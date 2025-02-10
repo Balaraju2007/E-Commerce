@@ -1,6 +1,6 @@
-*** Follow this steps to run this website ***
+***Follow this steps to run this website***
 
-** install node, npm, vscode, python in your machine **
+**install node, npm, vscode, python in your machine**
 
 > cd frontend  
 > npm install  
