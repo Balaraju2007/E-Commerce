@@ -5,29 +5,40 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [user, setUser] = useState(null)
+  const [pass, setPass] = useState(null)
 
+  const handleName = (event) => {
+    setUser(event.target.value)
+  }
+
+  const handlePass = (event) => {
+    setPass(event.target.value)
+  }
+
+  const call = async () =>{
+    try{
+    const response = await fetch('http://120.0.0.1:8000/hello',{
+      method: 'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify({'name':user, 'pass':pass})
+    })
+    const result = response.json()
+    console.log(result)
+  }
+  catch(error){
+    console.log(error)
+  }
+  }
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <form>
+        <input type='text' onChange={handleName} />
+        <input type='text' onChange={handlePass} />
+        <button onClick={call}>submit</button>
+      </form>
     </>
   )
 }
