@@ -16,16 +16,17 @@ function App() {
     setPass(event.target.value)
   }
 
-  const call = async () =>{
+  const call = async (event) =>{
+    event.preventDefault(); // Prevents page reload
     try{
-    const response = await fetch('http://120.0.0.1:8000/hello',{
+    const response = await fetch('http://127.0.0.1:8000/hello/',{
       method: 'POST',
       headers:{
         'Content-type':'application/json'
       },
-      body:JSON.stringify({'name':user, 'pass':pass})
+      body:JSON.stringify({name:user, pass:pass})
     })
-    const result = response.json()
+    const result = await response.json()
     console.log(result)
   }
   catch(error){
@@ -34,10 +35,10 @@ function App() {
   }
   return (
     <>
-      <form>
+      <form onSubmit={call}>
         <input type='text' onChange={handleName} />
         <input type='text' onChange={handlePass} />
-        <button onClick={call}>submit</button>
+        <button type='submit' >submit</button>
       </form>
     </>
   )
