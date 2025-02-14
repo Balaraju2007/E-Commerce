@@ -17,4 +17,4 @@ python manage.py runserver
 ```
 
 
-💡 **Tip:**  make sure set your command prompt to command prompt not to powershell.
+💡 **Tip:**  make sure use terminal as command prompt not to powershell.
