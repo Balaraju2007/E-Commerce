@@ -19,12 +19,12 @@ function App() {
   const call = async (event) =>{
     event.preventDefault(); // Prevents page reload
     try{
-    const response = await fetch('http://127.0.0.1:8000/hello/',{
+    const response = await fetch('http://127.0.0.1:8000/api/submissions/',{
       method: 'POST',
       headers:{
         'Content-type':'application/json'
       },
-      body:JSON.stringify({name:user, pass:pass})
+      body:JSON.stringify({username:user, password:pass})
     })
     const result = await response.json()
     console.log(result)
