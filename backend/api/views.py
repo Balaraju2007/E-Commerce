@@ -2,11 +2,15 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UserSubmissionSerializer
-from .models import UserSubmision
+from .serializers import *
+from .models import *
 
-class UserSubmissionViewSet(viewsets.ModelViewSet):
-    queryset = UserSubmision.objects.all()
-    serializer_class = UserSubmissionSerializer
+# class UserSubmissionViewSet(viewsets.ModelViewSet):
+#     queryset = UserSubmision.objects.all()
+#     serializer_class = UserSubmissionSerializer
+
+class userViewset(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 

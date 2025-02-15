@@ -1,11 +1,11 @@
 from django.urls import path, include
-from .views import UserSubmissionViewSet
+from .views import *
 from rest_framework.routers import DefaultRouter
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 
 
 router = DefaultRouter()
-router.register(r'submissions', UserSubmissionViewSet, basename='submission')
+router.register(r'users', userViewset, basename='user')
 
 
 urlpatterns = [
