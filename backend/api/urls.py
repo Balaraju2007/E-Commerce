@@ -5,11 +5,12 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, Sp
 
 
 router = DefaultRouter()
-router.register(r'users', userViewset, basename='user')
+router.register(r'users', UserViewset, basename='user')
+router.register(r'orders',OrdersViewset, basename = 'order' )
 
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),  # Schema JSON
     path('api/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),  # Swagger UI
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),  # Redoc UI

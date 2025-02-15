@@ -18,7 +18,7 @@ class User(models.Model):
         return self.name
     
 
-class order(models.Model):
+class Order(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE, to_field='name', db_column='username')
     order_id = models.AutoField(primary_key=True)
     product = models.CharField(max_length=100)

@@ -9,8 +9,10 @@ from .models import *
 #     queryset = UserSubmision.objects.all()
 #     serializer_class = UserSubmissionSerializer
 
-class userViewset(viewsets.ModelViewSet):
+class UserViewset(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-
+class OrdersViewset(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
