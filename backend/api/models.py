@@ -38,4 +38,7 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.username.name} - Order {self.order_id}: {self.product}"
     
+    class BookDetails(models.Model):
+        book_id = models.IntegerField()
+    
     
