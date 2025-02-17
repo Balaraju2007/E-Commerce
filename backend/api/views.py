@@ -18,3 +18,6 @@ class OrdersViewset(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
     
     
+class BooksViewset(viewsets.ModelViewSet):
+    queryset = BookDetails.objects.all()
+    serializer_class = BookSerializer

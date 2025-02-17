@@ -16,3 +16,10 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = '__all__'  # Return all fields in API response
         read_only_fields = ['order_id', 'order_date']
+
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookDetails
+        fields = '__all__'  # Return all fields in API response
+        read_only_fields = ['book_id']
+

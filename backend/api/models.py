@@ -38,7 +38,16 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.username.name} - Order {self.order_id}: {self.product}"
     
-    class BookDetails(models.Model):
-        book_id = models.IntegerField()
+class BookDetails(models.Model):
+        book_id = models.AutoField(primary_key=True)  # Unique book ID
+        title = models.CharField(max_length=255)  # Title of the book
+        author = models.CharField(max_length=255)  # Author of the book
+        publisher = models.CharField(max_length=255)  # Publisher of the book
+        genre = models.CharField(max_length=100, null=True, blank=True)  # Genre of the book (optional)
+        price = models.DecimalField(max_digits=10, decimal_places=2)  # Price of the book
+        description = models.TextField(null=True, blank=True)  # Book description (optional)
     
+        def __str__(self):
+            return f"Book: {self.title} by {self.author}"
+
     

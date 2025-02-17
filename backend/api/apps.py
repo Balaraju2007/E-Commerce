@@ -9,5 +9,7 @@ class ApiConfig(AppConfig):
         # Import your signals module to register it
         import api.signals
 
+        # Perform any additional setup here
+
 
 

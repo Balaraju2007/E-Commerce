@@ -7,6 +7,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, Sp
 router = DefaultRouter()
 router.register(r'users', UserViewset, basename='user')
 router.register(r'orders',OrdersViewset, basename = 'order' )
+router.register(r'books',BooksViewset, basename = 'book' )
 
 
 urlpatterns = [
