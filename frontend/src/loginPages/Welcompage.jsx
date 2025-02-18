@@ -5,11 +5,13 @@ import "./registration.css";
 const Header = () => {
     return (
         <header className='header'>
-            <div>
-             <img src="cn" />
+            <div className='bookname'>
+                <img src="cn" /> <h2 className='websitename'>Bookswap</h2>
             </div>
-            <div>
-             <p>signin</p>
+            <div className='signinup'>
+                <p>Contact us</p>
+                <p>Sign in</p>
+                <p>Sign up</p>
             </div>
         </header>
     )
@@ -19,8 +21,8 @@ const Welcomapage = () => {
     return (
         <>
             <div className='bodypart'>
-<Header />
-{/* <Body /> */}<div>balaaaaaaaa</div>
+                <Header />
+                {/* <Body /> */}<div>balaaaaaaaa</div>
             </div>
         </>
     )

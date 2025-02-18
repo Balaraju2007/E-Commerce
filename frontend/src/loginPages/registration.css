@@ -7,11 +7,29 @@
 
   .header {
         display: flex;
+        justify-content: space-between;
         background-color: aqua;
+        padding: 1.3rem;
   }
+.bookname {
+  display: flex;
+  gap:20px;
+}
+
+.websitename {
+  font-size:30px;
+}
 
   .bodypart {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+    gap: 30px;
+  }
+
+  .signinup {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    font-size: larger;
   }
