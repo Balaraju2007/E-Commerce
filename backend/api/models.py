@@ -22,10 +22,10 @@ class User(models.Model):
     ]
     
     user_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=40)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=20)
-    contact_number = models.CharField(max_length=10, default='0000000000')
+    name = models.CharField(max_length=40,null = False)
+    email = models.EmailField(unique=True,null = False)
+    password = models.CharField(max_length=20,null = False)
+    contact_number = models.CharField(max_length=10,null = False)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     
     def __str__(self):
@@ -34,14 +34,23 @@ class User(models.Model):
 class author(models.Model):
     author_id = models.AutoField(primary_key=True)
     author_name = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return self.author_name
+    
 
 class publisher(models.Model):
     publisher_id = models.AutoField(primary_key=True)
     publisher_name = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return self.publisher_name
 
 class genre(models.Model):
     genre_id = models.AutoField(primary_key=True)
     genre_name = models.CharField(max_length=255)
+    def __str__(self):
+        return self.genre_name
 
 class Book(models.Model):
     book_id = models.AutoField(primary_key=True)

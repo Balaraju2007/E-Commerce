@@ -46,14 +46,10 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-        read_only_fields = ['user_id', 'is_active', 'is_staff', 'is_superuser', 'last_login', 'date_joined', 'groups', 'user_permissions', 'password']
+        read_only_fields = ['user_id', 'is_active']
 
 
 class BookSerializer(serializers.ModelSerializer):
-    seller_name = UserSerializer(read_only=True)
-    author_id = AuthorSerializer(read_only=True)
-    publisher_id = PublisherSerializer(read_only=True)
-    genre_id = GenreSerializer(read_only=True)
 
     class Meta:
         model = Book
@@ -61,7 +57,6 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 class CartSerializer(serializers.ModelSerializer):
-    user_id = UserSerializer(read_only=True)
     
     class Meta:
         model = cart
@@ -69,8 +64,6 @@ class CartSerializer(serializers.ModelSerializer):
 
 
 class CartItemSerializer(serializers.ModelSerializer):
-    cart_id = CartSerializer(read_only=True)
-    book_id = BookSerializer(read_only=True)
 
     class Meta:
         model = cart_items
@@ -78,7 +71,6 @@ class CartItemSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    user_id = UserSerializer(read_only=True)
 
     class Meta:
         model = orders
@@ -86,8 +78,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    order_id = OrderSerializer(read_only=True)
-    book_id = BookSerializer(read_only=True)
+
 
     class Meta:
         model = order_items
