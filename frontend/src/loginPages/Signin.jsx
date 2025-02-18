@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import "./registration.css";
 
-const Registration = () => {
+const Signin = () => {
     const [count, setCount] = useState(0)
     const [user, setUser] = useState(null)
     const [pass, setPass] = useState(null)
@@ -38,7 +38,7 @@ const Registration = () => {
                 <div className='form'>
                     <div className='username'><label>UserName rfnk: </label><input type='text' onChange={handleName} required /> </div>
                     <div className='passsword'><label>Password : </label><input type='text' onChange={handlePass} required /> </div>
-                    <div className='email'><label>Email : </label><input type='emmail' onChange={handlePass} required /> </div>
+                    <div className='email'><label>Emailjjjjjjjjjjjjjjj11111111111111111111 : </label><input type='emmail' onChange={handlePass} required /> </div>
                     <button type='submit' >submit</button>
                 </div>
             </form>
@@ -46,4 +46,4 @@ const Registration = () => {
     )
 }
 
-export default Registration
+export default Signin

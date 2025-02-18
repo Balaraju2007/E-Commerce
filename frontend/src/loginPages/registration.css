@@ -4,3 +4,14 @@
     gap: 10px;
     /* background-color: aqua; */
   }
+
+  .header {
+        display: flex;
+        background-color: aqua;
+  }
+
+  .bodypart {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
