@@ -1,55 +1,67 @@
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    /* background-color: aqua; */
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* background-color: aqua; */
+}
 
-  .header {
-        display: flex;
-        justify-content: space-between;
-        background-color: white;
-        padding: 1.3rem;
-  }
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  padding: 0.8rem;
+}
+
 .bookname {
   display: flex;
-  gap:1.3rem;
+  gap: 1.3rem;
 }
 
 .websitename {
-  font-size:30px;
+  font-size: 30px;
+  margin-top: auto;
 }
+
 .welcomePageImage {
   height: 80vh;
   width: 40vw;
-  background-color: rgb(172, 183, 187);
-  box-shadow: 10px 10px 10px 10px rgba(48, 12, 12, 0.1);
+  /* background-color: rgb(172, 183, 187); */
+  /* box-shadow: 10px 10px 10px rgba(48, 12, 12, 0.1); */
   border-radius: 5%;
 }
-  .bodypart {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    gap: 30px;
-    background-color: rgb(203, 255, 255);
-  }
-  .content {
-    /* display: flex;
+
+.bodypart {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 30px;
+  background-color: rgb(203, 255, 255);
+}
+
+.content {
+  /* display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center; */
-    padding-left: 5rem;
-    padding-top: 10rem;
-  }
+  padding-left: 5rem;
+  padding-top: 10rem;
+}
 
-  .signinup {
-    display: flex;
-    justify-content: space-between;
-    gap: 50px;
-    font-size: larger;
-  }
+.signinup {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  font-size: larger;
+  margin-top: 9px;
+  margin-right: 10px;
+}
 
-  .container {
-    display: flex;
-    justify-content: space-between;
-  }
+/* .image{
+  height: 60%;
+  width: 70%;
+  margin-right: 0px;
+} */
+.container {
+  display: flex;
+  justify-content: space-between;
+}
