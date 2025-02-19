@@ -33,7 +33,13 @@ const Registration = () => {
         }
     }
     return (
-        <div lclassName='sigupContainer'><div>Details</div>
+        <div lclassName='sigupContainer'>
+            <div>
+                <h1>Sign up to </h1>
+                    <h2>Old book Seller</h2> <br></br>
+                    <p>If you already have an account <br>
+                    </br> you can <span>login here!</span></p>
+            </div>
             <form className='form' onSubmit={call}>
                 <div className='form'>
                     <div className='username'><label>UserName rfnk: </label><input type='text' onChange={handleName} required /> </div>
