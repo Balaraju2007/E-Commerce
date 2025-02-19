@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
-import "./registration.css";
+import "./signinup.css";
 
-const Signin = () => {
+const Registration = () => {
     const [count, setCount] = useState(0)
     const [user, setUser] = useState(null)
     const [pass, setPass] = useState(null)
@@ -33,17 +33,27 @@ const Signin = () => {
         }
     }
     return (
-        <>
-            <form className='form' onSubmit={call}>
-                <div className='form'>
-                    <div className='username'><label>UserName rfnk: </label><input type='text' onChange={handleName} required /> </div>
-                    <div className='passsword'><label>Password : </label><input type='text' onChange={handlePass} required /> </div>
-                    <div className='email'><label>Emailjjjjjjjjjjjjjjj11111111111111111111 : </label><input type='emmail' onChange={handlePass} required /> </div>
-                    <button type='submit' >submit</button>
-                </div>
-            </form>
-        </>
+        <div className='sigupContainer'>
+            <div className='loginInformation'>
+                <h1>Sign in to </h1>
+                <h2>Old book Seller</h2> <br></br>
+                <p style={{fontSize:"13px"}}>If you already have an account <br>
+                </br> you can <span style={{color:"blue",cursor: 'pointer'}}>login here!</span></p>
+            </div>
+            <div className='signupFieldss'>
+                <h2 style={{fontSize: '1.6rem'}}>Sign in</h2> <br></br>
+                <form className='form' onSubmit={call}>
+                    <div className='form'>
+                        <div className='username'><input type='text' onChange={handleName} required placeholder='---userName or Email---' /> </div>
+                        <div className='passsword'><input type='password' onChange={handlePass} required placeholder='---password---'/> </div>
+                        <p style={{fontSize:'80%',color:'rgba(168, 60, 60, 0.523)', cursor: 'pointer'}}>Forget password?</p>
+
+                        <button type='submit' className='button'>submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     )
 }
 
-export default Signin
+export default Registration

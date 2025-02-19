@@ -5,8 +5,10 @@
     align-items:center;
     padding-top: 10%;
     gap: 20%;
+    /* color: rgba(168, 60, 60, 0.523); */
     /* background-color: blue; */
 }
+
 
 input {
     /* border: 2px solid black; */
@@ -20,6 +22,7 @@ input {
 .button {
     background-color: rgb(103, 103, 253);
     width: 130%;
+    cursor: pointer;
 }
 
 h2 {
