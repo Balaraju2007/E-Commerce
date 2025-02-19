@@ -1,0 +1,32 @@
+.sigupContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center;
+    padding-top: 10%;
+    gap: 20%;
+    /* background-color: blue; */
+}
+
+input {
+    /* border: 2px solid black; */
+    width: 130%;
+    color: blue;
+    background-color: rgb(214, 237, 245);
+    margin-top: 5%;
+    padding: 4%;
+}
+
+.button {
+    background-color: rgb(103, 103, 253);
+    width: 130%;
+}
+
+h2 {
+    /* font-weight:; */
+    margin-top: 5%;
+    font-size: 150%;
+}
+h1 {
+    font-weight: 100%;
+}

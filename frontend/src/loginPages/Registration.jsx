@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import "./registration.css";
+import "./signinup.css";
 
 const Registration = () => {
     const [count, setCount] = useState(0)
@@ -33,21 +33,27 @@ const Registration = () => {
         }
     }
     return (
-        <div lclassName='sigupContainer'>
-            <div>
+        <div className='sigupContainer'>
+            <div className='loginInformation'>
                 <h1>Sign up to </h1>
-                    <h2>Old book Seller</h2> <br></br>
-                    <p>If you already have an account <br>
-                    </br> you can <span>login here!</span></p>
+                <h2>Old book Seller</h2> <br></br>
+                <p style={{fontSize:"13px"}}>If you already have an account <br>
+                </br> you can <span style={{color:"blue"}}>login here!</span></p>
             </div>
-            <form className='form' onSubmit={call}>
-                <div className='form'>
-                    <div className='username'><label>UserName rfnk: </label><input type='text' onChange={handleName} required /> </div>
-                    <div className='passsword'><label>Password : </label><input type='text' onChange={handlePass} required /> </div>
-                    <div className='email'><label>Email : </label><input type='emmail' onChange={handlePass} required /> </div>
-                    <button type='submit' >submit</button>
-                </div>
-            </form>
+            <div className='signupFieldss'>
+                <h2 style={{fontSize: '1.6rem'}}>Sign up</h2> <br></br>
+                <form className='form' onSubmit={call}>
+                    <div className='form'>
+                        <div className='username'><input type='text' onChange={handleName} required placeholder='---userName---' /> </div>
+                        <div className='email'><input type='emmail' onChange={handlePass} required placeholder='---Email---'/> </div>
+                        <div className='contactNumber'><input type='number' onChange={handlePass} required placeholder='---contactNumber---'/> </div> 
+                        <div className='passsword'><input type='password' onChange={handlePass} required placeholder='---password---'/> </div>
+                        <div className='confirmPasssword'><input type='password' onChange={handlePass} required placeholder='---confirm password---'/> </div>
+
+                        <button type='submit' className='button'>submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }
