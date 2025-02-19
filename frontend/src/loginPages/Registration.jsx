@@ -33,7 +33,7 @@ const Registration = () => {
         }
     }
     return (
-        <>
+        <div lclassName='sigupContainer'><div>Details</div>
             <form className='form' onSubmit={call}>
                 <div className='form'>
                     <div className='username'><label>UserName rfnk: </label><input type='text' onChange={handleName} required /> </div>
@@ -42,7 +42,7 @@ const Registration = () => {
                     <button type='submit' >submit</button>
                 </div>
             </form>
-        </>
+        </div>
     )
 }
 
