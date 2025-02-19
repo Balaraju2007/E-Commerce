@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import "./registration.css";
-
+import {useNavigate} from 'react-router-dom'
 const Header = () => {
     return (
         <header className='header'>
@@ -18,11 +18,16 @@ const Header = () => {
 }
 
 const Body = () => {
+    const navigate = useNavigate();
+    const navigatee = () => {
+        navigate('/home');
+    }
     return(
         <div className='container'>
             <div className='content'><h1>Find & Sell Old <br></br>Semester Books Easily!</h1><br></br>
             <p>Buy books at low prices and sell your used books effortlessly</p><br></br>
-            <p style={{ backgroundColor: 'blue', fontSize: '20px', display: 'inline', padding: '10px', borderRadius: '10px'}}>Get Started</p></div>
+            <p style={{ backgroundColor: 'royalblue',color:'white', fontSize: '20px', display: 'inline', padding: '10px', borderRadius: '10px', cursor: 'pointer'}}
+            onClick={navigatee}>Get Started</p></div>
             <div className='image'><img className="welcomePageImage"src="jrff">
             </img></div>
         </div>
