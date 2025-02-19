@@ -56,7 +56,7 @@ class Book(models.Model):
     book_id = models.AutoField(primary_key=True)
     book_name = models.CharField(max_length=255)
     seller_name = models.ForeignKey(User, on_delete=models.CASCADE, related_name="books", to_field="user_id", db_column="seller_name",default=get_default_seller)
-    author_id = models.ForeignKey(author, on_delete=models.CASCADE, related_name="books", to_field="author_id", db_column="author_id")
+    author = models.ManyToManyField(Author, related_name="books")  # Many-to-many relationship
     publisher_id = models.ForeignKey(publisher, on_delete=models.CASCADE, related_name="books", to_field="publisher_id", db_column="publisher_id")
     genre_id = models.ForeignKey(genre, on_delete=models.CASCADE, related_name="books", to_field="genre_id", db_column="genre_id")
     price = models.DecimalField(max_digits=10, decimal_places=2)

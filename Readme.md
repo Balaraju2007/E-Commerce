@@ -8,11 +8,11 @@
 ```
 
 ```
-cd backend  
+cd fastapi  
 python -m venv venv   
 venv\Scripts\activate  
 pip install -r requirements.txt  
-python manage.py runserver
+uvicorn app.main:app --log-level debug
 
 ```
 
