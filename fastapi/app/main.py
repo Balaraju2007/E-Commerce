@@ -2,7 +2,26 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from . import crud, models, schemas, database
 from .database import init_db
+import logging
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
+
+
 app = FastAPI()
+
+
+
+# logging.basicConfig(level=logging.ERROR)
+
+# @app.exception_handler(Exception)
+# async def global_exception_handler(request, exc):
+#     logging.error(f"Unhandled Error: {exc}")
+#     return JSONResponse(status_code=500, content={"detail": "Something went wrong!"})
+
+# @app.exception_handler(RequestValidationError)
+# async def validation_exception_handler(request, exc):
+#     return JSONResponse(status_code=422, content={"detail": exc.errors()})
+
 
 
 # Initialize the database tables on startup
@@ -20,16 +39,38 @@ def get_db():
     finally:
         db.close()
 
-@app.post("/items/", response_model=schemas.Item)
-def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
-    return crud.create_item(db=db, item=item)
 
-@app.get("/items/", response_model=list[schemas.Item])
-def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    items = crud.get_items(db=db, skip=skip, limit=limit)
-    return items
+@app.post("/users/", response_model=schemas.UserResponse)
+def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    existing_user = crud.get_user_by_email(db=db, email=user.email)
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    
+    return crud.create_user(db=db, user=user)
+    # return schemas.UserResponse(user_id=user.id, name=user.name, email=user.email)
 
-@app.get("/items/{item_id}", response_model=schemas.Item)
-def get_items_number(item_id: int , db : Session = Depends(get_db)):
-    item = crud.get_item_by_number(db = db, item_id = item_id)
-    return item
+
+
+@app.get("/users/", response_model=list[schemas.UserResponse])
+def get_users(db: Session = Depends(get_db)):
+    users = db.query(models.User).all()
+    return [schemas.UserResponse(user_id=user.id, name=user.name, email=user.email) for user in users]
+
+
+
+
+@app.delete("/users/{user_id}", response_model=dict)
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    db.delete(user)
+    db.commit()
+    return {"message": "User deleted successfully"}
+
+@app.get("/users/{user_id}", response_model=list[schemas.UserResponse])
+def get_users_by_id(user_id : int,db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    return schemas.UserResponse(user_id=user.id, name=user.name, email=user.email)
