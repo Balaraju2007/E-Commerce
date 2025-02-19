@@ -1,0 +1,22 @@
+.HeaderContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.homeContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.profileCartOrder, .nameSearch {
+    display: flex;
+    justify-content: space-around;
+    gap: 60px
+}
+.svg {
+    padding-top: 15px;
+}
+.svg:hover {
+    color: red;
+}
