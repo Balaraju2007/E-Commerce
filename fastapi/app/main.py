@@ -40,21 +40,19 @@ def get_db():
         db.close()
 
 
-@app.post("/users/", response_model=schemas.UserResponse)
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    existing_user = crud.get_user_by_email(db=db, email=user.email)
+@app.post("/user/", response_model=schemas.UserResponse)
+def create_user(request:schemas.UserCreate, db: Session = Depends(get_db)):
+    existing_user = crud.get_user_by_email(db=db, email=request.email)
     if existing_user:
         raise HTTPException(status_code=400, detail="Email already registered")
-    
-    return crud.create_user(db=db, user=user)
-    # return schemas.UserResponse(user_id=user.id, name=user.name, email=user.email)
+    return crud.create_new_user(db, request)
 
 
 
 @app.get("/users/", response_model=list[schemas.UserResponse])
 def get_users(db: Session = Depends(get_db)):
     users = db.query(models.User).all()
-    return [schemas.UserResponse(user_id=user.id, name=user.name, email=user.email) for user in users]
+    return [schemas.UserResponse(user_id=user.id, name=user.name, email=user.email, hashed_password = user.hashed_password) for user in users]
 
 
 
