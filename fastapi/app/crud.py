@@ -17,13 +17,10 @@ import bcrypt
 # def get_item_by_number(db:Session, item_id: int ):
 #     return db.query(Item).filter(Item.id == item_id).first()
 
-def hash_password(password: str)->str:
-    salt = bcrypt.gensalt()
-    password = bcrypt.hashpw(password.encode('utf-8'), salt)
-    return password.decode('utf-8')
+
 
 def create_user(db: Session, user: UserCreate):
-    hashed_password = hash_password(user.password)
+    hashed_password = user.password
     db_user = User(name=user.name, email=user.email, hashed_password=hashed_password)
     
     db.add(db_user)

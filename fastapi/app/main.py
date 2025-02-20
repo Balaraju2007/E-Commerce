@@ -76,15 +76,12 @@ def get_users_by_id(user_id : int,db: Session = Depends(get_db)):
     return schemas.UserResponse(user_id=user.id, name=user.name, email=user.email)
 
 
-# Function to verify password
-def verify_password(plain_password, hashed_password):
-    hashed_password = str(hashed_password)
-    return bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))
+
 
 # Login API
 @app.post("/login")
 def login(username: str, password: str, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.name == username).first()
-    if user and verify_password(password, models.User.hashed_password):
+    if user and models.User.hashed_password == password:
         return {"message": "Login successful", "user": {"id": user.id, "username": user.username}}
     raise HTTPException(status_code=400, detail="Invalid credentials")
