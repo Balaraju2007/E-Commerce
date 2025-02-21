@@ -11,7 +11,7 @@ class UserCreate(BaseModel):
 
 # ✅ Response model
 class UserResponse(BaseModel):
-    user_id: int
+    id: int
     name: str
     email: EmailStr
 

@@ -6,6 +6,10 @@ import logging
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 import bcrypt
+from passlib.context import CryptContext
+
+
+pwd_cxt = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 app = FastAPI()
 
@@ -52,14 +56,14 @@ def create_user(request:schemas.UserCreate, db: Session = Depends(get_db)):
 @app.get("/users/", response_model=list[schemas.UserResponse])
 def get_users(db: Session = Depends(get_db)):
     users = db.query(models.User).all()
-    return [schemas.UserResponse(user_id=user.id, name=user.name, email=user.email, hashed_password = user.hashed_password) for user in users]
+    return [schemas.UserResponse(id=user.id, name=user.name, email=user.email, hashed_password = user.hashed_password) for user in users]
 
 
 
 
-@app.delete("/users/{user_id}", response_model=dict)
-def delete_user(user_id: int, db: Session = Depends(get_db)):
-    user = db.query(models.User).filter(models.User.id == user_id).first()
+@app.delete("/users/{id}", response_model=dict)
+def delete_user(id: int, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == id).first()
     
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -68,10 +72,10 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
     db.commit()
     return {"message": "User deleted successfully"}
 
-@app.get("/users/{user_id}", response_model=schemas.UserResponse)
-def get_users_by_id(user_id : int,db: Session = Depends(get_db)):
-    user = db.query(models.User).filter(models.User.id == user_id).first()
-    return schemas.UserResponse(user_id=user.id, name=user.name, email=user.email)
+@app.get("/users/{id}", response_model=schemas.UserResponse)
+def get_users_by_id(id : int,db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == id).first()
+    return schemas.UserResponse(id=user.id, name=user.name, email=user.email)
 
 
 
@@ -80,6 +84,6 @@ def get_users_by_id(user_id : int,db: Session = Depends(get_db)):
 @app.post("/login")
 def login(username: str, password: str, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.name == username).first()
-    if user and models.User.hashed_password == password:
-        return {"message": "Login successful", "user": {"id": user.id, "username": user.username}}
+    if user and pwd_cxt.verify(password, user.hashed_password):
+        return {"message": "Login successful", "user": {"id": user.id, "username": user.name}}
     raise HTTPException(status_code=400, detail="Invalid credentials")
