@@ -7,11 +7,22 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 import bcrypt
 from passlib.context import CryptContext
+from fastapi.middleware.cors import CORSMiddleware
 
+app = FastAPI()
+
+# Allow cross-origin requests from your React app running on port 5173
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # React app origin
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods like GET, POST, etc.
+    allow_headers=["*"],  # Allow all headers
+)
 
 pwd_cxt = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-app = FastAPI()
+
 
 
 
@@ -82,8 +93,8 @@ def get_users_by_id(id : int,db: Session = Depends(get_db)):
 
 # Login API
 @app.post("/login")
-def login(username: str, password: str, db: Session = Depends(get_db)):
-    user = db.query(models.User).filter(models.User.name == username).first()
-    if user and pwd_cxt.verify(password, user.hashed_password):
+def login(data:schemas.LoginRequest, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.name == data.username).first()
+    if user and pwd_cxt.verify(data.password, user.hashed_password):
         return {"message": "Login successful", "user": {"id": user.id, "username": user.name}}
     raise HTTPException(status_code=400, detail="Invalid credentials")
