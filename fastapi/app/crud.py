@@ -3,17 +3,36 @@ from .models import *
 from .schemas import *
 import bcrypt
 from passlib.context import CryptContext
-
+import uuid
+import os
 
 pwd_cxt = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-def create_new_user(db, request):
-    hashed_password = pwd_cxt.hash(request.password)
-    db_user = User(name=request.name, email=request.email, hashed_password=hashed_password)
-    db.add(db_user)
+def create_new_user(db: Session, user_data, image_data: bytes = None):
+    # Save image to a file (or use a cloud storage)
+    image_dir = 'uploads/profile_images'
+    os.makedirs(image_dir, exist_ok=True)
+    
+    #sanitized name
+    sanitized_name = user_data.full_name.replace(" ", "_")  # Replace spaces with underscores
+    image_filename = f"{image_dir}/{sanitized_name}.jpg"  
+
+    
+    with open(image_filename, "wb") as f:
+        f.write(image_data)
+
+    # Create user object
+    new_user = User(
+        email=user_data.email,
+        password=user_data.password,  # Ensure this is hashed
+        full_name=user_data.full_name,
+        profile_image=image_filename  # Store the file path
+    )
+
+    db.add(new_user)
     db.commit()
-    db.refresh(db_user)
-    return  db_user
+    db.refresh(new_user)
+    return new_user
 
 
 def get_users(db: Session):

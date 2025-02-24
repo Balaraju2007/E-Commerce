@@ -5,8 +5,7 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-
-
+    email = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)  # Ensure you hash passwords before storing!
+    full_name = Column(String, nullable=False)
+    profile_image = Column(String, nullable=True)  # Stores the image file path

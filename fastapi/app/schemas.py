@@ -1,18 +1,19 @@
 from pydantic import BaseModel, EmailStr
+from typing import Optional
 
 # ✅ Request model
 class UserCreate(BaseModel):
-    name: str
     email: EmailStr
     password: str
-
+    full_name: str
+    profile_image: Optional[bytes] = None
     class Config:
         orm_mode = True
 
 # ✅ Response model
 class UserResponse(BaseModel):
     id: int
-    name: str
+    full_name: str
     email: EmailStr
 
     class Config:

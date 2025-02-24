@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Form, Request,UploadFile, File
 from sqlalchemy.orm import Session
 from . import crud, models, schemas, database
 from .database import init_db
@@ -8,8 +8,15 @@ from fastapi.responses import JSONResponse
 import bcrypt
 from passlib.context import CryptContext
 from fastapi.middleware.cors import CORSMiddleware
+import os
+from fastapi.staticfiles import StaticFiles
+
 
 app = FastAPI()
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+
+
+
 
 # Allow cross-origin requests from your React app running on port 5173
 app.add_middleware(
@@ -22,21 +29,10 @@ app.add_middleware(
 
 pwd_cxt = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+UPLOAD_FOLDER = "uploads/profile_images"
 
-
-
-
-# logging.basicConfig(level=logging.ERROR)
-
-# @app.exception_handler(Exception)
-# async def global_exception_handler(request, exc):
-#     logging.error(f"Unhandled Error: {exc}")
-#     return JSONResponse(status_code=500, content={"detail": "Something went wrong!"})
-
-# @app.exception_handler(RequestValidationError)
-# async def validation_exception_handler(request, exc):
-#     return JSONResponse(status_code=422, content={"detail": exc.errors()})
-
+# Ensure the directory exists
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
 # Initialize the database tables on startup
@@ -56,12 +52,28 @@ def get_db():
 
 
 @app.post("/user/", response_model=schemas.UserResponse)
-def create_user(request:schemas.UserCreate, db: Session = Depends(get_db)):
-    existing_user = crud.get_user_by_email(db=db, email=request.email)
+async def create_user(
+    db: Session = Depends(get_db),
+    email: str = Form(...),
+    password: str = Form(...),
+    full_name: str = Form(...),
+    profile_image: UploadFile = File(...)
+):
+    # Check if user already exists
+    existing_user = crud.get_user_by_email(db=db, email=email)
     if existing_user:
         raise HTTPException(status_code=400, detail="Email already registered")
-    return crud.create_new_user(db, request)
 
+    # Read the uploaded image (Optional: Save it to disk or cloud storage)
+    image_data = await profile_image.read()  # Reads the file content
+
+    # Create user object
+    user_data = schemas.UserCreate(email=email, password=password, full_name=full_name)
+
+    # Create new user
+    new_user = crud.create_new_user(db, user_data, image_data)  # Pass image to function
+
+    return new_user
 
 
 @app.get("/users/", response_model=list[schemas.UserResponse])
