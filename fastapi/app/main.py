@@ -92,7 +92,7 @@ def get_users_by_id(id : int,db: Session = Depends(get_db)):
 
 
 # Login API
-@app.post("/login")
+@app.post("/login/")
 def login(data:schemas.LoginRequest, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.name == data.username).first()
     if user and pwd_cxt.verify(data.password, user.hashed_password):
