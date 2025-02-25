@@ -18,3 +18,12 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 def init_db():
     # Create all tables from the models that inherit from Base
     Base.metadata.create_all(bind=engine)
+    
+
+# Dependency to get the database session
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
