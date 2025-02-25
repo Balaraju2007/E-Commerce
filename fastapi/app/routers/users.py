@@ -5,6 +5,8 @@ from ..database import get_db
 
 router = APIRouter()
 
+BASE_URL = "http://127.0.0.1:8000"
+
 @router.post("/user/", response_model=schemas.UserResponse)
 async def create_user(
     db: Session = Depends(get_db),
@@ -33,7 +35,15 @@ async def create_user(
 @router.get("/users/", response_model=list[schemas.UserResponse])
 def get_users(db: Session = Depends(get_db)):
     users = db.query(models.User).all()
-    return [schemas.UserResponse(id=user.id, name=user.name, email=user.email, hashed_password=user.hashed_password) for user in users]
+    return [
+        schemas.UserResponse(
+            id=user.id,
+            full_name=user.full_name,
+            email=user.email,
+            profile_image = f"{BASE_URL}/uploads/profile_images/{user.profile_image}"
+            ) 
+        for user in users
+    ]
 
 
 @router.delete("/users/{id}", response_model=dict)

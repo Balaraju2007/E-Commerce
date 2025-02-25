@@ -15,7 +15,9 @@ class UserResponse(BaseModel):
     id: int
     full_name: str
     email: EmailStr
-
+    profile_image: Optional[str] = None
+    
+    
     class Config:
         orm_mode = True
 
