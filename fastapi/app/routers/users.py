@@ -7,7 +7,7 @@ router = APIRouter()
 
 BASE_URL = "http://127.0.0.1:8000"
 
-@router.post("/user/", response_model=schemas.UserResponse)
+@router.post("/", response_model=schemas.UserResponse)
 async def create_user(
     db: Session = Depends(get_db),
     email: str = Form(...),
@@ -32,7 +32,7 @@ async def create_user(
     return new_user
 
 
-@router.get("/users/", response_model=list[schemas.UserResponse])
+@router.get("/", response_model=list[schemas.UserResponse])
 def get_users(db: Session = Depends(get_db)):
     users = db.query(models.User).all()
     return [
@@ -46,7 +46,7 @@ def get_users(db: Session = Depends(get_db)):
     ]
 
 
-@router.delete("/users/{id}", response_model=dict)
+@router.delete("/{id}", response_model=dict)
 def delete_user(id: int, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == id).first()
     
@@ -58,7 +58,7 @@ def delete_user(id: int, db: Session = Depends(get_db)):
     return {"message": "User deleted successfully"}
 
 
-@router.get("/users/{id}", response_model=schemas.UserResponse)
+@router.get("/{id}", response_model=schemas.UserResponse)
 def get_users_by_id(id: int, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == id).first()
     if not user:

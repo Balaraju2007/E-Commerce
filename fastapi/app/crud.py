@@ -8,6 +8,10 @@ import os
 
 pwd_cxt = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+
+def hash_password(password: str) -> str:
+    return pwd_cxt.hash(password)
+
 def create_new_user(db: Session, user_data, image_data: bytes = None):
     # Save image to a file (or use a cloud storage)
     image_dir = 'uploads/profile_images'
@@ -24,7 +28,7 @@ def create_new_user(db: Session, user_data, image_data: bytes = None):
     # Create user object
     new_user = User(
         email=user_data.email,
-        password=user_data.password,  # Ensure this is hashed
+        password=hash_password(user_data.password),  # Ensure this is hashed
         full_name=user_data.full_name,
         profile_image=image_filename  # Store the file path
     )
