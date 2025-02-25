@@ -63,4 +63,11 @@ def get_users_by_id(id: int, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    return schemas.UserResponse(id=user.id, name=user.name, email=user.email)
+    
+    return  schemas.UserResponse(
+            id=user.id,
+            full_name=user.full_name,
+            email=user.email,
+            profile_image = f"{BASE_URL}/uploads/profile_images/{user.profile_image}"
+            ) 
+    
