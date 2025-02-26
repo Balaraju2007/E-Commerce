@@ -1,11 +1,14 @@
 import React from 'react'
 import { useState } from 'react'
+import {useNavigate} from 'react-router-dom'
+
 import "./signinup.css";
 
 const Registration = () => {
     const [count, setCount] = useState(0)
     const [user, setUser] = useState(null)
     const [pass, setPass] = useState(null)
+    const navigate = useNavigate();
 
     const handleName = (event) => {
         setUser(event.target.value)
@@ -48,7 +51,7 @@ const Registration = () => {
                         <div className='passsword'><input type='password' onChange={handlePass} required placeholder='---password---'/> </div>
                         <p style={{fontSize:'80%',color:'rgba(168, 60, 60, 0.523)', cursor: 'pointer'}}>Forget password?</p>
 
-                        <button type='submit' className='button'>submit</button>
+                        <button type='submit' className='button' onClick={()=>{navigate('/home')}}>submit</button>
                     </div>
                 </form>
             </div>

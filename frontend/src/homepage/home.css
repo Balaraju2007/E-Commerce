@@ -2,12 +2,16 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    background-color: rgb(203, 255, 255);
+    padding-bottom: 2%;
 }
 
 .homeContainer {
     display: flex;
     flex-direction: column;
+    
 }
+
 
 .profileCartOrder, .nameSearch {
     display: flex;
@@ -19,4 +23,19 @@
 }
 .svg:hover {
     color: red;
+}
+.addBook {
+    height: 500px;
+    width: 300px;
+    border: 1px solid red;
+    margin-left: 80%;
+    position: fixed;
+}
+input {
+    /* border: 2px solid black; */
+    width: 100%;
+    color: blue;
+    background-color: rgb(214, 237, 245);
+    margin-top: 5%;
+    padding: 4%;
 }

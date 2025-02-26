@@ -41,7 +41,7 @@ const Body = () => {
 
 const Footer = () => {
     return (
-        <footer style={{ textAlign: 'center', fontSize: '20px', marginTop: '-15px' }}>
+        <footer style={{ textAlign: 'center', fontSize: '20px', marginTop: '-35px', backgroundColor: 'white', padding: '10px' }}>
             if you have anything conatct us +91 xxxxx xxxxx
         </footer>
     )

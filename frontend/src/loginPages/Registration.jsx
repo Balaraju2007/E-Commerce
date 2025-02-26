@@ -1,11 +1,13 @@
 import React from 'react'
 import { useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 import "./signinup.css";
 
 const Registration = () => {
     const [count, setCount] = useState(0)
     const [user, setUser] = useState(null)
     const [pass, setPass] = useState(null)
+    const navigate = useNavigate();
 
     const handleName = (event) => {
         setUser(event.target.value)
@@ -41,7 +43,7 @@ const Registration = () => {
                 </br> you can <span  style={{color:"blue",cursor: 'pointer'}}>login here!</span></p>
             </div>
             <div className='signupFieldss'>
-                <h2 style={{fontSize: '1.6rem'}}>Sign up</h2> <br></br>
+                <h2 style={{fontSize: '1.9rem'}}>Sign up</h2> <br></br>
                 <form className='form' onSubmit={call}>
                     <div className='form'>
                         <div className='username'><input type='text' onChange={handleName} required placeholder='---userName---' /> </div>
@@ -49,8 +51,8 @@ const Registration = () => {
                         <div className='contactNumber'><input type='number' onChange={handlePass} required placeholder='---contactNumber---'/> </div> 
                         <div className='passsword'><input type='password' onChange={handlePass} required placeholder='---password---'/> </div>
                         <div className='confirmPasssword'><input type='password' onChange={handlePass} required placeholder='---confirm password---'/> </div>
-
-                        <button type='submit' className='button'>submit</button>
+                        <div className='profile'><input type='file' onChange={handlePass} required placeholder='---set profile pic---'/> </div>
+                        <button type='submit' className='button' onClick={()=>{navigate('/home')}}>submit</button>
                     </div>
                 </form>
             </div>
