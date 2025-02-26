@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Form, UploadFile, File
 from sqlalchemy.orm import Session
 from .. import schemas, models, crud
 from ..database import get_db
+from ..tokens import get_current_user
 
 router = APIRouter()
 
@@ -33,7 +34,10 @@ async def create_user(
 
 
 @router.get("/", response_model=list[schemas.UserResponse])
-def get_users(db: Session = Depends(get_db)):
+def get_users(
+    db: Session = Depends(get_db),
+    user: dict = Depends(get_current_user)
+    ):
     users = db.query(models.User).all()
     return [
         schemas.UserResponse(
