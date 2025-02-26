@@ -36,13 +36,13 @@ const Registration = () => {
     }
     return (
         <div className='sigupContainer'>
-            <div className='loginInformation'>
+            <div className='loginInformation1'>
                 <h1>Sign up to </h1>
                 <h2>Old book Seller</h2> <br></br>
                 <p style={{fontSize:"13px"}}>If you already have an account <br>
-                </br> you can <span  style={{color:"blue",cursor: 'pointer'}}>login here!</span></p>
+                </br> you can <span  style={{color:"blue",cursor: 'pointer'}} onClick={()=>{navigate("/signin")}}>login here!</span></p>
             </div>
-            <div className='signupFieldss'>
+            <div className='signupFieldss1'>
                 <h2 style={{fontSize: '1.9rem'}}>Sign up</h2> <br></br>
                 <form className='form' onSubmit={call}>
                     <div className='form'>
