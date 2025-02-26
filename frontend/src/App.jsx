@@ -5,10 +5,11 @@ import Signin from './loginPages/Signin'
 import Welcomapage from './loginPages/Welcompage'
 import Home from './homepage/Home'
 import Cart from './serachCartOrder/Cart';
+import Order from './serachCartOrder/Order'
+import Search from './serachCartOrder/Search';
+import Profile from './serachCartOrder/Profile';
 function App() {
   return (
-
-
 
     <Router>
       <Routes>
@@ -17,6 +18,9 @@ function App() {
         <Route path='/signin' element={<Signin />} />
         <Route path='/home' element={<Home />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/order' element={<Order />} />
+        <Route path='/search' element={<Search />} />
+        <Route path='/profile' element={<Profile />} />
       </Routes>
 
     </Router>

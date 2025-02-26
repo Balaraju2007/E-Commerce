@@ -12,7 +12,9 @@
     
 }
 
-
+.profile {
+    padding-top: 1%;
+}
 .profileCartOrder, .nameSearch {
     display: flex;
     justify-content: space-around;
