@@ -25,9 +25,8 @@ alembic revision --autogenerate -m "Describe the change"
 
 alembic upgrade head
 
-
-
 if you want revert back to previous
+
 alembic downgrade -1
 ```
 
