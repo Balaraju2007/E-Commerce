@@ -42,7 +42,7 @@ def get_users(
     users = db.query(models.User).all()
     return [
         schemas.UserResponse(
-            id=user.id,
+            user_id=user.user_id,
             full_name=user.full_name,
             email=user.email,
             contact_number=user.contact_number,
@@ -54,7 +54,7 @@ def get_users(
 
 @router.delete("/{id}", response_model=dict)
 def delete_user(id: int, db: Session = Depends(get_db)):
-    user = db.query(models.User).filter(models.User.id == id).first()
+    user = db.query(models.User).filter(models.User.user_id == id).first()
     
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -66,12 +66,12 @@ def delete_user(id: int, db: Session = Depends(get_db)):
 
 @router.get("/{id}", response_model=schemas.UserResponse)
 def get_users_by_id(id: int, db: Session = Depends(get_db)):
-    user = db.query(models.User).filter(models.User.id == id).first()
+    user = db.query(models.User).filter(models.User.user_id == id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
     return  schemas.UserResponse(
-            id=user.id,
+            user_id=user.user_id,
             full_name=user.full_name,
             email=user.email,
             contact_number=user.contact_number,

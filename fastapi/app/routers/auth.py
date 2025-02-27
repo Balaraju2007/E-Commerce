@@ -25,7 +25,16 @@ def login(data:schemas.LoginRequest, db: Session = Depends(get_db)):
     if not pwd_cxt.verify(data.password, user.password):
         raise HTTPException(status_code=400, detail="Invalid credentials")
     access_token = create_access_token(data={"sub": user.email}, expires_delta=timedelta(minutes=30))
-    return {"access_token": access_token, "token_type": "bearer",  "user": {"id": user.id, "username": user.full_name, "email": user.email, "profile_image": f"{BASE_URL}/{user.profile_image}"}}
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user": {
+            "id": user.user_id,
+            "username": user.full_name,
+            "email": user.email,
+            "profile_image": f"{BASE_URL}/{user.profile_image}"
+            }
+        }
     
     
 
