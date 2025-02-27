@@ -7,6 +7,7 @@ class UserCreate(BaseModel):
     password: str
     full_name: str
     profile_image: Optional[bytes] = None
+    contact_number: str | None = None
     class Config:
         orm_mode = True
 
@@ -16,7 +17,7 @@ class UserResponse(BaseModel):
     full_name: str
     email: EmailStr
     profile_image: Optional[str] = None
-    
+    contact_number: str | None = None
     
     class Config:
         orm_mode = True

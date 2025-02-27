@@ -3,7 +3,7 @@ import Registration from './loginPages/Registration'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Signin from './loginPages/Signin'
 import Welcomapage from './loginPages/Welcompage'
-import Home from './homepage/Home'
+import Home from './homepage/home'
 import Cart from './serachCartOrder/Cart';
 import Order from './serachCartOrder/Order'
 import Search from './serachCartOrder/Search';

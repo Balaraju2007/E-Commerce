@@ -30,6 +30,7 @@ def create_new_user(db: Session, user_data, image_data: bytes = None):
         email=user_data.email,
         password=hash_password(user_data.password),  # Ensure this is hashed
         full_name=user_data.full_name,
+        contact_number=user_data.contact_number,
         profile_image=image_filename  # Store the file path
     )
 

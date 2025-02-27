@@ -14,6 +14,7 @@ async def create_user(
     email: str = Form(...),
     password: str = Form(...),
     full_name: str = Form(...),
+    contact_number: str = Form(...),
     profile_image: UploadFile = File(...)
 ):
     # Check if user already exists
@@ -25,7 +26,7 @@ async def create_user(
     image_data = await profile_image.read()  # Reads the file content
 
     # Create user object
-    user_data = schemas.UserCreate(email=email, password=password, full_name=full_name)
+    user_data = schemas.UserCreate(email=email, password=password, full_name=full_name, contact_number=contact_number)
 
     # Create new user
     new_user = crud.create_new_user(db, user_data, image_data)  # Pass image to function
@@ -44,6 +45,7 @@ def get_users(
             id=user.id,
             full_name=user.full_name,
             email=user.email,
+            contact_number=user.contact_number,
             profile_image = f"{BASE_URL}/uploads/profile_images/{user.profile_image}"
             ) 
         for user in users
@@ -72,6 +74,7 @@ def get_users_by_id(id: int, db: Session = Depends(get_db)):
             id=user.id,
             full_name=user.full_name,
             email=user.email,
+            contact_number=user.contact_number,
             profile_image = f"{BASE_URL}/uploads/profile_images/{user.profile_image}"
             ) 
     
