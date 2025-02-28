@@ -1,18 +1,29 @@
-from fastapi import FastAPI, Depends, HTTPException, Form, Request,UploadFile, File
-from sqlalchemy.orm import Session
-from . import crud, models, schemas, database
+from fastapi import FastAPI
 from .database import init_db
-import logging
-from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
-import bcrypt
 from passlib.context import CryptContext
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from fastapi.staticfiles import StaticFiles
 from .routers import users, auth
-from .database import get_db
+from datetime import datetime
+import pytz
+
 app = FastAPI()
+
+@app.middleware("http")
+async def add_ist_time_header(request, call_next):
+    response = await call_next(request)
+    
+    # Convert UTC time to IST
+    ist = pytz.timezone("Asia/Kolkata")
+    ist_time = datetime.now(ist).strftime("%a, %d %b %Y %H:%M:%S IST")
+    
+    del response.headers["date"]
+        
+    # Add the IST timestamp to response headers
+    response.headers["Date"] = ist_time
+    return response
+
 
 # Allow cross-origin requests from your React app running on port 5173
 app.add_middleware(
@@ -37,16 +48,10 @@ pwd_cxt = CryptContext(schemes=["bcrypt"], deprecated="auto")
 def on_startup():
     init_db()
 
-
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Bookstore API"}
 
 app.include_router(users.router, prefix="/users", tags=["users"])
 app.include_router(auth.router, prefix="/login", tags=["auth"])  # Auth router for login
 
-
-# # Login API
-# @app.post("/login/")
-# def login(data:schemas.LoginRequest, db: Session = Depends(get_db)):
-#     user = db.query(models.User).filter(models.User.name == data.username).first()
-#     if user and pwd_cxt.verify(data.password, user.hashed_password):
-#         return {"message": "Login successful", "user": {"id": user.id, "username": user.name}}
-#     raise HTTPException(status_code=400, detail="Invalid credentials")
