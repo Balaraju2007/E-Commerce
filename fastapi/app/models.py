@@ -50,7 +50,7 @@ class Book(Base):
 
     book_id = Column(Integer, primary_key=True, index=True)
     book_name = Column(String, nullable=False)
-    seller_name = Column(String, nullable=False)
+    seller_Id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
     author_id = Column(Integer, ForeignKey("author.author_id"))
     price = Column(DECIMAL(10, 2), nullable=False)
     quantity = Column(Integer, nullable=False)
