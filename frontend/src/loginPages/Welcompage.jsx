@@ -3,6 +3,7 @@ import { useState } from 'react'
 import "./registration.css";
 import { useNavigate } from 'react-router-dom'
 const Header = () => {
+    const navigate = useNavigate();
     return (
         <header className='header'>
             <div className='bookname'>
@@ -13,8 +14,8 @@ const Header = () => {
             </div>
             <div className='signinup'>
                 <p>Contact us</p>
-                <p style={{ color: 'blue', }}>Sign in</p>
-                <p>Sign up</p>
+                <p style={{ color: 'blue', cursor: 'pointer'}} onClick={()=>{navigate("/signin")}}>Sign in</p>
+                <p onClick={()=>{navigate("/signup")}} style={{cursor: 'pointer'}}>Sign up</p>
             </div>
         </header>
     )

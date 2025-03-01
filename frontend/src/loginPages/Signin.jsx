@@ -6,17 +6,17 @@ import "./signinup.css";
 
 const Registration = () => {
     const [count, setCount] = useState(0)
-    const [user, setUser] = useState(null)
-    const [pass, setPass] = useState(null)
+    const [user, setUser] = useState({  pass: '', email: '' })
     const navigate = useNavigate();
 
-    const handleName = (event) => {
-        setUser(event.target.value)
-    }
-
     const handlePass = (event) => {
-        setPass(event.target.value)
-    }
+        setUser({ ...user, pass: event.target.value });
+    };
+
+    const handleEmail = (event) => {
+        setUser({ ...user, email: event.target.value });
+    };
+
 
     const call = async (event) => {
         event.preventDefault(); // Prevents page reload
@@ -26,15 +26,18 @@ const Registration = () => {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify({ username: user, password: pass })
+                body: JSON.stringify({"email": user['email'], "password" : user["pass"]})
             })
             let res = await response.json()
             console.log(res)
+            if (res.access_token)
+            navigate("/home")
         }
         catch (error) {
             console.log(error)
         }
-        
+
+
     }
     return (
         <div className='sigupContainer'>
@@ -48,11 +51,12 @@ const Registration = () => {
                 <h2 style={{fontSize: '1.6rem'}}>Sign in</h2> <br></br>
                 <form className='form' onSubmit={call}>
                     <div className='form'>
-                        <div className='username'><input type='text' onChange={handleName} required placeholder='---userName or Email---' /> </div>
+                        <div className='username'><input type='text' onChange={handleEmail} required placeholder='--- Email---' /> </div>
                         <div className='passsword'><input type='password' onChange={handlePass} required placeholder='---password---'/> </div>
-                        <p style={{fontSize:'80%',color:'rgba(168, 60, 60, 0.523)', cursor: 'pointer'}}>Forget password?</p>
+                        <p style={{fontSize:'80%',color:'rgba(168, 60, 60, 0.523)', cursor: 'pointer'}}>Forget password?<br/>
+                        </p>
 
-                        <button type='submit' className='button' onClick={()=>{navigate('/home')}}>submit</button>
+                        <button type='submit' className='button' onClick={()=>{call}}>submit</button>
                     </div>
                 </form>
             </div>
