@@ -53,8 +53,20 @@ class BookBase(BaseModel):
 class BookCreate(BookBase):
     pass
 
-class BookResponse(BookBase):
+class BookResponse(BaseModel):
     book_id: int
+    book_name: str
+    seller_name: str
+    seller_id: int   # Add this
+    author_name: str
+    author_id: int   # Add this
+    publisher_name: str
+    publisher_id: int  # Add this
+    genre_name: str
+    genre_id: int    # Add this
+    price: float
+    quantity: int    # Add this
+    picture: str
 
     class Config:
         from_attributes = True

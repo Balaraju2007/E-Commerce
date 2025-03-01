@@ -46,7 +46,7 @@ def get_users(
             full_name=user.full_name,
             email=user.email,
             contact_number=user.contact_number,
-            profile_image = f"{BASE_URL}/uploads/profile_images/{user.profile_image}"
+            profile_image = f"{BASE_URL}/{user.profile_image}"
             ) 
         for user in users
     ]
@@ -75,6 +75,6 @@ def get_users_by_id(id: int, db: Session = Depends(get_db)):
             full_name=user.full_name,
             email=user.email,
             contact_number=user.contact_number,
-            profile_image = f"{BASE_URL}/uploads/profile_images/{user.profile_image}"
+            profile_image = f"{BASE_URL}/{user.profile_image}"
             ) 
     

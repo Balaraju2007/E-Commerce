@@ -10,27 +10,40 @@ router = APIRouter()
 UPLOAD_DIR = "uploads/books"
 BASE_URL = "http://127.0.0.1:8000"
 
-@router.get('/', response_model=list[schemas.BookResponse])
-def get_books(
-    db: Session = Depends(get_db)
-    ):
-    books = db.query(models.Book).all()
+@router.get('/', response_model=list[dict])  # ✅ Remove response_model if using custom dict
+def get_books(db: Session = Depends(get_db)):
+    books = (
+        db.query(
+            models.Book,
+            models.User.full_name.label("seller_name"),
+            models.Author.author_name.label("author_name"),
+            models.Genre.genre_name.label("genre_name"),
+            models.Publisher.publisher_name.label("publisher_name"),
+        )
+        .join(models.User, models.User.user_id == models.Book.seller_id)
+        .join(models.Author, models.Author.author_id == models.Book.author_id)
+        .join(models.Genre, models.Genre.genre_id == models.Book.genre_id)
+        .join(models.Publisher, models.Publisher.publisher_id == models.Book.publisher_id)
+        .all()
+    )
+
     return [
-        schemas.BookResponse(
-            book_id = book.book_id,
-            book_name = book.book_name,
-            seller_id = book.seller_id,
-            author_id = book.author_id,
-            price = book.price,
-            quantity = book.quantity,
-            genre_id = book.genre_id,
-            publisher_id = book.publisher_id,
-            picture = f"{BASE_URL}/uploads/books/{book.picture}"
-            ) 
+        {
+            "book_id": book.Book.book_id,
+            "book_name": book.Book.book_name,
+            "seller_name": book.seller_name,
+            "author_name": book.author_name,
+            "price": book.Book.price,
+            "quantity": book.Book.quantity,
+            "genre_name": book.genre_name,
+            "publisher_name": book.publisher_name,
+            "picture": f"{BASE_URL}/uploads/books/{book.Book.picture}"
+        }
         for book in books
     ]
 
-@router.post('/', response_model=schemas.BookCreate)
+
+@router.post('/')
 async def create_book(
     db: Session = Depends(get_db),
     book_name: str = Form(...),
@@ -64,6 +77,8 @@ async def create_book(
         db.refresh(genre)
 
     seller = db.query(models.User).filter(models.User.full_name == seller_name).first()
+    if not seller:
+        return {'message': 'invalid user adding books'}
     seller_id = seller.user_id
 
     picture_filename = f"{book_name.replace(' ', '_')}.jpg"
@@ -87,17 +102,28 @@ async def create_book(
     db.commit()
     db.refresh(new_book)
 
-    return schemas.BookResponse(
-        book_id=new_book.book_id,
-        book_name=new_book.book_name,
-        seller_id=new_book.seller_id,
-        author_id=new_book.author_id,
-        price=new_book.price,
-        quantity=new_book.quantity,
-        genre_id=new_book.genre_id,
-        publisher_id=new_book.publisher_id,
-        picture=f"{BASE_URL}/uploads/books/{new_book.picture}"
-    )
+    return {
+        "book_id":new_book.book_id,
+        "book_name":new_book.book_name,
+        "seller_name":seller_name,
+        "author_name":author.author_name,
+        "price":new_book.price,
+        "quantity":new_book.quantity,
+        "genre_name":genre.genre_name,
+        "publisher_name":publisher.publisher_name,
+        "picture":f"{BASE_URL}/uploads/books/{new_book.picture}"
+    }
     
     
 
+@router.delete('/{book_id}', response_model=dict)
+def delete_book(book_id:int, db: Session = Depends(get_db)):
+    book = db.query(models.Book).filter(models.Book.book_id == book_id).first()
+
+    if not book:
+        return {'message' : 'no book there in my db with such id'}
+    
+    db.delete(book)
+    db.commit()
+
+    return { 'message' : 'book deleted successfully'}
