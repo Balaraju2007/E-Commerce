@@ -4,9 +4,10 @@ from passlib.context import CryptContext
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from fastapi.staticfiles import StaticFiles
-from .routers import users, auth
+from .routers import users, auth, books
 from datetime import datetime
 import pytz
+
 
 app = FastAPI()
 
@@ -54,4 +55,5 @@ def read_root():
 
 app.include_router(users.router, prefix="/users", tags=["users"])
 app.include_router(auth.router, prefix="/login", tags=["auth"])  # Auth router for login
+app.include_router(books.router, prefix="/books", tags=["books"])  # Auth router for books
 

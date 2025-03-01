@@ -40,6 +40,7 @@ class TokenData(BaseModel):
 
 # Book Schemas
 class BookBase(BaseModel):
+    book_id:int
     book_name: str
     seller_name: str
     author_id: int
@@ -47,13 +48,13 @@ class BookBase(BaseModel):
     quantity: int
     genre_id: int
     publisher_id: int
+    picture: Optional[str] = None
 
 class BookCreate(BookBase):
     pass
 
 class BookResponse(BookBase):
-    book_id: int
-    picture: Optional[str] = None
+    pass
 
     class Config:
         from_attributes = True
