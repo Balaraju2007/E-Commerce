@@ -77,6 +77,8 @@ async def create_book(
         db.refresh(genre)
 
     seller = db.query(models.User).filter(models.User.full_name == seller_name).first()
+    if not seller:
+        return {'message': 'invalid user adding books'}
     seller_id = seller.user_id
 
     picture_filename = f"{book_name.replace(' ', '_')}.jpg"
