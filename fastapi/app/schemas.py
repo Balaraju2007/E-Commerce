@@ -42,7 +42,7 @@ class TokenData(BaseModel):
 class BookBase(BaseModel):
     book_id:int
     book_name: str
-    seller_name: str
+    seller_id: int
     author_id: int
     price: float
     quantity: int
@@ -54,7 +54,7 @@ class BookCreate(BookBase):
     pass
 
 class BookResponse(BookBase):
-    pass
+    book_id: int
 
     class Config:
         from_attributes = True

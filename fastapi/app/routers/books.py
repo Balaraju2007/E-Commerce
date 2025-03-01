@@ -3,9 +3,11 @@ from sqlalchemy.orm import Session
 from .. import schemas, models, crud
 from ..database import get_db
 from ..tokens import get_current_user
+import os
 
 router = APIRouter()
 
+UPLOAD_DIR = "uploads/books"
 BASE_URL = "http://127.0.0.1:8000"
 
 @router.get('/', response_model=list[schemas.BookResponse])
@@ -17,7 +19,7 @@ def get_books(
         schemas.BookResponse(
             book_id = book.book_id,
             book_name = book.book_name,
-            seller_name = book.seller_name,
+            seller_id = book.seller_id,
             author_id = book.author_id,
             price = book.price,
             quantity = book.quantity,
@@ -28,12 +30,74 @@ def get_books(
         for book in books
     ]
 
-# @router.post('/', response_model=schemas.BookCreate)
-# async def create_book(
-#     db: Session = Depends(get_db),
-#     email: str = Form(...),
-#     password: str = Form(...),
-#     full_name: str = Form(...),
-#     contact_number: str = Form(...),
-#     profile_image: UploadFile = File(...)
-# )
+@router.post('/', response_model=schemas.BookCreate)
+async def create_book(
+    db: Session = Depends(get_db),
+    book_name: str = Form(...),
+    seller_name: str = Form(...),
+    quantity: int = Form(...),
+    author_name: str = Form(...),
+    publisher_name: str = Form(...),
+    genre_name: str = Form(...),
+    price: int = Form(...),
+    picture: UploadFile = File(...)
+):
+    author = db.query(models.Author).filter(models.Author.author_name == author_name).first()
+    if not author:
+        author = models.Author(author_name = author_name)
+        db.add(author)
+        db.commit()
+        db.refresh(author)
+    
+    publisher = db.query(models.Publisher).filter(models.Publisher.publisher_name == publisher_name).first()
+    if not publisher:
+        publisher = models.Publisher(publisher_name = publisher_name)
+        db.add(publisher)
+        db.commit()
+        db.refresh(publisher)
+
+    genre = db.query(models.Genre).filter(models.Genre.genre_name == genre_name).first()
+    if not genre:
+        genre = models.Genre(genre_name = genre_name)
+        db.add(genre)
+        db.commit()
+        db.refresh(genre)
+
+    seller = db.query(models.User).filter(models.User.full_name == seller_name).first()
+    seller_id = seller.user_id
+
+    picture_filename = f"{book_name.replace(' ', '_')}.jpg"
+    picture_path = os.path.join(UPLOAD_DIR, picture_filename)
+
+    with open(picture_path, "wb") as buffer:
+        buffer.write(await picture.read())
+
+    # Create the new book entry
+    new_book = models.Book(
+        book_name=book_name,
+        seller_id=seller_id,
+        author_id=author.author_id,
+        publisher_id=publisher.publisher_id,
+        genre_id=genre.genre_id,
+        price=price,
+        quantity=quantity,
+        picture=picture_filename,
+    )
+    db.add(new_book)
+    db.commit()
+    db.refresh(new_book)
+
+    return schemas.BookResponse(
+        book_id=new_book.book_id,
+        book_name=new_book.book_name,
+        seller_id=new_book.seller_id,
+        author_id=new_book.author_id,
+        price=new_book.price,
+        quantity=new_book.quantity,
+        genre_id=new_book.genre_id,
+        publisher_id=new_book.publisher_id,
+        picture=f"{BASE_URL}/uploads/books/{new_book.picture}"
+    )
+    
+    
+

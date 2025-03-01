@@ -10,7 +10,7 @@
 ```
 cd fastapi  
 python -m venv venv   
-venv\Scripts\activate  
+venv\Scripts\activate
 pip install -r requirements.txt  
 uvicorn app.main:app --log-level debug --reload
 
