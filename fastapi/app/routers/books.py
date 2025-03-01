@@ -116,3 +116,14 @@ async def create_book(
     
     
 
+@router.delete('/{book_id}', response_model=dict)
+def delete_book(book_id:int, db: Session = Depends(get_db)):
+    book = db.query(models.Book).filter(models.Book.book_id == book_id).first()
+
+    if not book:
+        return {'message' : 'no book there in my db with such id'}
+    
+    db.delete(book)
+    db.commit()
+
+    return { 'message' : 'book deleted successfully'}
