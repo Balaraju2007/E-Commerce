@@ -8,6 +8,7 @@ import Cart from './serachCartOrder/Cart';
 import Order from './serachCartOrder/Order'
 import Search from './serachCartOrder/Search';
 import Profile from './serachCartOrder/Profile';
+import BookDetails from './singleBookDetails/singleBookDetails';
 function App() {
   return (
 
@@ -21,6 +22,7 @@ function App() {
         <Route path='/order' element={<Order />} />
         <Route path='/search' element={<Search />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/singleBookDetails' element={<BookDetails />} />
       </Routes>
 
     </Router>
