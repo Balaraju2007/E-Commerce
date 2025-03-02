@@ -129,7 +129,7 @@ def delete_book(book_id:int, db: Session = Depends(get_db)):
 
 
 @router.get('/{book_id}', response_model=dict)
-def delete_book(book_id:int, db: Session = Depends(get_db)):
+def get_book_by_id( book_id:int, db: Session = Depends(get_db)):
     book = (
         db.query(
             models.Book,
@@ -170,11 +170,11 @@ async def update_book(
     db: Session = Depends(get_db),
     book_name: str = Form(...),
     seller_name: str = Form(...),
-    quantity: int = Form(...),
+    quantity: str = Form(...),
     author_name: str = Form(...),
     publisher_name: str = Form(...),
     genre_name: str = Form(...),
-    price: int = Form(...),
+    price: float = Form(...),
     picture: UploadFile = File(...)
 ):
     book = db.query(models.Book).filter(models.Book.book_id == book_id).first()
@@ -188,6 +188,7 @@ async def update_book(
         db.add(author)
         db.commit()
         db.refresh(author)
+    author_id = author.author_id
     
     publisher = db.query(models.Publisher).filter(models.Publisher.publisher_name == publisher_name).first()
     if not publisher:
@@ -195,6 +196,7 @@ async def update_book(
         db.add(publisher)
         db.commit()
         db.refresh(publisher)
+    publisher_id = publisher.publisher_id
 
     genre = db.query(models.Genre).filter(models.Genre.genre_name == genre_name).first()
     if not genre:
@@ -202,41 +204,43 @@ async def update_book(
         db.add(genre)
         db.commit()
         db.refresh(genre)
+    genre_id = genre.genre_id
 
     seller = db.query(models.User).filter(models.User.full_name == seller_name).first()
     if not seller:
         return {'message': 'invalid user adding books'}
     seller_id = seller.user_id
+    if picture:
+        picture_filename = f"{book_name.replace(' ', '_')}.jpg"
+        picture_path = os.path.join(UPLOAD_DIR, picture_filename)
 
-    picture_filename = f"{book_name.replace(' ', '_')}.jpg"
-    picture_path = os.path.join(UPLOAD_DIR, picture_filename)
-
-    with open(picture_path, "wb") as buffer:
-        buffer.write(await picture.read())
+        with open(picture_path, "wb") as buffer:
+            buffer.write(await picture.read())
+        
+        book.picture = picture_filename
 
     # Create the new book entry
-    new_book = models.Book(
-        book_name=book_name,
-        seller_id=seller_id,
-        author_id=author.author_id,
-        publisher_id=publisher.publisher_id,
-        genre_id=genre.genre_id,
-        price=price,
-        quantity=quantity,
-        picture=picture_filename,
-    )
-    db.add(new_book)
+    
+    book.book_name=book_name
+    book.seller_id=seller_id
+    book.author_id=author_id
+    book.publisher_id=publisher_id
+    book.genre_id=genre_id
+    book.price=float(price)
+    book.quantity=int(quantity)
+
+    
     db.commit()
-    db.refresh(new_book)
+    db.refresh(book)
 
     return {
-        "book_id":new_book.book_id,
-        "book_name":new_book.book_name,
+        "book_id":book.book_id,
+        "book_name":book.book_name,
         "seller_name":seller_name,
         "author_name":author.author_name,
-        "price":new_book.price,
-        "quantity":new_book.quantity,
+        "price":book.price,
+        "quantity":book.quantity,
         "genre_name":genre.genre_name,
         "publisher_name":publisher.publisher_name,
-        "picture":f"{BASE_URL}/uploads/books/{new_book.picture}"
+        "picture":f"{BASE_URL}/uploads/books/{book.picture}" if book.picture else None
     }
