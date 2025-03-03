@@ -70,11 +70,11 @@ def get_users_by_id(id: int, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    return  schemas.UserResponse(
-            user_id=user.user_id,
-            full_name=user.full_name,
-            email=user.email,
-            contact_number=user.contact_number,
-            profile_image = f"{BASE_URL}/{user.profile_image}"
-            ) 
+    return  {
+            'user_id':user.user_id,
+            'full_name':user.full_name,
+            'email':user.email,
+            'contact_number':user.contact_number,
+            'profile_image' : f"{BASE_URL}/{user.profile_image}"
+            }
     
