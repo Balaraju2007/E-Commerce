@@ -37,7 +37,7 @@ async def create_user(
 @router.get("/", response_model=list[schemas.UserResponse])
 def get_users(
     db: Session = Depends(get_db),
-    user: dict = Depends(get_current_user)
+    # user: dict = Depends(get_current_user)
     ):
     users = db.query(models.User).all()
     return [
