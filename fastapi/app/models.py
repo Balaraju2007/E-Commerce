@@ -94,19 +94,19 @@ class Cart(Base):
     __tablename__ = "cart"
 
     cart_id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.user_id"), unique=True)
+    user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False, unique=True)
 
     user = relationship("User", back_populates="cart")
-    cart_items = relationship("CartItem", back_populates="cart")
-
+    cart_items = relationship("CartItem", back_populates="cart",cascade="all, delete-orphan", passive_deletes=True) 
+    
 # Cart Items Table
 class CartItem(Base):
     __tablename__ = "cart_items"
 
     id = Column(Integer, primary_key=True, index=True)
-    cart_id = Column(Integer, ForeignKey("cart.cart_id"))
-    book_id = Column(Integer, ForeignKey("books.book_id"))
+    cart_id = Column(Integer, ForeignKey("cart.cart_id"), nullable=False)
+    book_id = Column(Integer, ForeignKey("books.book_id"), nullable=False)
     quantity = Column(Integer, nullable=False)
 
-    cart = relationship("Cart", back_populates="cart_items")
+    cart = relationship("Cart", back_populates="cart_items", passive_deletes=True)
     book = relationship("Book", back_populates="cart_items")

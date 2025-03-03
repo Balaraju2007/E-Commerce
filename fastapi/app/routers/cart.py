@@ -5,7 +5,7 @@ from .. import models, schemas, database
 from ..database import get_db
 from .books import get_book_by_id
 from ..routers.users import get_users_by_id
-
+import logging
 
 router = APIRouter()
 
@@ -138,23 +138,23 @@ def update_cart_item(user_id:int, item_id:int, quantity:int, db: Session = Depen
     
     
     
-# @router.delete("/clear/{user_id}")
-# def clear_cart(user_id:int, db: Session = Depends(get_db)):
-#     cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
-#     # cart_details = get_cart_items(user_id, db)
+@router.delete("/clear/{user_id}/")
+async def clear_cart(user_id: int, db: Session = Depends(get_db)):
+    """✅ Deletes the user's cart and all cart items"""
     
-#     if not cart:
-#         return {
-#             "message": "Cart is empty",
-#         }
+    user_details = get_users_by_id(user_id, db)
+    cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
     
-#     cart_items = db.query(models.CartItem).filter(models.CartItem.cart_id == cart.cart_id).all()
-#     for item in cart_items:
-#         db.delete(item)
-#     db.commit()
+    if not cart:
+        return {
+                "message": "Cart is already empty",
+                "user_details": user_details
+               }
     
-
+    db.delete(cart)  # ✅ Automatically deletes all cart items due to cascade delete
+    db.commit()
     
-#     return {
-#         "message": f'Cart cleared successfully for {user_id} user',
-#         }
+    return {
+            "message": f"Cart cleared successfully for user {user_id}",
+            "user_details": user_details
+        }
