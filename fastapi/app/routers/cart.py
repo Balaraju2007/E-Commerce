@@ -41,7 +41,8 @@ def get_cart_items(
                 "book_name": item.book_name,
                 "price": item.price,
                 "quantity": item.CartItem.quantity,
-                "total_price": item.CartItem.quantity * item.price
+                "total_price": item.CartItem.quantity * item.price,
+                'book_detals': get_book_by_id(item.CartItem.book_id, db)
             }
             for item in cart_items
         ]
