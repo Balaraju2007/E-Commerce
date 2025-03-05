@@ -20,6 +20,9 @@ def place_order(
         if not book:
             return {'message' : 'book not found'}
         
+        if book.quantity < quantity:
+            return {'message' : 'book quantity not available'}
+        
         order = models.Order(user_id = user_id, order_date = datetime.utcnow())
         db.add(order)
         db.commit()
@@ -27,6 +30,9 @@ def place_order(
         
         order_item = models.OrderItem(order_id = order.order_id, book_id = book_id , quantity = quantity )
         db.add(order_item)
+        db.commit()
+        
+        book.quantity -= quantity
         db.commit()
         
         return {
@@ -47,8 +53,17 @@ def place_order(
     db.refresh(order)
     
     for cart_item in cart.cart_items:
+        book = db.query(models.Book).filter(models.Book.book_id == cart_item.book_id).first()
+        if not book:
+            continue
+        
+        if book.quantity < cart_item.quantity:
+            raise HTTPException(status_code=400, detail="Book quantity not available")
+        
         order_item = models.OrderItem(order_id = order.order_id, book_id = cart_item.book_id, quantity = cart_item.quantity)
         db.add(order_item)
+        
+        book.quantity -= cart_item.quantity
     
     db.commit()
     
