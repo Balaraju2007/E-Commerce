@@ -4,6 +4,7 @@ import "./home.css";
 import { useNavigate } from 'react-router-dom';
 
 const Header = (prop) => {
+    console.log(prop.profile)
     const navigate = useNavigate()
     const popUp = () => {
         prop.setStatus(true)
@@ -38,7 +39,7 @@ const Header = (prop) => {
                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                         </svg></h2>
                     {/* <div> */}
-                    <h2 className='profile'>      <img onClick={()=>{navigate('/profile')}} className='svg' src="ssnjscnjn" />
+                    <h2 className='profile'> <img onClick={()=>{navigate('/profile')}} className='svg' src={prop.profile} />
                     </h2>
                     {/* </div> */}
                 </div>

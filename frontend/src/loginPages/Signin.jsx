@@ -1,12 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import "./signinup.css";
 
 const Registration = () => {
-    const [count, setCount] = useState(0)
-    const [user, setUser] = useState({  pass: '', email: '' })
+    const [check, setCheck] = useState(false)
+    const [user, setUser] = useState({ pass: '', email: '' })
     const navigate = useNavigate();
 
     const handlePass = (event) => {
@@ -26,17 +26,18 @@ const Registration = () => {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify({"email": user['email'], "password" : user["pass"]})
+                body: JSON.stringify({ "email": user['email'], "password": user["pass"] })
             })
             let res = await response.json()
             console.log(res)
-            if (res.access_token)
-            navigate("/home")
+            if (res.access_token) {
+                navigate("/home", { state: { access_token: res.access_token,id: res.user.id } })
+            }
+            setCheck(true)
         }
         catch (error) {
             console.log(error)
         }
-
 
     }
     return (
@@ -44,19 +45,20 @@ const Registration = () => {
             <div className='loginInformation'>
                 <h1>Sign in to </h1>
                 <h2>Old book Seller</h2> <br></br>
-                <p style={{fontSize:"13px"}}>If you already have an account <br>
-                </br> you can <span style={{color:"blue",cursor: 'pointer'}} onClick={()=>{navigate("/signup")}}>Signup here!</span></p>
+                <p style={{ fontSize: "13px" }}>If you already have an account <br>
+                </br> you can <span style={{ color: "blue", cursor: 'pointer' }} onClick={() => { navigate("/signup") }}>Signup here!</span></p>
             </div>
             <div className='signupFieldss'>
-                <h2 style={{fontSize: '1.6rem'}}>Sign in</h2> <br></br>
+                <h2 style={{ fontSize: '1.6rem' }}>Sign in</h2> <br></br>
                 <form className='form' onSubmit={call}>
                     <div className='form'>
                         <div className='username'><input type='text' onChange={handleEmail} required placeholder='--- Email---' /> </div>
-                        <div className='passsword'><input type='password' onChange={handlePass} required placeholder='---password---'/> </div>
-                        <p style={{fontSize:'80%',color:'rgba(168, 60, 60, 0.523)', cursor: 'pointer'}}>Forget password?<br/>
-                        </p>
+                        <div className='passsword'><input type='password' onChange={handlePass} required placeholder='---password---' /> </div>
+                        <div style={{ fontSize: '80%', color: 'rgba(168, 60, 60, 0.523)', cursor: 'pointer' }}>Forget password?<br></br>
+                            {check && <p style={{ color: 'red' }}> please register or enter correct login information</p>}
+                        </div>
 
-                        <button type='submit' className='button' onClick={()=>{call}}>submit</button>
+                        <button type='submit' className='button' onClick={() => { call }}>submit</button>
                     </div>
                 </form>
             </div>
