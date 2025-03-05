@@ -97,7 +97,7 @@ def ger_order_details(order_id: int, db: Session = Depends(get_db)):
 
 @router.delete("/{order_id}")
 def delete_order(order_id: int, db: Session = Depends(get_db)):
-    """✅ Deletes an order and its items"""
+    """ Deletes an order and its items"""
     
     order = db.query(models.Order).filter(models.Order.order_id == order_id).first()
     if not order:
