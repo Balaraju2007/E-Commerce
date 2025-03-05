@@ -146,6 +146,20 @@ def get_book_by_id( book_id:int, db: Session = Depends(get_db)):
         .first()
     )
     
+    if not book:
+        raise HTTPException(status_code=404, detail="Book not found")
+
+    return {
+        "book_id": book.Book.book_id,
+        "book_name": book.Book.book_name,
+        "seller_name": book.seller_name,
+        "author_name": book.author_name,
+        "price": book.Book.price,
+        "quantity": book.Book.quantity,
+        "genre_name": book.genre_name,
+        "publisher_name": book.publisher_name,
+        "picture": f"{BASE_URL}/uploads/books/{book.Book.picture}" if book.Book.picture else None
+    }
     
 
 

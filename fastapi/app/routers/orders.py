@@ -84,22 +84,27 @@ def ger_order_details(order_id: int, db: Session = Depends(get_db)):
         return {'message': 'order not found'}
     
     order_items = db.query(models.OrderItem).filter(models.OrderItem.order_id == order_id).all()
-    total_price = sum(order_item.quantity * get_book_by_id(order_item.book_id, db)["price"] for order_item in order_items)
+    total_price = 0
+    order_details = []
     
+    for order_item in order_items:
+        book_data = get_book_by_id(order_item.book_id, db)
+        
+        if not book_data:
+            raise HTTPException(status_code=404, detail=f"Book with ID {order_item.book_id} not found")
+        
+        total_price += order_item.quantity * book_data["price"]  # ✅ Ensure book_data exists
+
+        order_details.append({
+            "quantity": order_item.quantity,
+            "book_details": {k: v for k, v in book_data.items() if k not in ["book_id", "quantity"]}
+        })
+        
     return {
         "order_id": order.order_id,
         "order_date": order.order_date,
-        "total_price": total_price,
-        "order_items": [
-            {
-                "quantity": order_item.quantity,
-                "book_details": {
-                    k: v for k, v in get_book_by_id(order_item.book_id, db).items() if k not in ["book_id", "quantity"]
-                }
-                    
-            }
-            for order_item in order_items
-        ]
+        "total_price": total_price,  # ✅ Total Price is added outside book details
+        "order_items": order_details
     }
     
 
