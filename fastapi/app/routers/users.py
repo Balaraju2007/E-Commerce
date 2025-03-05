@@ -1,12 +1,32 @@
+import os
 from fastapi import APIRouter, Depends, HTTPException, Form, UploadFile, File
 from sqlalchemy.orm import Session
 from .. import schemas, models, crud
 from ..database import get_db
 from ..tokens import get_current_user
+import csv
 
 router = APIRouter()
 
+CSV_FILE_PATH = os.path.join(os.path.dirname(__file__), "../csv_files/Users.csv")
+
 BASE_URL = "http://127.0.0.1:8000"
+
+def append_user_to_csv(user: models.User):
+    file_exists = os.path.exists(CSV_FILE_PATH)
+
+    with open(CSV_FILE_PATH, mode="a", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+
+        # ✅ Write header only if the file is newly created
+        if not file_exists:
+            writer.writerow(["user_id", "email", "full_name", "contact_number", "profile_image"])
+
+        # ✅ Append new user details
+        writer.writerow([user.user_id, user.email, user.full_name, user.contact_number, user.profile_image])
+
+    print("✅ User appended to CSV successfully!")
+
 
 @router.post("/", response_model=schemas.UserResponse)
 async def create_user(
@@ -31,7 +51,16 @@ async def create_user(
     # Create new user
     new_user = crud.create_new_user(db, user_data, image_data)  # Pass image to function
 
-    return new_user
+    # Append user to CSV file
+    append_user_to_csv(new_user)
+    
+    return {
+        "user_id": new_user.user_id,
+        "email": new_user.email,
+        "full_name": new_user.full_name,
+        "contact_number": new_user.contact_number,
+        "profile_image": f"{BASE_URL}/uploads/profiles/{new_user.profile_image}"
+    }
 
 
 @router.get("/", response_model=list[schemas.UserResponse])
