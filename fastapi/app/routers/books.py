@@ -102,28 +102,17 @@ async def create_book(
     db.commit()
     db.refresh(new_book)
 
-    return {
-        "book_id":new_book.book_id,
-        "book_name":new_book.book_name,
-        "seller_name":seller_name,
-        "author_name":author.author_name,
-        "price":new_book.price,
-        "quantity":new_book.quantity,
-        "genre_name":genre.genre_name,
-        "publisher_name":publisher.publisher_name,
-        "picture":f"{BASE_URL}/uploads/books/{new_book.picture}"
-    }
+    return schemas.BookResponse(
+        book_id=new_book.book_id,
+        book_name=new_book.book_name,
+        seller_id=new_book.seller_id,
+        author_id=new_book.author_id,
+        price=new_book.price,
+        quantity=new_book.quantity,
+        genre_id=new_book.genre_id,
+        publisher_id=new_book.publisher_id,
+        picture=f"{BASE_URL}/uploads/books/{new_book.picture}"
+    )
     
     
 
-@router.delete('/{book_id}', response_model=dict)
-def delete_book(book_id:int, db: Session = Depends(get_db)):
-    book = db.query(models.Book).filter(models.Book.book_id == book_id).first()
-
-    if not book:
-        return {'message' : 'no book there in my db with such id'}
-    
-    db.delete(book)
-    db.commit()
-
-    return { 'message' : 'book deleted successfully'}
