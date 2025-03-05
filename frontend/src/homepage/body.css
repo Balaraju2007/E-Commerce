@@ -1,0 +1,20 @@
+.allDisplayedBooks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.image {
+    height: 23vh;
+    width: 12vw;
+    margin: auto;
+    border: 1px solid rgb(89, 0, 255);
+}
+.book {
+    border: 1px solid red;
+    height: 38vh;
+    width: 15vw;
+    padding: 10px;
+    border-radius: 10%;
+    /* align-self: center; */
+}
