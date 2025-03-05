@@ -3,7 +3,8 @@ from sqlalchemy.orm import Session
 from datetime import datetime
 from .. import models
 from ..database import get_db
-
+from .books import get_book_by_id
+from .cart import get_cart_items
 
 router = APIRouter()
 
@@ -32,7 +33,8 @@ def place_order(
             'message': 'order placed successfully (Direct order)',
             'order_id': order.order_id,
             'book_id': book_id,
-            'quantity': quantity
+            'quantity': quantity,
+            'book_details': get_book_by_id(book_id, db)
         }
         
     cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
@@ -52,7 +54,8 @@ def place_order(
     
     return {
         "message": "Order placed successfully (Cart Order)",
-        "order_id": order.order_id
+        "order_id": order.order_id,
+        "cart_details": get_cart_items(user_id, db)
     }
     
 @router.get('/{user_id}')
@@ -71,7 +74,7 @@ def get_orders(user_id: int, db: Session = Depends(get_db)):
         for order in orders
     ]
     
-@router.get('details/{order_id}')
+@router.get('/details/{order_id}')
 def ger_order_details(order_id: int, db: Session = Depends(get_db)):
     """ return details for given order id"""
     
@@ -81,16 +84,21 @@ def ger_order_details(order_id: int, db: Session = Depends(get_db)):
         return {'message': 'order not found'}
     
     order_items = db.query(models.OrderItem).filter(models.OrderItem.order_id == order_id).all()
+    total_price = sum(order_item.quantity * get_book_by_id(order_item.book_id, db)["price"] for order_item in order_items)
     
     return {
         "order_id": order.order_id,
         "order_date": order.order_date,
-        "books": [
+        "total_price": total_price,
+        "order_items": [
             {
-                "book_id": item.book_id,
-                "quantity": item.quantity
+                "quantity": order_item.quantity,
+                "book_details": {
+                    k: v for k, v in get_book_by_id(order_item.book_id, db).items() if k not in ["book_id", "quantity"]
+                }
+                    
             }
-            for item in order_items
+            for order_item in order_items
         ]
     }
     
