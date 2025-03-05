@@ -75,18 +75,18 @@ class Order(Base):
     order_date = Column(DateTime, nullable=False)
 
     user = relationship("User", back_populates="orders")
-    order_items = relationship("OrderItem", back_populates="order")
+    order_items = relationship("OrderItem", back_populates="order", cascade="all, delete-orphan")
 
 # Order Items Table
 class OrderItem(Base):
     __tablename__ = "order_items"
 
     id = Column(Integer, primary_key=True, index=True)
-    order_id = Column(Integer, ForeignKey("orders.order_id"))
+    order_id = Column(Integer, ForeignKey("orders.order_id", ondelete="CASCADE"), nullable=False)
     book_id = Column(Integer, ForeignKey("books.book_id"))
     quantity = Column(Integer, nullable=False)
 
-    order = relationship("Order", back_populates="order_items")
+    order = relationship("Order", back_populates="order_items", passive_deletes = True)
     book = relationship("Book", back_populates="order_items")
 
 # Cart Table
