@@ -13,7 +13,7 @@ class User(Base):
     contact_number = Column(String, nullable=True)
     profile_image = Column(String, nullable=True)  # Stores the image file path
 
-
+    books = relationship("Book", back_populates="seller", cascade="all, delete-orphan")
     cart = relationship("Cart", back_populates="user", uselist=False)
     orders = relationship("Order", back_populates="user")
 
@@ -63,7 +63,7 @@ class Book(Base):
     publisher = relationship("Publisher", back_populates="books")
     order_items = relationship("OrderItem", back_populates="book")  # ✅ Fix
     cart_items = relationship("CartItem", back_populates="book")  # ✅ Fix
-
+    seller = relationship("User", back_populates="books", passive_deletes=True)
 
 
 # Orders Table
@@ -74,7 +74,7 @@ class Order(Base):
     user_id = Column(Integer, ForeignKey("users.user_id"))
     order_date = Column(DateTime, nullable=False)
 
-    user = relationship("User", back_populates="orders")
+    user = relationship("User", back_populates="orders", passive_deletes=True)
     order_items = relationship("OrderItem", back_populates="order", cascade="all, delete-orphan")
 
 # Order Items Table
@@ -96,7 +96,7 @@ class Cart(Base):
     cart_id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False, unique=True)
 
-    user = relationship("User", back_populates="cart")
+    user = relationship("User", back_populates="cart", passive_deletes=True)
     cart_items = relationship("CartItem", back_populates="cart",cascade="all, delete-orphan", passive_deletes=True) 
     
 # Cart Items Table

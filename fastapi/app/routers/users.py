@@ -12,21 +12,21 @@ CSV_FILE_PATH = os.path.join(os.path.dirname(__file__), "../csv_files/Users.csv"
 
 BASE_URL = "http://127.0.0.1:8000"
 
-def append_user_to_csv(user: models.User):
-    file_exists = os.path.exists(CSV_FILE_PATH)
+def write_all_users_to_csv(db: Session):
+    """Rewrites the entire CSV file with current DB users (for updates & deletes)."""
+    users = db.query(models.User).all()
 
-    with open(CSV_FILE_PATH, mode="a", newline="", encoding="utf-8") as file:
+    with open(CSV_FILE_PATH, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
 
-        # ✅ Write header only if the file is newly created
-        if not file_exists:
-            writer.writerow(["user_id", "email", "full_name", "contact_number", "profile_image"])
+        # ✅ Write header
+        writer.writerow(["user_id", "email", "full_name", "contact_number", "profile_image"])
 
-        # ✅ Append new user details
-        writer.writerow([user.user_id, user.email, user.full_name, user.contact_number, user.profile_image])
+        # ✅ Write all users
+        for user in users:
+            writer.writerow([user.user_id, user.email, user.full_name, user.contact_number, user.profile_image])
 
-    print("✅ User appended to CSV successfully!")
-
+    print("✅ CSV file updated with all users!")
 
 @router.post("/", response_model=schemas.UserResponse)
 async def create_user(
@@ -52,7 +52,7 @@ async def create_user(
     new_user = crud.create_new_user(db, user_data, image_data)  # Pass image to function
 
     # Append user to CSV file
-    append_user_to_csv(new_user)
+    write_all_users_to_csv(db)
     
     return {
         "user_id": new_user.user_id,
@@ -90,6 +90,10 @@ def delete_user(id: int, db: Session = Depends(get_db)):
 
     db.delete(user)
     db.commit()
+    
+    # Update CSV file
+    write_all_users_to_csv(db)
+    
     return {"message": "User deleted successfully"}
 
 
