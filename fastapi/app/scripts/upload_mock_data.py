@@ -169,7 +169,53 @@ def import_cart_items_from_csv(file_path: str, db: Session):
         db.commit()
         print("✅ Cart Items imported successfully!")
 
+def import_orders_from_csv(file_path: str, db: Session):
+    """Imports orders from CSV into the database"""
+    with open(file_path, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
 
+        for row in reader:
+            user = db.query(models.User).filter(models.User.user_id == int(row["user_id"])).first()
+            if not user:
+                print(f"❌ User ID {row['user_id']} not found. Skipping order.")
+                continue  # Skip invalid orders
+
+            order = models.Order(
+                order_id=int(row["order_id"]),  # Ensure ID consistency
+                user_id=int(row["user_id"]),
+                order_date=row["order_date"]
+            )
+            db.add(order)
+
+        db.commit()
+        print("✅ Orders imported successfully!")
+
+
+def import_order_items_from_csv(file_path: str, db: Session):
+    """Imports order items from CSV into the database"""
+    with open(file_path, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+
+        for row in reader:
+            order = db.query(models.Order).filter(models.Order.order_id == int(row["order_id"])).first()
+            book = db.query(models.Book).filter(models.Book.book_id == int(row["book_id"])).first()
+
+            if not order:
+                print(f"❌ Order ID {row['order_id']} not found. Skipping order item.")
+                continue
+            if not book:
+                print(f"❌ Book ID {row['book_id']} not found. Skipping order item.")
+                continue
+
+            order_item = models.OrderItem(
+                order_id=int(row["order_id"]),
+                book_id=int(row["book_id"]),
+                quantity=int(row["quantity"])
+            )
+            db.add(order_item)
+
+        db.commit()
+        print("✅ Order Items imported successfully!")
 
 
 # ✅ Main Function
@@ -183,5 +229,7 @@ if __name__ == "__main__":
     import_books_from_csv("app/csv_files/Books.csv", db)
     import_cart_from_csv("app/csv_files/Cart.csv",db)
     import_cart_items_from_csv("app/csv_files/CartItems.csv",db)
+    import_orders_from_csv("app/csv_files/Orders.csv",db)
+    import_order_items_from_csv("app/csv_files/OrderItems.csv",db)
 
     db.close()
