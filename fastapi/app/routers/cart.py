@@ -6,8 +6,44 @@ from ..database import get_db
 from .books import get_book_by_id
 from ..routers.users import get_users_by_id
 import logging
+import os, csv
 
 router = APIRouter()
+
+CSV_DIR= os.path.join(os.path.dirname(__file__), "../csv_files")
+CART_CSV = os.path.join(CSV_DIR, "Cart.csv")
+CART_ITEMS_CSV = os.path.join(CSV_DIR, "CartItems.csv")
+
+
+def export_cart_to_csv(db: Session):
+    """Exports Cart table data to a CSV file."""
+    carts = db.query(models.Cart).all()
+
+    with open(CART_CSV, mode="w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(["cart_id", "user_id"])  # ✅ Header
+
+        for cart in carts:
+            writer.writerow([cart.cart_id, cart.user_id])
+    
+    print("✅ Cart data exported to CSV")
+
+
+# ✅ Function to export CartItems table data to CSV
+def export_cart_items_to_csv(db: Session):
+    """Exports CartItems table data to a CSV file."""
+    cart_items = db.query(models.CartItem).all()
+    
+    with open(CART_ITEMS_CSV, mode="w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(["cart_id","book_id", "quantity"])  # ✅ Header
+
+        for item in cart_items:
+            writer.writerow([item.cart_id, item.book_id, item.quantity ])
+    
+    print("✅ Cart Items exported to CSV")
+
+
 
 @router.get("/{user_id}")
 def get_cart_items(
@@ -81,18 +117,15 @@ def add_to_cart(
     book_details = get_book_by_id(book_id, db)
     cart_details = get_cart_items(user_id, db)
     
+    export_cart_to_csv(db)
+    export_cart_items_to_csv(db)
+    
     return {
         "message": "Item added to cart successfully",
         "cart": cart_details,
         "book": book_details
     }
 
-        
-    
-
-
-
-   
 
 @router.delete("/{user_id}/{item_id}")
 def remove_from_cart(user_id:int, item_id:int,db: Session = Depends(get_db)):
@@ -110,6 +143,10 @@ def remove_from_cart(user_id:int, item_id:int,db: Session = Depends(get_db)):
     db.commit()
     
     cart_details = get_cart_items(user_id, db)
+    
+    export_cart_to_csv(db)
+    export_cart_items_to_csv(db)
+    
     return {
         "message": "Item removed from cart successfully",
         "cart": cart_details
@@ -131,6 +168,10 @@ def update_cart_item(user_id:int, item_id:int, quantity:int, db: Session = Depen
     db.refresh(cart_item)
     
     cart_details = get_cart_items(user_id, db)
+    
+    export_cart_to_csv(db)
+    export_cart_items_to_csv(db)
+    
     return {
         "message": "Cart item updated successfully",
         "cart": cart_details
@@ -154,6 +195,9 @@ async def clear_cart(user_id: int, db: Session = Depends(get_db)):
     
     db.delete(cart)  # ✅ Automatically deletes all cart items due to cascade delete
     db.commit()
+    
+    export_cart_to_csv(db)
+    export_cart_items_to_csv(db)
     
     return {
             "message": f"Cart cleared successfully for user {user_id}",
