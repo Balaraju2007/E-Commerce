@@ -121,6 +121,57 @@ def import_books_from_csv(file_path: str,db):
         db.commit()
         print("✅ Books imported successfully!")
 
+
+
+def import_cart_from_csv(file_path: str, db: Session):
+    with open(file_path, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+
+        for row in reader:
+            # ✅ Ensure the user exists before adding a cart
+            user = db.query(models.User).filter(models.User.user_id == int(row["user_id"])).first()
+            if not user:
+                print(f"❌ User ID {row['user_id']} not found. Skipping cart entry.")
+                continue  # Skip invalid cart entries
+
+            cart = models.Cart(
+                cart_id=int(row["cart_id"]),
+                user_id=int(row["user_id"])
+            )
+            db.add(cart)
+
+        db.commit()
+        print("✅ Carts imported successfully!")
+
+def import_cart_items_from_csv(file_path: str, db: Session):
+    with open(file_path, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+
+        for row in reader:
+            # ✅ Ensure the cart and book exist before adding cart items
+            cart = db.query(models.Cart).filter(models.Cart.cart_id == int(row["cart_id"])).first()
+            book = db.query(models.Book).filter(models.Book.book_id == int(row["book_id"])).first()
+
+            if not cart:
+                print(f"❌ Cart ID {row['cart_id']} not found. Skipping cart item.")
+                continue
+            if not book:
+                print(f"❌ Book ID {row['book_id']} not found. Skipping cart item.")
+                continue
+
+            cart_item = models.CartItem(
+                cart_id=int(row["cart_id"]),
+                book_id=int(row["book_id"]),
+                quantity=int(row["quantity"])
+            )
+            db.add(cart_item)
+
+        db.commit()
+        print("✅ Cart Items imported successfully!")
+
+
+
+
 # ✅ Main Function
 if __name__ == "__main__":
     db = SessionLocal()  # Create a new DB session
@@ -130,5 +181,7 @@ if __name__ == "__main__":
     import_genres_from_csv("app/csv_files/Genres.csv", db)
     import_authors_from_csv("app/csv_files/Authors.csv",db)
     import_books_from_csv("app/csv_files/Books.csv", db)
+    import_cart_from_csv("app/csv_files/Cart.csv",db)
+    import_cart_items_from_csv("app/csv_files/CartItems.csv",db)
 
     db.close()
