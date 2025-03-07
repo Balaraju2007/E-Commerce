@@ -19,14 +19,14 @@ def write_all_users_to_csv(db: Session):
     with open(CSV_FILE_PATH, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
 
-        # ✅ Write header
+        # Write header
         writer.writerow(["user_id", "email", "full_name", "contact_number", "profile_image"])
 
-        # ✅ Write all users
+        #  Write all users
         for user in users:
             writer.writerow([user.user_id, user.email, user.full_name, user.contact_number, user.profile_image])
 
-    print("✅ CSV file updated with all users!")
+    print(" CSV file updated with all users!")
 
 @router.post("/", response_model=schemas.UserResponse)
 async def create_user(

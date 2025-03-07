@@ -4,11 +4,61 @@ from .. import schemas, models, crud
 from ..database import get_db
 from ..tokens import get_current_user
 import os
+import csv
 
 router = APIRouter()
 
 UPLOAD_DIR = "uploads/books"
 BASE_URL = "http://127.0.0.1:8000"
+
+
+CSV_DIR= os.path.join(os.path.dirname(__file__), "../csv_files")
+BOOKS_CSV = os.path.join(CSV_DIR, "Books.csv")
+AUTHORS_CSV = os.path.join(CSV_DIR, "Authors.csv")
+GENRES_CSV = os.path.join(CSV_DIR, "Genres.csv")
+PUBLISHERS_CSV = os.path.join(CSV_DIR, "Publishers.csv")
+
+
+def write_all_books_to_csv(db: Session):
+    """Rewrites the entire CSV file with current DB users (for updates & deletes)."""
+    # Update Books CSV
+    books = db.query(models.Book).all()
+    with open(BOOKS_CSV, mode="w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(["book_id", "book_name", "seller_id", "author_id", "price", "quantity", "genre_id", "publisher_id", "picture"])
+        for book in books:
+            writer.writerow([
+                book.book_id, book.book_name, book.seller_id, book.author_id,
+                book.price, book.quantity, book.genre_id, book.publisher_id, book.picture
+            ])
+
+    #  Update Authors CSV
+    authors = db.query(models.Author).all()
+    with open(AUTHORS_CSV, mode="w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(["author_id", "author_name"])
+        for author in authors:
+            writer.writerow([author.author_id, author.author_name])
+
+    # Update Genres CSV
+    genres = db.query(models.Genre).all()
+    with open(GENRES_CSV, mode="w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(["genre_id", "genre_name"])
+        for genre in genres:
+            writer.writerow([genre.genre_id, genre.genre_name])
+
+    # Update Publishers CSV
+    publishers = db.query(models.Publisher).all()
+    with open(PUBLISHERS_CSV, mode="w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(["publisher_id", "publisher_name"])
+        for publisher in publishers:
+            writer.writerow([publisher.publisher_id, publisher.publisher_name])
+
+    print("✅ All CSV files updated!")
+
+
 
 @router.get('/', response_model=list[dict])  # ✅ Remove response_model if using custom dict
 def get_books(db: Session = Depends(get_db)):
@@ -101,6 +151,8 @@ async def create_book(
     db.add(new_book)
     db.commit()
     db.refresh(new_book)
+    
+    write_all_books_to_csv(db)
 
     return {
         "book_id":new_book.book_id,
@@ -125,6 +177,9 @@ def delete_book(book_id:int, db: Session = Depends(get_db)):
     
     db.delete(book)
     db.commit()
+    
+    write_all_books_to_csv(db)
+    
     return { 'message' : 'book deleted successfully'}
 
 
@@ -233,6 +288,8 @@ async def update_book(
     
     db.commit()
     db.refresh(book)
+    
+    write_all_books_to_csv(db)
 
     return {
         "book_id":book.book_id,
