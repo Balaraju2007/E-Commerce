@@ -5,8 +5,40 @@ from .. import models
 from ..database import get_db
 from .books import get_book_by_id
 from .cart import get_cart_items
+import os, csv
+
 
 router = APIRouter()
+
+CSV_DIR= os.path.join(os.path.dirname(__file__), "../csv_files")
+ORDERS_CSV = os.path.join(CSV_DIR, "Orders.csv")
+ORDER_ITEMS_CSV = os.path.join(CSV_DIR, "OrderItems.csv")
+
+def export_orders_to_csv(db: Session):
+    orders = db.query(models.Order).all()
+    
+    with open(ORDERS_CSV, mode='w', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+        writer.writerow(['order_id', 'user_id', 'order_date'])
+        
+        for order in orders:
+            writer.writerow([order.order_id, order.user_id, order.order_date])
+        
+    print('order data exported to csv')
+    
+def export_order_items_to_csv(db: Session):
+    order_items = db.query(models.OrderItem).all()
+    
+    with open(ORDER_ITEMS_CSV, mode='w', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+        writer.writerow(["id", "order_id", "book_id", "quantity"])
+        
+        # ✅ Write each order item
+        for order_item in order_items:
+            writer.writerow([order_item.id, order_item.order_id, order_item.book_id, order_item.quantity])
+            
+    print('order items data exported to csv')
+
 
 @router.post('/')
 def place_order(
@@ -34,6 +66,9 @@ def place_order(
         
         book.quantity -= quantity
         db.commit()
+        
+        export_orders_to_csv(db)
+        export_order_items_to_csv(db)
         
         return {
             'message': 'order placed successfully (Direct order)',
@@ -66,6 +101,9 @@ def place_order(
         book.quantity -= cart_item.quantity
     
     db.commit()
+    
+    export_orders_to_csv(db)
+    export_order_items_to_csv(db)
     
     return {
         "message": "Order placed successfully (Cart Order)",
@@ -133,5 +171,8 @@ def delete_order(order_id: int, db: Session = Depends(get_db)):
 
     db.delete(order)
     db.commit()
+    
+    export_orders_to_csv(db)
+    export_order_items_to_csv(db)
     
     return {"message": f"Order {order_id} deleted successfully"}
