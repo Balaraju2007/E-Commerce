@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from datetime import datetime
 from .. import models
 from ..database import get_db
-from .books import get_book_by_id
+from .books import get_book_by_id, write_all_books_to_csv
 from .cart import get_cart_items
 import os, csv
 
@@ -67,6 +67,8 @@ def place_order(
         book.quantity -= quantity
         db.commit()
         
+        write_all_books_to_csv(db)
+        
         export_orders_to_csv(db)
         export_order_items_to_csv(db)
         
@@ -81,6 +83,11 @@ def place_order(
     cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
     if not cart or not cart.cart_items:
         return {'message' : 'your cart is empty nothing to order'}
+    
+    for cart_item in cart.cart_items:
+        book = db.query(models.Book).filter(models.Book.book_id == cart_item.book_id).first()
+        if not book or book.quantity < cart_item.quantity:
+            return {'message': f'Insufficient stock for "{book.book_name}" (ID: {book.book_id})'}
     
     order = models.Order(user_id = user_id, order_date = datetime.utcnow())
     db.add(order)
@@ -102,6 +109,7 @@ def place_order(
     
     db.commit()
     
+    write_all_books_to_csv(db)
     export_orders_to_csv(db)
     export_order_items_to_csv(db)
     
@@ -169,9 +177,17 @@ def delete_order(order_id: int, db: Session = Depends(get_db)):
     if not order:
         return{'message': "Order not found"}
 
+    order_items = db.query(models.OrderItem).filter(models.OrderItem.order_id == order_id).all()
+    
+    for order_item in order_items:
+        book = db.query(models.Book).filter(models.Book.book_id == order_item.book_id).first()
+        if book:
+            book.quantity += order_item.quantity 
+    
     db.delete(order)
     db.commit()
     
+    write_all_books_to_csv(db)
     export_orders_to_csv(db)
     export_order_items_to_csv(db)
     

@@ -95,6 +95,9 @@ def add_to_cart(
     if not book:
         raise HTTPException(status_code=404, detail="Book not found")
     
+    # if quantity > book.quantity:
+    #     return {'message' : 'quantity is more than stock quantity'}
+    
     cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
     
     if not cart:
@@ -162,6 +165,11 @@ def update_cart_item(user_id:int, item_id:int, quantity:int, db: Session = Depen
     cart_item = db.query(models.CartItem).filter(models.CartItem.id == item_id, models.CartItem.cart_id == cart.cart_id).first()
     if not cart_item:
         raise HTTPException(status_code=404, detail="Item not found")
+    
+    book = db.query(models.Book).filter(models.Book.book_id == cart_item.book_id).first()
+    
+    if book.quantity < quantity:
+        return {'message': 'quantity is more than stock quantity'}
     
     cart_item.quantity = quantity
     db.commit()
