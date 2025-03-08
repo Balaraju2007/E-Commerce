@@ -46,89 +46,114 @@ def place_order(
     user_id: int,
     book_id: int = None,
     quantity: int = None,
-    db : Session = Depends(get_db)
+    db: Session = Depends(get_db)
 ):
+    customer = db.query(models.User).filter(models.User.user_id == user_id).first()
+    if not customer:
+        return {"message": "User not found"}
+
     if book_id:
         book = db.query(models.Book).filter(models.Book.book_id == book_id).first()
         if not book:
-            return {'message' : 'book not found'}
-        
+            return {'message': 'book not found'}
+
         if book.quantity < quantity:
-            return {'message' : 'book quantity not available'}
-        
-        order = models.Order(user_id = user_id, order_date = datetime.utcnow())
+            return {'message': 'book quantity not available'}
+
+        order = models.Order(user_id=user_id, order_date=datetime.utcnow())
         db.add(order)
         db.commit()
         db.refresh(order)
-        
-        order_item = models.OrderItem(order_id = order.order_id, book_id = book_id , quantity = quantity )
+
+        order_item = models.OrderItem(order_id=order.order_id, book_id=book_id, quantity=quantity)
         db.add(order_item)
         db.commit()
-        
+
         book.quantity -= quantity
         db.commit()
-        
+
         write_all_books_to_csv(db)
-        
         export_orders_to_csv(db)
         export_order_items_to_csv(db)
-        
+
+        # ✅ Get seller details
         seller = db.query(models.User).filter(models.User.user_id == book.seller_id).first()
         if seller:
-            message = f" Order Received: {quantity} x {book.book_name} was ordered."
+            message = (
+                f" New Order Received!\n"
+                f" Customer: {customer.full_name} ({customer.email},  {customer.ph_no})\n"
+                f" Order ID: {order.order_id}\n"
+                f" Book: {book.book_name} x {quantity}\n"
+                f" Price: {book.price} per unit\n"
+                f" Total Price: {quantity * book.price}\n"
+                f" Order Date: {order.order_date}"
+            )
             create_notification(db, seller.user_id, message)
-            
+
         return {
-            'message': 'order placed successfully (Direct order)',
+            'message': 'Order placed successfully (Direct order)',
             'order_id': order.order_id,
             'book_id': book_id,
             'quantity': quantity,
             'book_details': get_book_by_id(book_id, db)
         }
-        
+
+    # ✅ Order from cart
     cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
     if not cart or not cart.cart_items:
-        return {'message' : 'your cart is empty nothing to order'}
-    
-    for cart_item in cart.cart_items:
-        book = db.query(models.Book).filter(models.Book.book_id == cart_item.book_id).first()
-        if not book or book.quantity < cart_item.quantity:
-            return {'message': f'Insufficient stock for "{book.book_name}" (ID: {book.book_id})'}
-    
-    order = models.Order(user_id = user_id, order_date = datetime.utcnow())
+        return {'message': 'your cart is empty, nothing to order'}
+
+    order = models.Order(user_id=user_id, order_date=datetime.utcnow())
     db.add(order)
     db.commit()
     db.refresh(order)
-    
+
+    total_price = 0
+    order_details = []
+
     for cart_item in cart.cart_items:
         book = db.query(models.Book).filter(models.Book.book_id == cart_item.book_id).first()
         if not book:
             continue
-        
+
         if book.quantity < cart_item.quantity:
-            raise HTTPException(status_code=400, detail="Book quantity not available")
-        
-        order_item = models.OrderItem(order_id = order.order_id, book_id = cart_item.book_id, quantity = cart_item.quantity)
+            return {'message': f'Insufficient stock for "{book.book_name}" (ID: {book.book_id})'}
+
+        order_item = models.OrderItem(order_id=order.order_id, book_id=cart_item.book_id, quantity=cart_item.quantity)
         db.add(order_item)
-        
+
         book.quantity -= cart_item.quantity
-        
-        seller = db.query(models.User).filter(models.User.user_id == book.seller_id).first()
-        if seller:
-            message = f" Order Received: {cart_item.quantity} x {book.book_name} ordered from your store!"
-            create_notification(db, seller.user_id, message)
-    
+        total_price += cart_item.quantity * book.price
+        order_details.append(f"{book.book_name} x {cart_item.quantity} - ₹{book.price} per unit")
+
     db.commit()
-    
+
     write_all_books_to_csv(db)
     export_orders_to_csv(db)
     export_order_items_to_csv(db)
-    
+
+    # ✅ Notify sellers about cart order
+    for cart_item in cart.cart_items:
+        book = db.query(models.Book).filter(models.Book.book_id == cart_item.book_id).first()
+        if book:
+            seller = db.query(models.User).filter(models.User.user_id == book.seller_id).first()
+            if seller:
+                message = (
+                    f" New Order Received!\n"
+                    f" Customer: {customer.full_name} ({customer.email}, {customer.ph_no})\n"
+                    f" Order ID: {order.order_id}\n"
+                    f" Items Ordered:\n" + "\n".join(order_details) + "\n"
+                    f" Total Price: ₹{total_price}\n"
+                    f" Order Date: {order.order_date}"
+                )
+                create_notification(db, seller.user_id, message)
+
     return {
         "message": "Order placed successfully (Cart Order)",
         "order_id": order.order_id,
         "cart_details": get_cart_items(user_id, db)
     }
+
     
 @router.get('/{user_id}')
 def get_orders(user_id: int, db: Session = Depends(get_db)):
@@ -197,7 +222,12 @@ def delete_order(order_id: int, db: Session = Depends(get_db)):
             
             seller = db.query(models.User).filter(models.User.user_id == book.seller_id).first()
             if seller:
-                message = f" order cancled : {order_item.quantity} x {book.book_name} was cancelled"
+                message = (
+                    f" Order Canceled!\n"
+                    f" Order ID: {order.order_id}\n"
+                    f" Book: {book.book_name} x {order_item.quantity}\n"
+                    f" Order Date: {order.order_date}"
+                )
                 create_notification(db, seller.user_id, message)
     
     db.delete(order)
