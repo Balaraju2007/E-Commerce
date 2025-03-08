@@ -9,24 +9,26 @@ import Order from './serachCartOrder/Order'
 import Search from './serachCartOrder/Search';
 import Profile from './serachCartOrder/Profile';
 import BookDetails from './singleBookDetails/singleBookDetails';
+import { AppProvider } from './homepage/AppContext';
 function App() {
   return (
+    <AppProvider>
+      <Router>
+      {/* <Header />  */}
+        <Routes>
+          <Route path='/' element={<Welcomapage />} />
+          <Route path='/signup' element={<Registration />} />
+          <Route path='/signin' element={<Signin />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='/cart' element={<Cart />} />
+          <Route path='/order' element={<Order />} />
+          <Route path='/search' element={<Search />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/singleBookDetails/:id' element={<BookDetails />} />
+        </Routes>
 
-    <Router>
-      <Routes>
-        <Route path='/' element={<Welcomapage />} />
-        <Route path='/signup' element={<Registration />} />
-        <Route path='/signin' element={<Signin />} />
-        <Route path='/home' element={<Home />} />
-        <Route path='/cart' element={<Cart />} />
-        <Route path='/order' element={<Order />} />
-        <Route path='/search' element={<Search />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/singleBookDetails' element={<BookDetails />} />
-      </Routes>
-
-    </Router>
-
+      </Router>
+    </AppProvider>
 
   )
 }

@@ -1,20 +1,17 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import Header from './Header'
-import Addbook from './Addbook'
-import "./home.css"
-import Body from './Body'
-
-
+import React, { useEffect } from 'react';
+import { useAppContext } from './AppContext'; // Custom hook to access context
+import { useLocation } from 'react-router-dom';
+import Header from './Header';
+import Addbook from './Addbook';
+import Body from './Body';
+import './home.css';
 
 const Home = () => {
-  const aq = useLocation();
-  const [userData, setUserData] = useState({})
-  const c = aq.state
-  console.log(c)
+  const location = useLocation();
+  const { userData, setUserData } = useAppContext(); // Access userData from context and setter
+  const c = location.state;  // Access state passed from the previous page
+
   useEffect(() => {
-    // Define the async function inside useEffect
     const fetchUserData = async () => {
       try {
         const response = await fetch(`http://127.0.0.1:8000/users/${c.id}`, {
@@ -24,32 +21,27 @@ const Home = () => {
           },
         });
 
-        // Handle the response
         const res = await response.json();
-        console.log(res);
-
-        setUserData(res); // Update state with fetched data
-        console.log("hiii");
+        setUserData(res); // Set the userData globally using context
       } catch (error) {
         console.log(error);
-      } finally {
-        // You can add cleanup or other final steps here if needed
       }
     };
 
-    // Call the async function
-    fetchUserData();
-  }, [c.id]);
-  const [status, setStatus] = useState(false)
+    if (c?.id) {
+      fetchUserData();
+    }
+  }, [c.id, setUserData]);  // Re-run when `c.id` changes
+
   return (
     <div className='homeContainer'>
-      <Header setStatus={setStatus} profile={userData.profile_image} /> <br></br>
-      <div className='body'>{status && <Addbook />}
-        <Body id={userData.user_id} />
-
+      <Header /> {/* Header can now use userData from context */}
+      <br />
+      <div className='body'>
+        {userData && <Body id={userData.user_id} />}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
