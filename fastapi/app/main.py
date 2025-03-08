@@ -4,7 +4,7 @@ from passlib.context import CryptContext
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from fastapi.staticfiles import StaticFiles
-from .routers import users, auth, books, cart, orders
+from .routers import users, auth, books, cart, orders, notifications
 from datetime import datetime
 import pytz
 
@@ -58,3 +58,5 @@ app.include_router(auth.router, prefix="/login", tags=["auth"])  # Auth router f
 app.include_router(books.router, prefix="/books", tags=["books"])  # Auth router for books
 app.include_router(cart.router, prefix="/cart", tags=["cart"])  # Auth router for cart
 app.include_router(orders.router, prefix = '/orders', tags = ['orders'])
+app.include_router(notifications.router, prefix = '/notification', tags = ['notifications'])
+

@@ -11,13 +11,13 @@
 cd fastapi  
 python -m venv venv   
 venv\Scripts\activate
-pip install -r requirements.txt  
-uvicorn app.main:app --log-level debug --reload
+pip install -r requirements.txt 
+python run.py
 
 ```
 
 
-** alembic added to track the migrations on db **
+**alembic added to track the migrations on db**
 ```
 alembic init alembic (only once at starting)
 

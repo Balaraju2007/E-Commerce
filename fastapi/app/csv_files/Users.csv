@@ -1,0 +1,7 @@
+user_id,email,full_name,contact_number,profile_image,password
+3,avinash@gmail.com,Avinash,8765432109,avinash.jpg,asdf
+4,arunkumar@gmail.com,Arun Kumar,7654321098,arunkumar.jpg,asdf
+5,gnaneswar@gmail.com,Gnaneswar Rao,6543210987,gnaneswar.jpg,asdf
+6,kuladeep@gmail.com,kuladeep,9876324554,uploads/profile_images/kuladeep.jpg,asdf
+1,hemanth@gmail.com,hemanth,9876543233,uploads/profile_images/hemanth.jpg,asdf
+2,balaraju@gmail.com,balaraju,9876545674,uploads/profile_images/balaraju.jpg,asdf

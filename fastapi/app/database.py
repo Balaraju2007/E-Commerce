@@ -1,9 +1,14 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Get `app/` directory path
+DB_PATH = os.path.join(BASE_DIR, "../test.db")  # Move up one level to `fastapi/`
+DATABASE_URL = f"sqlite:///{DB_PATH}"  # Absolute path to avoid incorrect creation
 
-DATABASE_URL = "sqlite:///./test.db"  # SQLite database file (local file-based)
+
+# DATABASE_URL = "sqlite:///./test.db"  # SQLite database file (local file-based)
 
 # Create an engine that stores data in the SQLite file.
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
