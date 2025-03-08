@@ -11,7 +11,7 @@
 cd fastapi  
 python -m venv venv   
 venv\Scripts\activate
-pip install -r requirements.txt  
+pip install -r requirements.txt 
 rm -r test.db
 uvicorn app.main:app --log-level debug --reload
 python app/scripts/upload_mock_data.py
@@ -19,7 +19,7 @@ python app/scripts/upload_mock_data.py
 ```
 
 
-** alembic added to track the migrations on db **
+**alembic added to track the migrations on db**
 ```
 alembic init alembic (only once at starting)
 
