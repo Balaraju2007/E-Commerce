@@ -49,9 +49,9 @@ const Cart = () => {
           {cartBooks.cart_items.map((item) => (
             <div key={item.book_id} className='book'>
               <p>Book Name: {item.book_name}</p>
-              <img src={item.picture} className='image' alt={item.book_name} />
-              <p><span>by</span> {item.author_name}</p>
-              <p>Rs: {item.price}</p>
+              <img src={item.book_detals.picture} className='image' alt={item.book_name} />
+              <p><span>by</span> {item.book_detals.author_name}</p>
+              <p>Rs: {item.quantity.price}</p>
             </div>
           ))}
         </div>
