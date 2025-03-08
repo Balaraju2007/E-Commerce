@@ -52,7 +52,7 @@ if __name__ == "__main__":
     uvicorn_process.wait()
 
     # ✅ Step 6: Load Mock Data
-    run_command('python3 app/scripts/upload_mock_data.py')
+    run_command('python app/scripts/upload_mock_data.py')
 
     # ✅ Step 7: Restart Uvicorn for actual API serving
     print("\n🚀 Restarting Uvicorn for production...")
