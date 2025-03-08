@@ -3,6 +3,7 @@ import sys
 import csv
 import bcrypt
 from sqlalchemy.orm import Session
+from datetime import datetime
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))  # ✅ Fix Import Path
 
@@ -217,6 +218,37 @@ def import_order_items_from_csv(file_path: str, db: Session):
         db.commit()
         print("✅ Order Items imported successfully!")
 
+def import_notifications_from_csv(file_path: str, db: Session):
+    """Imports notifications from a CSV file into the database."""
+    
+    with open(file_path, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+
+        for row in reader:
+            # ✅ Convert string values to the appropriate type
+            user_id = int(row["user_id"])
+            message = row["message"]
+            is_read = row["is_read"].strip().lower() == "true"  # ✅ Convert "true"/"false" to boolean
+            created_at = datetime.strptime(row["created_at"], "%Y-%m-%d %H:%M:%S.%f")
+
+            # ✅ Ensure the user exists before adding a notification
+            user = db.query(models.User).filter(models.User.user_id == user_id).first()
+            if not user:
+                print(f"❌ User ID {user_id} not found. Skipping notification.")
+                continue
+
+            notification = models.Notifications(
+                user_id=user_id,
+                message=message,
+                is_read=is_read,
+                created_at=created_at
+            )
+            db.add(notification)
+
+        db.commit()
+        print("✅ Notifications imported successfully!")
+
+
 
 # ✅ Main Function
 if __name__ == "__main__":
@@ -231,5 +263,6 @@ if __name__ == "__main__":
     import_cart_items_from_csv("app/csv_files/CartItems.csv",db)
     import_orders_from_csv("app/csv_files/Orders.csv",db)
     import_order_items_from_csv("app/csv_files/OrderItems.csv",db)
-
+    import_notifications_from_csv("app/csv_files/Notifications.csv",db)
+    
     db.close()

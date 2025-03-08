@@ -10,15 +10,15 @@ router = APIRouter()
 CSV_DIR= os.path.join(os.path.dirname(__file__), "../csv_files")
 NOTIFICATIONS_CSV = os.path.join(CSV_DIR, "Notifications.csv")
 
-def export_notifications_to_csv(db: Session):
+def export_notifications_to_csv(db: Session, val = False):
     notifications = db.query(models.Notifications).all()
     
     with open(NOTIFICATIONS_CSV, 'w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
-        writer.writerow(['user_id', 'message', 'created_at'])
+        writer.writerow(['user_id', 'message', 'created_at', 'is_read'])
         
         for n in notifications:
-            writer.writerow([n.user_id, n.message, n.created_at])
+            writer.writerow([n.user_id, n.message, n.created_at, val])
             
     print('notification.csv updated')
     
@@ -58,7 +58,7 @@ def mark_notification_as_read(notification_id:int, db:Session = Depends(get_db))
     notification.is_read = True
     db.commit()
     
-    export_notifications_to_csv(db)
+    export_notifications_to_csv(db, True)
     
     return {'message': 'notification marked as read'}
 

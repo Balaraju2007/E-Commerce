@@ -1,26 +1,12 @@
-user_id,message,created_at
-5, Order Received: 1 x java was ordered.,2025-03-08 05:51:19.597805
-5, Order Received: 1 x java was ordered.,2025-03-08 06:05:22.778081
-5, Order Received: 1 x java was ordered.,2025-03-08 06:05:52.462276
-5, Order Received: 1 x java was ordered.,2025-03-08 06:06:21.227588
-5, Order Received: 1 x java was ordered.,2025-03-08 07:27:15.372246
-5, order cancled : 1 x java was cancelled,2025-03-08 07:29:42.159035
-5," New Order Received!
- Customer: kuladeep (kuladeep@gmail.com)
- Order ID: 1
- Book: java x 1
- Price: 175.00 per unit
- Total Price: 175.00
- Order Date: 2025-03-08 11:36:00.524293",2025-03-08 11:36:00.542522
-5, order cancled : 1 x java was cancelled,2025-03-08 11:37:47.260639
+user_id,message,created_at,is_read
 6," New Order Received!
- Customer: kuladeep (kuladeep@gmail.com)
+ Customer: kuladeep (kuladeep@gmail.com,  9876324554)
  Order ID: 1
  Book: python x 1
  Price: 155.00 per unit
  Total Price: 155.00
- Order Date: 2025-03-08 11:43:43.346112",2025-03-08 11:43:43.362939
-6,"🚨 Order Canceled!
+ Order Date: 2025-03-08 12:06:50.703335",2025-03-08 12:06:50.720320,False
+6," Order Canceled!
  Order ID: 1
  Book: python x 1
- Order Date: 2025-03-08 11:43:43.346112",2025-03-08 11:44:11.529792
+ Order Date: 2025-03-08 12:06:50.703335",2025-03-08 12:07:05.258401,False

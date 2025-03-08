@@ -81,7 +81,7 @@ def place_order(
         if seller:
             message = (
                 f" New Order Received!\n"
-                f" Customer: {customer.full_name} ({customer.email},  {customer.ph_no})\n"
+                f" Customer: {customer.full_name} ({customer.email},  {customer.contact_number})\n"
                 f" Order ID: {order.order_id}\n"
                 f" Book: {book.book_name} x {quantity}\n"
                 f" Price: {book.price} per unit\n"
@@ -140,7 +140,7 @@ def place_order(
             if seller:
                 message = (
                     f" New Order Received!\n"
-                    f" Customer: {customer.full_name} ({customer.email}, {customer.ph_no})\n"
+                    f" Customer: {customer.full_name} ({customer.email}, {customer.contact_number})\n"
                     f" Order ID: {order.order_id}\n"
                     f" Items Ordered:\n" + "\n".join(order_details) + "\n"
                     f" Total Price: ₹{total_price}\n"
