@@ -6,6 +6,7 @@ from ..database import get_db
 from .books import get_book_by_id, write_all_books_to_csv
 from .cart import get_cart_items
 import os, csv
+from .notifications import create_notification
 
 
 router = APIRouter()
@@ -72,6 +73,12 @@ def place_order(
         export_orders_to_csv(db)
         export_order_items_to_csv(db)
         
+        seller = db.query(models.User).filter(models.User.user_id == book.seller_id).first()
+        if seller:
+            print('entered')
+            message = f" Order Received: {quantity} x {book.book_name} was ordered."
+            create_notification(db, seller.user_id, message)
+            
         return {
             'message': 'order placed successfully (Direct order)',
             'order_id': order.order_id,

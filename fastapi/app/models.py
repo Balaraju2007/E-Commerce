@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Boolean
 from .database import Base
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey, DECIMAL, DateTime
@@ -16,6 +16,7 @@ class User(Base):
     books = relationship("Book", back_populates="seller", cascade="all, delete-orphan")
     cart = relationship("Cart", back_populates="user", uselist=False)
     orders = relationship("Order", back_populates="user")
+    notifications = relationship("Notifications", back_populates="user", cascade="all, delete-orphan")  
 
 # Genre Table
 class Genre(Base):
@@ -110,3 +111,18 @@ class CartItem(Base):
 
     cart = relationship("Cart", back_populates="cart_items", passive_deletes=True)
     book = relationship("Book", back_populates="cart_items")
+    
+    
+    
+# notifications table
+class Notifications(Base):
+    __tablename__ = 'notifications'
+    
+    id = Column(Integer, primary_key = True, index = True)
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable = False)
+    message = Column(String, nullable = False)
+    is_read = Column(Boolean, default= False )
+    created_at = Column(DateTime, nullable = False)
+    
+    user = relationship('User', back_populates='notifications')
+    
