@@ -75,7 +75,6 @@ def place_order(
         
         seller = db.query(models.User).filter(models.User.user_id == book.seller_id).first()
         if seller:
-            print('entered')
             message = f" Order Received: {quantity} x {book.book_name} was ordered."
             create_notification(db, seller.user_id, message)
             
@@ -113,6 +112,11 @@ def place_order(
         db.add(order_item)
         
         book.quantity -= cart_item.quantity
+        
+        seller = db.query(models.User).filter(models.User.user_id == book.seller_id).first()
+        if seller:
+            message = f" Order Received: {cart_item.quantity} x {book.book_name} ordered from your store!"
+            create_notification(db, seller.user_id, message)
     
     db.commit()
     
@@ -190,6 +194,11 @@ def delete_order(order_id: int, db: Session = Depends(get_db)):
         book = db.query(models.Book).filter(models.Book.book_id == order_item.book_id).first()
         if book:
             book.quantity += order_item.quantity 
+            
+            seller = db.query(models.User).filter(models.User.user_id == book.seller_id).first()
+            if seller:
+                message = f" order cancled : {order_item.quantity} x {book.book_name} was cancelled"
+                create_notification(db, seller.user_id, message)
     
     db.delete(order)
     db.commit()
