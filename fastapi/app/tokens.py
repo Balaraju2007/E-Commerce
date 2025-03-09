@@ -33,6 +33,7 @@ def decode_jwt_token(token: str):
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
+
 def get_current_user(credentials: HTTPAuthorizationCredentials = Security(security)):
     """Extract user info from the JWT token"""
     token = credentials.credentials
