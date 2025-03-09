@@ -10,6 +10,7 @@ import Search from './serachCartOrder/Search';
 import Profile from './serachCartOrder/Profile';
 import BookDetails from './singleBookDetails/singleBookDetails';
 import { AppProvider } from './homepage/AppContext';
+import Addbook from './homepage/Addbook'
 function App() {
   return (
     <AppProvider>
@@ -22,6 +23,7 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/order' element={<Order />} />
+          <Route path='/addbook' element={<Addbook />} />
           <Route path='/search' element={<Search />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/singleBookDetails/:id' element={<BookDetails />} />

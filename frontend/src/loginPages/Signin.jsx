@@ -1,12 +1,10 @@
-import React from 'react'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./signinup.css";
 
 const Registration = () => {
-    const [check, setCheck] = useState(false)
-    const [user, setUser] = useState({ pass: '', email: '' })
+    const [check, setCheck] = useState(false);
+    const [user, setUser] = useState({ pass: '', email: '' });
     const navigate = useNavigate();
 
     const handlePass = (event) => {
@@ -17,7 +15,6 @@ const Registration = () => {
         setUser({ ...user, email: event.target.value });
     };
 
-
     const call = async (event) => {
         event.preventDefault(); // Prevents page reload
         try {
@@ -27,34 +24,41 @@ const Registration = () => {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify({ "email": user['email'], "password": user["pass"] })
-            })
-            let res = await response.json()
-            console.log(res)
-            if (res.access_token) {
-                navigate("/home", { state: { access_token: res.access_token,id: res.user.id } })
-            }
-            setCheck(true)
-        }
-        catch (error) {
-            console.log(error)
-        }
+            });
 
+            let res = await response.json();
+            console.log(res);
+
+            if (res.access_token) {
+                // Store the access_token and user id in localStorage
+                localStorage.setItem('access_token', res.access_token);
+                localStorage.setItem('user_id', res.user.id);
+
+                // Redirect to home page with the data in state
+                navigate("/home", { state: { access_token: res.access_token, id: res.user.id } });
+            }
+            setCheck(true);
+        } catch (error) {
+            console.log(error);
+        }
     }
+
     return (
         <div className='sigupContainer'>
             <div className='loginInformation'>
                 <h1>Sign in to </h1>
-                <h2>Old book Seller</h2> <br></br>
-                <p style={{ fontSize: "13px" }}>If you already have an account <br>
-                </br> you can <span style={{ color: "blue", cursor: 'pointer' }} onClick={() => { navigate("/signup") }}>Signup here!</span></p>
+                <h2>Old book Seller</h2> <br />
+                <p style={{ fontSize: "13px" }}>If you already have an account <br />
+                    you can <span style={{ color: "blue", cursor: 'pointer' }} onClick={() => { navigate("/signup") }}>Signup here!</span>
+                </p>
             </div>
             <div className='signupFieldss'>
-                <h2 style={{ fontSize: '1.6rem' }}>Sign in</h2> <br></br>
+                <h2 style={{ fontSize: '1.6rem' }}>Sign in</h2> <br />
                 <form className='form' onSubmit={call}>
                     <div className='form'>
                         <div className='username'><input type='text' onChange={handleEmail} required placeholder='--- Email---' /> </div>
                         <div className='passsword'><input type='password' onChange={handlePass} required placeholder='---password---' /> </div>
-                        <div style={{ fontSize: '80%', color: 'rgba(168, 60, 60, 0.523)', cursor: 'pointer' }}>Forget password?<br></br>
+                        <div style={{ fontSize: '80%', color: 'rgba(168, 60, 60, 0.523)', cursor: 'pointer' }}>Forget password?<br />
                             {check && <p style={{ color: 'red' }}> please register or enter correct login information</p>}
                         </div>
 
@@ -63,7 +67,7 @@ const Registration = () => {
                 </form>
             </div>
         </div>
-    )
+    );
 }
 
-export default Registration
+export default Registration;
