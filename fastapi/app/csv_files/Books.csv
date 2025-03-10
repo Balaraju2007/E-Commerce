@@ -12,3 +12,4 @@ book_id,book_name,seller_id,author_id,price,quantity,genre_id,publisher_id,pictu
 11,hari,8,1,0.00,0,1,1,hari.jpg
 12,string,8,1,0.00,0,1,1,string.jpg
 13,string,8,1,0.00,0,1,1,string.jpg
+14,os,5,12,199.00,2,4,4,os.jpg
