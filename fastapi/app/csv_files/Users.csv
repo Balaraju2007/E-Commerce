@@ -1,5 +1,4 @@
 user_id,email,full_name,contact_number,profile_image,password
-1,bb@gmail.com,bb,11,uploads/profile_images/bb.jpg,asdf
 2,avinash@gmail.com,Avinash,8765432109,avinash.jpg,asdf
 3,arunkumar@gmail.com,Arun Kumar,7654321098,arunkumar.jpg,asdf
 4,gnaneswar@gmail.com,Gnaneswar Rao,6543210987,gnaneswar.jpg,asdf

@@ -1,61 +1,52 @@
 import React, { useEffect, useState } from 'react'; 
-import { useAppContext } from '../homepage/AppContext';  // Import the custom hook
+import { useAppContext } from '../homepage/AppContext';  
 import Header from '../homepage/Header';
 import "../homepage/home.css";
 
 const Order = () => {
-  const { userData } = useAppContext();  // Use context to access global userData
-  const [cartBooks, setCartBooks] = useState([]);
-  const [status, setStatus] = useState(false);
+  const { userData } = useAppContext();
+  const [orders, setOrders] = useState([]); // ✅ Store orders properly
+  const [status, setStatus] = useState(false); // ✅ Set to true after fetching data
 
   useEffect(() => {
     if (userData && userData.user_id) {
-      const fetchCartData = async () => {
+      const fetchOrders = async () => {
         try {
-          const response = await fetch(`http://127.0.0.1:8000/order/${userData.user_id}`, {
-            method: 'GET',
-            headers: {
-              'Content-type': 'application/json',
-            },
-          });
-
-          const res = await response.json();
-          setCartBooks(res); // Set the cartBooks based on the API response
+          const response = await fetch(`http://127.0.0.1:8000/orders/${userData.user_id}`);
+  
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+  
+          const data = await response.json(); // ✅ Parse response
+          console.log("📦 Fetched Orders:", data); // ✅ Debugging
+          setOrders(data);  // ✅ Update correct state
+          setStatus(true);  // ✅ Ensure status is updated
         } catch (error) {
-          console.log("Error fetching cart data:", error);
+          console.error("❌ Error fetching orders:", error);
         }
       };
-
-      fetchCartData();
+  
+      fetchOrders();
     }
-  }, [userData]);  // Run the effect only when userData is available
-
-  // Log cartBooks whenever it changes
-  useEffect(() => {
-    console.log("Cart Books:", cartBooks);
-    setStatus(true);
-  }, [cartBooks]); // This will log cartBooks after it's updated
+  }, [userData]); // Runs when userData changes
 
   return (
     <div className='homeContainer'>
       <Header />
-      {/* {status && <Addbook />} */}
-      <p>{status ? `You have ${cartBooks.cart_items?.length} books in your cartfnenfn` : "No booksbbbs in cart"}</p>
+      <h2>📦 My Orders</h2>
       
-      {/* Display cart content */}
-      {cartBooks.cart_items?.length > 0 ? (
+      {status && orders.length > 0 ? (
         <div className='allDisplayedBooks'>
-          {cartBooks.cart_items.map((item) => (
-            <div key={item.book_id} className='book'>
-              <p>Book Name: {item.book_name}</p>
-              <img src={item.book_detals.picture} className='image' alt={item.book_name} />
-              <p><span>by</span> {item.book_detals.author_name}</p>
-              <p>Rs: {item.quantity.price}</p>
+          {orders.map((order) => (
+            <div key={order.order_id} className='book'>
+              <p><strong>Order ID:</strong> {order.order_id}</p>
+              <p><strong>Order Date:</strong> {new Date(order.order_date).toLocaleString()}</p>
             </div>
           ))}
         </div>
       ) : (
-        <p>No items in the cafbfgbjgfjgjrt</p>
+        <p>🚫 No orders found.</p>
       )}
     </div>
   );
