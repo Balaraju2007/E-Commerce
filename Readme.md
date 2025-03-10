@@ -12,7 +12,8 @@ cd fastapi
 python -m venv venv   
 venv\Scripts\activate
 pip install -r requirements.txt 
-python run.py
+python3 run.py (for linux )
+python execute.py (for windows)
 
 ```
 
