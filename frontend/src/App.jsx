@@ -11,6 +11,7 @@ import Profile from './serachCartOrder/Profile';
 import BookDetails from './singleBookDetails/singleBookDetails';
 import { AppProvider } from './homepage/AppContext';
 import Addbook from './homepage/Addbook'
+import NotificationPage from './assets/orderNotifications/orderNotifications';
 function App() {
   return (
     <AppProvider>
@@ -27,6 +28,7 @@ function App() {
           <Route path='/search' element={<Search />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/singleBookDetails/:id' element={<BookDetails />} />
+          <Route path='/orderNotifications' element={<NotificationPage />} />
         </Routes>
 
       </Router>
