@@ -28,7 +28,7 @@ def stop_uvicorn():
 
 if __name__ == "__main__":
     # ✅ Step 1: Remove old database
-    run_command('rm -rf test.db')
+    run_command('del test.db')
 
     # ✅ Step 2: Stop any running Uvicorn processes (Fix "Address already in use" error)
     stop_uvicorn()
