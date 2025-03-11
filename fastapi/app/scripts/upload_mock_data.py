@@ -184,7 +184,7 @@ def import_orders_from_csv(file_path: str, db: Session):
             order = models.Order(
                 order_id=int(row["order_id"]),  # Ensure ID consistency
                 user_id=int(row["user_id"]),
-                order_date=row["order_date"]
+                order_date=datetime.strptime(row["order_date"],"%Y-%m-%d %H:%M:%S.%f")
             )
             db.add(order)
 

@@ -93,6 +93,40 @@ def get_books(db: Session = Depends(get_db)):
     ]
 
 
+@router.get('/{user_id}', response_model = list[dict])
+def get_books_for_user(user_id: int, db : Session = Depends(get_db)):
+    books = (
+        db.query(
+            models.Book,
+            models.User.full_name.label("seller_name"),
+            models.Author.author_name.label("author_name"),
+            models.Genre.genre_name.label("genre_name"),
+            models.Publisher.publisher_name.label("publisher_name"),
+        )
+        .filter(models.Book.seller_id != user_id)
+        .join(models.User, models.User.user_id == models.Book.seller_id)
+        .join(models.Author, models.Author.author_id == models.Book.author_id)
+        .join(models.Genre, models.Genre.genre_id == models.Book.genre_id)
+        .join(models.Publisher, models.Publisher.publisher_id == models.Book.publisher_id)
+        .all()
+    )
+
+    return [
+        {
+            "book_id": book.Book.book_id,
+            "book_name": book.Book.book_name,
+            "seller_name": book.seller_name,
+            "author_name": book.author_name,
+            "price": book.Book.price,
+            "quantity": book.Book.quantity,
+            "genre_name": book.genre_name,
+            "publisher_name": book.publisher_name,
+            "picture": f"{BASE_URL}/uploads/books/{book.Book.picture}"
+        }
+        for book in books
+    ]
+
+
 @router.post('/')
 async def create_book(
     db: Session = Depends(get_db),
