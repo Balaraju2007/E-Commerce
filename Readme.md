@@ -15,6 +15,8 @@ pip install -r requirements.txt
 python3 run.py (for linux )
 python execute.py (for windows)
 
+use powershell in windows
+
 ```
 
 
