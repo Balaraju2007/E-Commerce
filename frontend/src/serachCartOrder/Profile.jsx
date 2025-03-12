@@ -11,7 +11,7 @@ const Profile = () => {
 
     useEffect(() => {
         axios
-            .get("http://127.0.0.1:8000/users/7")
+            .get(`http://127.0.0.1:8000/users/${localStorage.getItem('user_id')}`)
             .then((response) => {
                 setUser(response.data);
                 setLoading(false);
