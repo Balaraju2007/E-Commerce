@@ -3,15 +3,15 @@ import "./singleBookDetails.css";
 import Header from "../homepage/Header";
 import { useParams } from "react-router-dom";
 import { useAppContext } from "../homepage/AppContext";
+
 const BookDetails = () => {
-    const { userData } = useAppContext();  // Access userData from context
-    console.log(userData)
-  const { id } = useParams()
-  const [bookData, setBookData] = useState({})
-  console.log("1111111111111111111111111111111" + id)
+  const { userData } = useAppContext(); // Access userData from context
+  const { id } = useParams();
+  const [bookData, setBookData] = useState({});
+  console.log("Book ID:", id);
+
   useEffect(() => {
-    // Define the async function inside useEffect
-    const fetchUserData = async () => {
+    const fetchBookData = async () => {
       try {
         const response = await fetch(`http://127.0.0.1:8000/books/${id}`, {
           method: 'GET',
@@ -20,88 +20,85 @@ const BookDetails = () => {
           },
         });
 
-        // Handle the response
         const res = await response.json();
-        console.log(res);
-        console.log("lllllllllllllllllll")
+        console.log("Book data:", res);
         setBookData(res); // Update state with fetched data
-        console.log(bookData);
-
       } catch (error) {
         console.log(error);
-      } finally {
-        ;
-        // You can add cleanup or other final steps here if needed
       }
     };
 
-    fetchUserData();
-  }, []);
+    fetchBookData();
+  }, [id]); // Added `id` dependency to re-fetch when it changes
 
+  // Function to add book to cart
+  const addBookToCart = async (event, b_id, b_q, u_id) => {
+    event.preventDefault(); // Prevent page reload when the button is clicked
 
-  const addBookToCart = async (b_id, b_q, u_id) => {
-    console.log(b_id+"....."+b_q+"....."+u_id)
+    // Create a URLSearchParams object to encode data as x-www-form-urlencoded
+    const formData = new URLSearchParams();
+    formData.append('user_id', u_id);
+    formData.append('book_id', b_id);
+    formData.append('quantity', b_q);
+
     try {
-      const response = await fetch(`http://127.0.0.1:8000/books/`, {
+      const response = await fetch('http://127.0.0.1:8000/cart/', {
         method: 'POST',
         headers: {
-          'Content-type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body:JSON.stringify({user_id: u_id, book_id: b_id, quantity: b_q})
-
+        body: formData.toString(),
       });
 
-      // Handle the response
       const res = await response.json();
-      console.log(res);
-
-      setBookData(res); // Update state with fetched data
-      console.log(bookData);
-
+      console.log("Cart response:", res);
+      // Handle cart addition response if needed
+      // You can update cart-related state here if necessary
     } catch (error) {
-      console.log(error);
-    } finally {
-      ;
-      // You can add cleanup or other final steps here if needed
+      console.error('Error adding book to cart:', error);
     }
   };
 
   const optionsArray = Array(bookData.quantity).fill(null);
+
   return (
     <>
-      <div> <Header> </Header> </div>
-      {bookData && <>{console.log(bookData)}
+      <Header />
+      {bookData && (
         <div className="full-page">
           <div className="book-container">
             <div className="book-image">
-              <img
-                src={bookData.picture}
-                alt="Let Us C Book"
-              />
+              <img src={bookData.picture} alt={bookData.book_name} />
             </div>
 
             <div className="book-details">
               <h1>{bookData.book_name}</h1>
-              <p className="author">by <span>{bookData.author_name}</span></p>
+              <p className="author">
+                by <span>{bookData.author_name}</span>
+              </p>
               <div className="rating">
                 <span>★★★★☆</span>
                 <span className="rating-count">22 ratings</span>
               </div>
 
-              <p className="price">₹{bookData.price} <span className="old-price">₹399</span></p>
+              <p className="price">
+                ₹{bookData.price} <span className="old-price">₹399</span>
+              </p>
               <p className="stock">In Stock</p>
-              <p className="delivery">FREE delivery Tuesday, 4 March on orders above ₹499</p>
+              <p className="delivery">
+                FREE delivery Tuesday, 4 March on orders above ₹499
+              </p>
 
               <div className="description">
                 <h3>About this book</h3>
-                <p>This book provides basic information about C .</p>
+                <p>This book provides basic information about C.</p>
               </div>
 
               <div className="quantity">
                 <label>Quantity:</label>
                 <select>
                   {optionsArray.map((_, index) => (
-                    <option key={index} value={`option-${index + 1}`}>
+                    <option key={index} value={index + 1}>
                       {index + 1}
                     </option>
                   ))}
@@ -109,7 +106,14 @@ const BookDetails = () => {
               </div>
 
               <div className="buttons">
-                <button className="add-to-cart" onClick={()=>{addBookToCart(bookData.book_id, bookData.quantity, userData.user_id)}}>Add to Cart</button>
+                <button
+                  className="add-to-cart"
+                  onClick={(event) =>
+                    addBookToCart(event, bookData.book_id, bookData.quantity, localStorage.getItem('user_id'))
+                  }
+                >
+                  Add to Cart
+                </button>
                 <button className="buy-now">Buy Now</button>
               </div>
             </div>
@@ -118,8 +122,8 @@ const BookDetails = () => {
           <footer className="footer">
             <p>&copy; 2025 Book Store. All rights reserved.</p>
           </footer>
-        </div>  </>
-      }
+        </div>
+      )}
     </>
   );
 };

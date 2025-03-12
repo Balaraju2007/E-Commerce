@@ -4,15 +4,15 @@ import Header from '../homepage/Header';
 import "../homepage/home.css";
 
 const Cart = () => {
-  // const { userData } = useAppContext();  // Use context to access global userData
+  const  userData  = localStorage.getItem('user_id');  // Use context to access global userData
   const [cartBooks, setCartBooks] = useState([]);
   const [status, setStatus] = useState(false);
 
   useEffect(() => {
-    if (userData && userData.user_id) {
+    if (userData && userData) {
       const fetchCartData = async () => {
         try {
-          const response = await fetch(`http://127.0.0.1:8000/cart/${localStorage.getItem('user_id')}`, {
+          const response = await fetch(`http://127.0.0.1:8000/cart/${userData}`, {
             method: 'GET',
             headers: {
               'Content-type': 'application/json',
@@ -28,7 +28,7 @@ const Cart = () => {
 
       fetchCartData();
     }
-  }, [userData]);  // Run the effect only when userData is available
+  }, []);  // Run the effect only when userData is available
 
   // Log cartBooks whenever it changes
   useEffect(() => {
