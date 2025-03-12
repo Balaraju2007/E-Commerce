@@ -211,3 +211,25 @@ async def clear_cart(user_id: int, db: Session = Depends(get_db)):
             "message": f"Cart cleared successfully for user {user_id}",
             "user_details": user_details
         }
+
+
+@router.get('/{user_id}/{itemid}')
+def get_item_details_from_cart(user_id:int, item_id:int, db: Session = Depends(get_db)):
+    cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
+    if not cart:
+        raise HTTPException(status_code=404, detail="Cart not found")
+    
+    cart_item = db.query(models.CartItem).filter(models.CartItem.id == item_id, models.CartItem.cart_id == cart.cart_id).first()
+    if not cart_item:
+        raise HTTPException(status_code=404, detail="Item not found")
+    
+    book = db.query(models.Book).filter(models.Book.book_id == cart_item.book_id).first()
+
+    
+    cart_details = get_cart_items(user_id, db)
+    book_details = get_book_by_id(book.book_id,db)
+    
+    return {
+        "message": "Cart item updated successfully",
+        "book_details":book_details 
+        }
