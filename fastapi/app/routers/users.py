@@ -20,11 +20,11 @@ def write_all_users_to_csv(db: Session):
         writer = csv.writer(file)
 
         # Write header
-        writer.writerow(["user_id", "email", "full_name", "contact_number", "profile_image"])
+        writer.writerow(["user_id", "email", "full_name", "contact_number", "profile_image", "password"])
 
         #  Write all users
         for user in users:
-            writer.writerow([user.user_id, user.email, user.full_name, user.contact_number, user.profile_image])
+            writer.writerow([user.user_id, user.email, user.full_name, user.contact_number, user.profile_image, 'asdf'])
 
     print(" CSV file updated with all users!")
 
