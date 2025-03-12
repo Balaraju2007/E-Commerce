@@ -15,7 +15,9 @@ pip install -r requirements.txt
 python3 run.py (for linux )
 python execute.py (for windows)
 
-use powershell in windows
+uvicorn app.main:app --log-level debug --reload
+
+use cmd  in windows
 
 ```
 
@@ -34,4 +36,3 @@ alembic downgrade -1
 ```
 
 
-💡 **Tip:**  make sure use terminal as command prompt not to powershell.

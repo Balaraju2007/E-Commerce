@@ -57,4 +57,3 @@ if __name__ == "__main__":
     # ✅ Step 7: Restart Uvicorn for actual API serving
     print("\n🚀 Restarting Uvicorn for production...")
     stop_uvicorn()  # Ensure no previous process is running
-    run_command('uvicorn app.main:app --log-level debug --reload')
