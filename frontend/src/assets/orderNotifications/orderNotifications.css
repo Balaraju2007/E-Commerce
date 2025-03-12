@@ -1,0 +1,105 @@
+/* NotificationPage.css */
+
+.notification-container {
+    width: 100%;
+    padding: 20px;
+    background-color: white;
+    min-height: 100vh;
+    color: black;
+  }
+  
+  .notification-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .notification-icon {
+    margin-right: 10px;
+    color: black;
+    width: 24px;
+    height: 24px;
+  }
+  
+  .notification-card {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 15px;
+    background-color: #f3f4f6;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .notification-card:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .notification-details {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    gap: 15px;
+  }
+  
+  .notification-content {
+    padding: 0;
+    width: 100%;
+  }
+  
+  .notification-message {
+    font-weight: 600;
+    font-size: 18px;
+    color: black;
+  }
+  
+  .notification-text {
+    color: #4b5563;
+  }
+  
+  .notification-text span {
+    font-weight: 500;
+    color: black;
+  }
+  
+  .notification-items {
+    list-style-type: disc;
+    padding-left: 20px;
+    color: #4b5563;
+  }
+  
+  .notification-items li {
+    color: #1f2937;
+  }
+  
+  .notification-items li span {
+    font-weight: 600;
+    color: black;
+  }
+  
+  .notification-total {
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 18px;
+    color: black;
+  }
+  
+  .notification-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .notification-empty {
+    text-align: center;
+    font-size: 16px;
+    color: gray;
+  }
+  

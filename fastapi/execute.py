@@ -28,7 +28,7 @@ def stop_uvicorn():
 
 if __name__ == "__main__":
     # ✅ Step 1: Remove old database
-    run_command('rm -rf test.db')
+    run_command('del test.db')
 
     # ✅ Step 2: Stop any running Uvicorn processes (Fix "Address already in use" error)
     stop_uvicorn()
@@ -52,9 +52,8 @@ if __name__ == "__main__":
     uvicorn_process.wait()
 
     # ✅ Step 6: Load Mock Data
-    run_command('python3 app/scripts/upload_mock_data.py')
+    run_command('python app/scripts/upload_mock_data.py')
 
     # ✅ Step 7: Restart Uvicorn for actual API serving
     print("\n🚀 Restarting Uvicorn for production...")
     stop_uvicorn()  # Ensure no previous process is running
-    run_command('uvicorn app.main:app --log-level debug --reload')

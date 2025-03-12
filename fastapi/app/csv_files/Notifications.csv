@@ -10,3 +10,10 @@ user_id,message,created_at,is_read
  Order ID: 1
  Book: python x 1
  Order Date: 2025-03-08 12:06:50.703335",2025-03-08 12:07:05.258401,False
+4," New Order Received!
+ Customer: kuladeep (kuladeep@gmail.com,  9876324554)
+ Order ID: 1
+ Book: c programming x 1
+ Price: 90.00 per unit
+ Total Price: 90.00
+ Order Date: 2025-03-10 14:31:33.629910",2025-03-10 14:31:33.645364,False

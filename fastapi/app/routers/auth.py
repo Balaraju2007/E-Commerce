@@ -35,6 +35,11 @@ def login(data:schemas.LoginRequest, db: Session = Depends(get_db)):
             "profile_image": f"{BASE_URL}/{user.profile_image}"
             }
         }
+
+@router.get('check/')
+def check_user_alreadyin():
+    pass
+
     
     
 

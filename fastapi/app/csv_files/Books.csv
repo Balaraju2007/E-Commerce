@@ -2,13 +2,9 @@ book_id,book_name,seller_id,author_id,price,quantity,genre_id,publisher_id,pictu
 1,string1,1,2,1.00,1,2,2,string1.jpg
 2,nowshik,1,3,100000.00,4,3,3,nowshik.jpg
 3,nowshik,1,3,100000.00,4,3,3,nowshik.jpg
-4,c programming,4,1,90.00,5,1,1,c_programming.jpg
+4,c programming,4,1,90.00,4,1,1,c_programming.jpg
 5,c++,4,3,200.00,2,1,2,c++.jpg
 6,java,5,4,175.00,2,1,3,java.jpg
 7,python,6,5,155.00,5,1,4,python.jpg
 8,myth,7,9,0.00,0,1,1,myth.jpg
-9,string,8,2,1.00,1,2,2,string.jpg
-10,string1,8,2,0.00,1,1,2,string1.jpg
-11,hari,8,1,0.00,0,1,1,hari.jpg
-12,string,8,1,0.00,0,1,1,string.jpg
-13,string,8,1,0.00,0,1,1,string.jpg
+9,os,5,12,199.00,1,4,4,os.jpg

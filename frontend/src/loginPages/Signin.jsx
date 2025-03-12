@@ -27,15 +27,16 @@ const Registration = () => {
             });
 
             let res = await response.json();
+            console.log('login')
             console.log(res);
 
             if (res.access_token) {
                 // Store the access_token and user id in localStorage
                 localStorage.setItem('access_token', res.access_token);
                 localStorage.setItem('user_id', res.user.id);
-
+                localStorage.setItem('user', res.user);
                 // Redirect to home page with the data in state
-                navigate("/home", { state: { access_token: res.access_token, id: res.user.id } });
+                navigate("/home", { state: { access_token: res.access_token, id: res.user.id, user: res.user} });
             }
             setCheck(true);
         } catch (error) {

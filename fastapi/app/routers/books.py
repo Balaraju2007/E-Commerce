@@ -93,6 +93,8 @@ def get_books(db: Session = Depends(get_db)):
     ]
 
 
+
+
 @router.post('/')
 async def create_book(
     db: Session = Depends(get_db),
@@ -184,7 +186,11 @@ def delete_book(book_id:int, db: Session = Depends(get_db)):
 
 
 @router.get('/{book_id}', response_model=dict)
-def get_book_by_id( book_id:int, db: Session = Depends(get_db)):
+def get_book_by_id(book_id: int, db: Session = Depends(get_db)):
+    """Fetch a single book by its ID"""
+    
+    print(f"🔍 Fetching book with ID: {book_id}")  # ✅ Debugging
+
     book = (
         db.query(
             models.Book,
@@ -197,10 +203,10 @@ def get_book_by_id( book_id:int, db: Session = Depends(get_db)):
         .join(models.Author, models.Author.author_id == models.Book.author_id)
         .join(models.Genre, models.Genre.genre_id == models.Book.genre_id)
         .join(models.Publisher, models.Publisher.publisher_id == models.Book.publisher_id)
-        .filter(models.Book.book_id == book_id)
-        .first()
+        .filter(models.Book.book_id == book_id)  # ✅ Ensure book_id is properly filtered
+        .first()  # ✅ Ensures only one book is fetched
     )
-    
+
     if not book:
         raise HTTPException(status_code=404, detail="Book not found")
 
@@ -215,6 +221,7 @@ def get_book_by_id( book_id:int, db: Session = Depends(get_db)):
         "publisher_name": book.publisher_name,
         "picture": f"{BASE_URL}/uploads/books/{book.Book.picture}" if book.Book.picture else None
     }
+
     
 
 
