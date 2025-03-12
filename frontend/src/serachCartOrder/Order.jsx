@@ -2,17 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../homepage/AppContext';  
 import Header from '../homepage/Header';
 import "../homepage/home.css";
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Order = () => {
-  const { userData } = useAppContext();
+  const userData = localStorage.getItem('user_id');
   const [orders, setOrders] = useState([]); // ✅ Store orders properly
   const [status, setStatus] = useState(false); // ✅ Set to true after fetching data
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (userData && userData.user_id) {
+    if (userData && userData) {
       const fetchOrders = async () => {
         try {
-          const response = await fetch(`http://127.0.0.1:8000/orders/${userData.user_id}`);
+          const response = await fetch(`http://127.0.0.1:8000/orders/${userData}`);
   
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -29,8 +31,11 @@ const Order = () => {
   
       fetchOrders();
     }
-  }, [userData]); // Runs when userData changes
+  }, []); // Runs when userData changes
 
+  const nnavigate = (value) => {
+    navigate(`/orderDetails/${value}`)
+  }
   return (
     <div className='homeContainer'>
       <Header />
@@ -39,7 +44,7 @@ const Order = () => {
       {status && orders.length > 0 ? (
         <div className='allDisplayedBooks'>
           {orders.map((order) => (
-            <div key={order.order_id} className='book'>
+            <div key={order.order_id}  onClick={()=>{nnavigate(order.order_id)}}className='book'>
               <p><strong>Order ID:</strong> {order.order_id}</p>
               <p><strong>Order Date:</strong> {new Date(order.order_date).toLocaleString()}</p>
             </div>

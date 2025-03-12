@@ -17,10 +17,11 @@ const Body = (prop) => {
 
                 // Handle the response
                 const res = await response.json();
+                console.log("hiiixxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                 console.log(res);
 
                 setUserdata(res); // Update state with fetched data
-                console.log("hiii");
+                
             } catch (error) {
                 console.log(error);
             } finally {
@@ -42,6 +43,7 @@ const Body = (prop) => {
             {prop.id && 
                userdata.map((key) => (
                 <div key={key.book_id} className='book' onClick={() => Navigate(key.book_id)}>
+                    <div><p>{key.seller_name}</p></div>
                     <p>Book Name: {key.book_name}</p>
                     <img src={key.picture} className='image' alt={key.book_name} />
                     <p><span>by</span> {key.author_name}</p>

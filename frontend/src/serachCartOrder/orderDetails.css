@@ -1,0 +1,37 @@
+.order-details-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .order-details h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .order-details p {
+    font-size: 18px;
+    margin: 5px 0;
+  }
+  
+  .order-items {
+    margin-top: 20px;
+  }
+  
+  .order-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .book-image img {
+    max-width: 150px;
+    max-height: 200px;
+    object-fit: cover;
+    margin-top: 10px;
+  }
+  

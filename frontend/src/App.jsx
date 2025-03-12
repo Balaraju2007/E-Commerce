@@ -13,24 +13,28 @@ import { AppProvider } from './homepage/AppContext';
 import Addbook from './homepage/Addbook'
 import NotificationPage from './assets/orderNotifications/orderNotifications';
 import OrderSummary from './orderSummary/orderSummary';
+import OrderDetails from './serachCartOrder/OrderDetails';
+
 function App() {
   return (
     <AppProvider>
       <Router>
-      {/* <Header />  */}
+        {/* <Header />  */}
         <Routes>
           <Route path='/' element={<Welcomapage />} />
           <Route path='/signup' element={<Registration />} />
           <Route path='/signin' element={<Signin />} />
           <Route path='/home' element={<Home />} />
           <Route path='/cart' element={<Cart />} />
-          <Route path='/order' element={<Order />} />
+          <Route path='/order' element={<Order />} >
+          </Route>
+          <Route path='/orderDetails/:id' element={<OrderDetails />} />
           <Route path='/addbook' element={<Addbook />} />
           <Route path='/search' element={<Search />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/singleBookDetails/:id' element={<BookDetails />} />
           <Route path='/orderNotifications' element={<NotificationPage />} />
-          <Route path='/orderSummary' element={<OrderSummary/>} />
+          <Route path='/orderSummary' element={<OrderSummary />} />
         </Routes>
 
       </Router>

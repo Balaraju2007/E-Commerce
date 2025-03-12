@@ -17,3 +17,17 @@ user_id,message,created_at,is_read
  Price: 90.00 per unit
  Total Price: 90.00
  Order Date: 2025-03-10 14:31:33.629910",2025-03-10 14:31:33.645364,False
+1," New Order Received!
+ Customer: kuladeep (kuladeep@gmail.com,  9876324554)
+ Order ID: 2
+ Book: nowshik x 1
+ Price: 100000.00 per unit
+ Total Price: 100000.00
+ Order Date: 2025-03-12 10:16:18.218128",2025-03-12 10:16:18.255074,False
+4," New Order Received!
+ Customer: kuladeep (kuladeep@gmail.com,  9876324554)
+ Order ID: 3
+ Book: c++ x 1
+ Price: 200.00 per unit
+ Total Price: 200.00
+ Order Date: 2025-03-12 10:16:28.707977",2025-03-12 10:16:28.732357,False
