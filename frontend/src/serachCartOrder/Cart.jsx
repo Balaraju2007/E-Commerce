@@ -4,7 +4,7 @@ import Header from '../homepage/Header';
 import "../homepage/home.css";
 
 const Cart = () => {
-  const { userData } = useAppContext();  // Use context to access global userData
+  // const { userData } = useAppContext();  // Use context to access global userData
   const [cartBooks, setCartBooks] = useState([]);
   const [status, setStatus] = useState(false);
 
@@ -12,7 +12,7 @@ const Cart = () => {
     if (userData && userData.user_id) {
       const fetchCartData = async () => {
         try {
-          const response = await fetch(`http://127.0.0.1:8000/cart/${userData.user_id}`, {
+          const response = await fetch(`http://127.0.0.1:8000/cart/${localStorage.getItem('user_id')}`, {
             method: 'GET',
             headers: {
               'Content-type': 'application/json',

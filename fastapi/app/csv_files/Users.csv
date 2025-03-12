@@ -1,8 +1,8 @@
-user_id,email,full_name,contact_number,profile_image,password
-1,avinash@gmail.com,Avinash,8765432109,avinash.jpg,asdf
-2,arunkumar@gmail.com,Arun Kumar,7654321098,arunkumar.jpg,asdf
-3,gnaneswar@gmail.com,Gnaneswar Rao,6543210987,gnaneswar.jpg,asdf
-4,kuladeep@gmail.com,kuladeep,9876324554,uploads/profile_images/kuladeep.jpg,asdf
-5,hemanth@gmail.com,hemanth,9876543233,uploads/profile_images/hemanth.jpg,asdf
-6,balaraju@gmail.com,balaraju,9876545674,uploads/profile_images/balaraju.jpg,asdf
-
+user_id,email,full_name,contact_number,profile_image
+1,avinash@gmail.com,Avinash,8765432109,avinash.jpg
+2,arunkumar@gmail.com,Arun Kumar,7654321098,arunkumar.jpg
+3,gnaneswar@gmail.com,Gnaneswar Rao,6543210987,gnaneswar.jpg
+4,kuladeep@gmail.com,kuladeep,9876324554,uploads/profile_images/kuladeep.jpg
+5,hemanth@gmail.com,hemanth,9876543233,uploads/profile_images/hemanth.jpg
+6,balaraju@gmail.com,balaraju,9876545674,uploads/profile_images/balaraju.jpg
+7,rakesh@gmail.com,RAKESH GURUGU,7396257990,uploads/profile_images/RAKESH_GURUGU.jpg
