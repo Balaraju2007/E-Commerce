@@ -24,7 +24,7 @@ const Header = () => {
 const Body = () => {
     const navigate = useNavigate();
     const navigatee = () => {
-        navigate('/home');
+        navigate('/signin');
     }
     return (
         <div className='container'>

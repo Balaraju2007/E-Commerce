@@ -27,6 +27,7 @@ const Registration = () => {
             });
 
             let res = await response.json();
+            console.log('login')
             console.log(res);
 
             if (res.access_token) {
