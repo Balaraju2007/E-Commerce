@@ -12,6 +12,7 @@ import BookDetails from './singleBookDetails/singleBookDetails';
 import { AppProvider } from './homepage/AppContext';
 import Addbook from './homepage/Addbook'
 import NotificationPage from './assets/orderNotifications/orderNotifications';
+import OrderSummary from './orderSummary/orderSummary';
 function App() {
   return (
     <AppProvider>
@@ -29,6 +30,7 @@ function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/singleBookDetails/:id' element={<BookDetails />} />
           <Route path='/orderNotifications' element={<NotificationPage />} />
+          <Route path='/orderSummary' element={<OrderSummary/>} />
         </Routes>
 
       </Router>
