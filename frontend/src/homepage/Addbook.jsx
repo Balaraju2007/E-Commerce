@@ -4,9 +4,11 @@ import "../homepage/home.css";
 import "./home.css";
 
 const Addbook = () => {
+  // const username = localStorage.getItem("user");
+  const user = localStorage.getItem("user");
+  console.log(user)
   const [formData, setFormData] = useState({
     book_name: '',
-    seller_name: '',
     quantity: '',
     author_name: '',
     publisher_name: '',
@@ -14,7 +16,7 @@ const Addbook = () => {
     price: '',
     picture: null
   });
-
+  console.log(formData)
   // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +39,7 @@ const Addbook = () => {
     e.preventDefault();
 
     // Ensure all required fields are filled
-    if (!formData.book_name || !formData.seller_name || !formData.quantity ||
+    if (!formData.book_name || !formData.quantity ||
         !formData.author_name || !formData.publisher_name || !formData.genre_name ||
         !formData.price || !formData.picture) {
       alert('Please fill all the fields');
@@ -47,7 +49,7 @@ const Addbook = () => {
     // Create FormData to send as multipart/form-data
     const formDataToSubmit = new FormData();
     formDataToSubmit.append("book_name", formData.book_name);
-    formDataToSubmit.append("seller_name", formData.seller_name);
+    formDataToSubmit.append("seller_name", user);
     formDataToSubmit.append("quantity", Number(formData.quantity)); // Ensure it's a number
     formDataToSubmit.append("author_name", formData.author_name);
     formDataToSubmit.append("publisher_name", formData.publisher_name);
@@ -56,13 +58,15 @@ const Addbook = () => {
     formDataToSubmit.append("picture", formData.picture);
 
     try {
+      console.log(formDataToSubmit)
       const response = await fetch('http://127.0.0.1:8000/books/', {
         method: 'POST',
         body: formDataToSubmit, // ✅ Automatically sets the correct Content-Type
       });
 
       const data = await response.json();
-
+      console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+      console.log(data)
       if (!response.ok) {
         console.error('Failed to add the book:', data);
         alert(`Error: ${data.detail || 'Failed to add book'}`);
@@ -71,7 +75,6 @@ const Addbook = () => {
         alert('✅ Book added successfully');
         setFormData({
           book_name: '',
-          seller_name: '',
           quantity: '',
           author_name: '',
           publisher_name: '',
@@ -91,9 +94,9 @@ const Addbook = () => {
       <Header />
       <div className='addBook'>
         <h2>Add Book</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='addBook'>
           <input type='text' name='book_name' placeholder='Enter Book Name' value={formData.book_name} onChange={handleInputChange} /><br />
-          <input type='text' name='seller_name' placeholder='Enter Seller Name' value={formData.seller_name} onChange={handleInputChange} /><br />
+          {/* <input type='text' name='seller_name' placeholder='Enter Seller Name' value={formData.seller_name} onChange={handleInputChange} /><br /> */}
           <input type='number' name='quantity' placeholder='Enter Quantity' value={formData.quantity} onChange={handleInputChange} /><br />
           <input type='text' name='author_name' placeholder='Enter Author Name' value={formData.author_name} onChange={handleInputChange} /><br />
           <input type='text' name='publisher_name' placeholder='Enter Publisher Name' value={formData.publisher_name} onChange={handleInputChange} /><br />

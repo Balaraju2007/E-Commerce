@@ -70,5 +70,18 @@
       gap: 15px;
     }
   }
-  
-  
+  .addBook{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:1px
+  }
+
+  .addBook input {
+    border-radius: 10px;
+    margin: -5px;
+    background-color: white;
+    border: 1px solid black;
+  }

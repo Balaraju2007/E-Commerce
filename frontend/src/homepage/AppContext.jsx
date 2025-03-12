@@ -5,6 +5,8 @@ const AppContext = createContext();
 
 // Create a provider component
 export const AppProvider = ({ children }) => {
+  // localStorage.clear();
+
   const [userData, setUserData] = useState(() => {
     // Get data from localStorage or return null if not available
     const savedUserData = localStorage.getItem('userData');

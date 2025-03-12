@@ -13,7 +13,9 @@ const Home = () => {
     const accessToken = localStorage.getItem('access_token');
     const userId = localStorage.getItem('user_id');
     const users = localStorage.getItem('user')
-    
+    console.log('ffffffffffffffffffffffff')
+    console.log(users)
+    console.log(userId)
     if (!accessToken || !userId) {
       // If no access token or user ID, redirect to signin page
       navigate('/signin');

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./singleBookDetails.css";
 import Header from "../homepage/Header";
 import { useParams } from "react-router-dom";
-
+import { useAppContext } from "../homepage/AppContext";
 const BookDetails = () => {
+    const { userData } = useAppContext();  // Access userData from context
+    console.log(userData)
   const { id } = useParams()
   const [bookData, setBookData] = useState({})
   console.log("1111111111111111111111111111111" + id)
@@ -21,7 +23,7 @@ const BookDetails = () => {
         // Handle the response
         const res = await response.json();
         console.log(res);
-
+        console.log("lllllllllllllllllll")
         setBookData(res); // Update state with fetched data
         console.log(bookData);
 
@@ -33,9 +35,37 @@ const BookDetails = () => {
       }
     };
 
-    // Call the async function
     fetchUserData();
   }, []);
+
+
+  const addBookToCart = async (b_id, b_q, u_id) => {
+    console.log(b_id+"....."+b_q+"....."+u_id)
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/books/`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body:JSON.stringify({user_id: u_id, book_id: b_id, quantity: b_q})
+
+      });
+
+      // Handle the response
+      const res = await response.json();
+      console.log(res);
+
+      setBookData(res); // Update state with fetched data
+      console.log(bookData);
+
+    } catch (error) {
+      console.log(error);
+    } finally {
+      ;
+      // You can add cleanup or other final steps here if needed
+    }
+  };
+
   const optionsArray = Array(bookData.quantity).fill(null);
   return (
     <>
@@ -79,7 +109,7 @@ const BookDetails = () => {
               </div>
 
               <div className="buttons">
-                <button className="add-to-cart">Add to Cart</button>
+                <button className="add-to-cart" onClick={()=>{addBookToCart(bookData.book_id, bookData.quantity, userData.user_id)}}>Add to Cart</button>
                 <button className="buy-now">Buy Now</button>
               </div>
             </div>
