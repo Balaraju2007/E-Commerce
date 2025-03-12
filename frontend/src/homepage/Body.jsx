@@ -1,59 +1,51 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import './body.css'
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './body.css';
+
 const Body = (prop) => {
-    const [userdata, setUserdata] = useState([])
-    const navigate = useNavigate()
+    const [userdata, setUserdata] = useState([]);
+    const navigate = useNavigate();
+
     useEffect(() => {
-        // Define the async function inside useEffect
         const fetchUserData = async () => {
             try {
                 const response = await fetch('http://127.0.0.1:8000/books/', {
                     method: 'GET',
-                    headers: {
-                        'Content-type': 'application/json',
-                    },
+                    headers: { 'Content-type': 'application/json' },
                 });
 
-                // Handle the response
                 const res = await response.json();
-                console.log("hiiixxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                console.log(res);
-
-                setUserdata(res); // Update state with fetched data
-                
+                console.log("📚 Books Data:", res);
+                setUserdata(res);
             } catch (error) {
-                console.log(error);
-            } finally {
-                ;
-                // You can add cleanup or other final steps here if needed
+                console.error("❌ Error fetching books:", error);
             }
         };
 
-        // Call the async function
         fetchUserData();
     }, []);
 
-    const Navigate = (e) => {
-        navigate(`/singleBookDetails/${e}`)
-    }
+    const handleBookClick = (bookId) => {
+        navigate(`/singleBookDetails/${bookId}`);
+    };
 
     return (
         <div className='allDisplayedBooks'>
-            {prop.id && 
-               userdata.map((key) => (
-                <div key={key.book_id} className='book' onClick={() => Navigate(key.book_id)}>
-                    <div><p>{key.seller_name}</p></div>
-                    <p>Book Name: {key.book_name}</p>
-                    <img src={key.picture} className='image' alt={key.book_name} />
-                    <p><span>by</span> {key.author_name}</p>
-                    <p>Rs: {key.price}</p>
-                </div>
-            ))}
-            
+            {prop.id && userdata.length > 0 ? (
+                userdata.map((book) => (
+                    <div key={book.book_id} className='book' onClick={() => handleBookClick(book.book_id)}>
+                        <img src={book.picture} className='image' alt={book.book_name} />
+                        <p><span>{book.seller_name}</span></p>
+                        <p>Book Name: <strong>{book.book_name}</strong></p>
+                        <p>by <span>{book.author_name}</span></p>
+                        <p className='price'>₹{book.price}</p>
+                    </div>
+                ))
+            ) : (
+                <p>Loading books...</p>
+            )}
+        </div>
+    );
+};
 
-        </div >
-    )
-}
-
-export default Body
+export default Body;

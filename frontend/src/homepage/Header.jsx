@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from './AppContext'; // Import the context
+import './header.css'
 
 const Header = (prop) => {
   //  const { userData } = useAppContext();  // Access userData from context
@@ -21,7 +22,7 @@ const Header = (prop) => {
       <div className='HeaderContainer'>
         <div className='nameSearch'>
           <h2
-            style={{ marginTop: '6%', fontSize: '2rem', fontWeight: 'inherit' }}
+            style={{ marginTop: '6%',  fontSize: '2rem', fontWeight: 'inherit' }}
             onClick={() => {
               navigate('/home');
             }}
@@ -105,7 +106,6 @@ const Header = (prop) => {
           </h2>
         </div>
       </div>
-      <hr style={{ marginTop: '1%' }}></hr>
     </>
   );
 };
