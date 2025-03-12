@@ -6,5 +6,4 @@ book_id,book_name,seller_id,author_id,price,quantity,genre_id,publisher_id,pictu
 5,c++,4,3,200.00,2,1,2,c++.jpg
 6,java,5,4,175.00,2,1,3,java.jpg
 7,python,6,5,155.00,5,1,4,python.jpg
-8,myth,7,9,0.00,0,1,1,myth.jpg
 9,os,5,12,199.00,1,4,4,os.jpg

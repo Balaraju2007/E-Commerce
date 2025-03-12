@@ -10,14 +10,14 @@
 ```
 cd fastapi  
 python -m venv venv   
-venv\Scripts\activate
+.\venv\Scripts\activate
 pip install -r requirements.txt 
 python3 run.py (for linux )
 python execute.py (for windows)
 
 uvicorn app.main:app --log-level debug --reload
 
-use cmd  in windows
+use ps  in windows
 
 ```
 
