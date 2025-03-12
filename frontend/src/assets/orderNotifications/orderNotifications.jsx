@@ -65,7 +65,7 @@ const NotificationPage = () => {
                 <p className="notification-total">Total: {notification.orderDetails.totalAmount}</p>
               </div>
             </div>
-            <img src={notification.orderDetails.imageUrl} alt="Order" className="notification-image" />
+
           </div>
         ))
       ) : (
