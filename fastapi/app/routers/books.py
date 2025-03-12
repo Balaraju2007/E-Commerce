@@ -199,12 +199,12 @@ def get_book_by_id(book_id: int, db: Session = Depends(get_db)):
             models.Genre.genre_name.label("genre_name"),
             models.Publisher.publisher_name.label("publisher_name"),
         )
+        .filter(models.Book.book_id == book_id) 
         .join(models.User, models.User.user_id == models.Book.seller_id)
         .join(models.Author, models.Author.author_id == models.Book.author_id)
         .join(models.Genre, models.Genre.genre_id == models.Book.genre_id)
         .join(models.Publisher, models.Publisher.publisher_id == models.Book.publisher_id)
-        .filter(models.Book.book_id == book_id)  # ✅ Ensure book_id is properly filtered
-        .first()  # ✅ Ensures only one book is fetched
+        .first()  
     )
 
     if not book:
