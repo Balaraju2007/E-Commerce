@@ -162,14 +162,34 @@ def get_orders(user_id: int, db: Session = Depends(get_db)):
     orders = db.query(models.Order).filter(models.Order.user_id == user_id).all()
     if not orders:
         return {"message": "No orders found"}
+    detailed_orders = []
 
-    return [
-        {
+    for order in orders:
+        order_items = db.query(models.OrderItem).filter(models.OrderItem.order_id == order.order_id).all()
+        total_price = 0
+        items = []
+
+        for item in order_items:
+            book = db.query(models.Book).filter(models.Book.book_id == item.book_id).first()
+            if book:
+                total_price += book.price * item.quantity
+                items.append({
+                    "book_id": book.book_id,
+                    "book_name": book.book_name,
+                    "quantity": item.quantity,
+                    "price_per_unit": book.price,
+                    "total_price": book.price * item.quantity,
+                    "image_url": f"http://127.0.0.1:8000/uploads/books/{book.picture}" if book.picture else None
+                })
+
+        detailed_orders.append({
             "order_id": order.order_id,
-            "order_date": order.order_date
-        }
-        for order in orders
-    ]
+            "order_date": order.order_date,
+            "total_price": total_price,
+            "items": items
+        })
+
+    return detailed_orders
     
 @router.get('/details/{order_id}')
 def ger_order_details(order_id: int, db: Session = Depends(get_db)):
