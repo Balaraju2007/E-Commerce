@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Header from './Header';
-import "../homepage/home.css";
-import "./home.css";
+import "./addbook.css"
+import bookImage from '../assets/thankyou.jpg';
 
 const Addbook = () => {
   // const username = localStorage.getItem("user");
@@ -91,12 +91,18 @@ const Addbook = () => {
 
   return (
     <div className='homeContainer'>
-      <Header />
-      <div className='addBook'>
+    <Header />
+    <div className='addBookContainer'>
+      {/* Left Side Image */}
+      <div className='imageContainer'>
+        <img src={bookImage} alt='Book Cover' className='bookImage' />
+      </div>
+
+      {/* Right Side Form */}
+      <div className='formContainer'>
         <h2>Add Book</h2>
-        <form onSubmit={handleSubmit} className='addBook'>
+        <form onSubmit={handleSubmit} className='addBookForm'>
           <input type='text' name='book_name' placeholder='Enter Book Name' value={formData.book_name} onChange={handleInputChange} /><br />
-          {/* <input type='text' name='seller_name' placeholder='Enter Seller Name' value={formData.seller_name} onChange={handleInputChange} /><br /> */}
           <input type='number' name='quantity' placeholder='Enter Quantity' value={formData.quantity} onChange={handleInputChange} /><br />
           <input type='text' name='author_name' placeholder='Enter Author Name' value={formData.author_name} onChange={handleInputChange} /><br />
           <input type='text' name='publisher_name' placeholder='Enter Publisher Name' value={formData.publisher_name} onChange={handleInputChange} /><br />
@@ -107,7 +113,8 @@ const Addbook = () => {
         </form>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default Addbook;
