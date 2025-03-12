@@ -28,13 +28,12 @@ def login(data:schemas.LoginRequest, db: Session = Depends(get_db)):
     return {
         "access_token": access_token,
         "token_type": "bearer",
-        "user": {
-            "id": user.user_id,
-            "username": user.full_name,
-            "email": user.email,
-            "profile_image": f"{BASE_URL}/{user.profile_image}"
-            }
-        }
+        "id": user.user_id,
+        "username": user.full_name,
+        "email": user.email,
+        "profile_image": f"{BASE_URL}/{user.profile_image}"
+    }
+            
 
 @router.get('check/')
 def check_user_alreadyin():

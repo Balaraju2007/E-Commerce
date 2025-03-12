@@ -23,7 +23,7 @@ const BookDetails = () => {
         // Handle the response
         const res = await response.json();
         console.log(res);
-
+        console.log("lllllllllllllllllll")
         setBookData(res); // Update state with fetched data
         console.log(bookData);
 

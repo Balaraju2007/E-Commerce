@@ -29,7 +29,7 @@ async def add_ist_time_header(request, call_next):
 # Allow cross-origin requests from your React app running on port 5173
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # React app origin
+    allow_origins=["http://localhost:5173","http://localhost:5174" ],  # React app origin
     allow_credentials=True,
     allow_methods=["*"],  # Allow all methods like GET, POST, etc.
     allow_headers=["*"],  # Allow all headers

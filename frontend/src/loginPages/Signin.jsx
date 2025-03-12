@@ -31,12 +31,15 @@ const Registration = () => {
             console.log(res);
 
             if (res.access_token) {
+                localStorage.clear();
                 // Store the access_token and user id in localStorage
                 localStorage.setItem('access_token', res.access_token);
-                localStorage.setItem('user_id', res.user.id);
-                localStorage.setItem('user', res.user);
+                localStorage.setItem('user_id', res.id);
+                localStorage.setItem('user', res.username);
+                localStorage.setItem('profile',res.profile_image)
+                console.log(res.username)
                 // Redirect to home page with the data in state
-                navigate("/home", { state: { access_token: res.access_token, id: res.user.id, user: res.user} });
+                navigate("/home", { state: { access_token: res.access_token, id: res.id, user: res.user} });
             }
             setCheck(true);
         } catch (error) {

@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAppContext } from './AppContext'; // Import the context
 
 const Header = (prop) => {
-  const { userData } = useAppContext();  // Access userData from context
-  console.log(userData)
+  //  const { userData } = useAppContext();  // Access userData from context
+  const profile = localStorage.getItem('profile')
+  // console.log(userData)
   const navigate = useNavigate();
 
   // const popUp = () => {
@@ -13,8 +14,8 @@ const Header = (prop) => {
   // };
 
   // Ensure userData is not null or undefined before trying to access profile_image
-  const profileImage = userData?.profile_image;
-  console.log(profileImage)
+  // const profileImage = userData?.profile_image;
+  console.log(profile)
   return (
     <>
       <div className='HeaderContainer'>
@@ -89,9 +90,9 @@ const Header = (prop) => {
           </h2>
           {/* Conditional Rendering for Profile Image */}
           <h2 className='profile'>
-            {profileImage ? (
+            {profile ? (
               <img
-                src={profileImage}
+                src={profile}
                 onClick={() => {
                   navigate('/profile');
                 }}
