@@ -233,3 +233,16 @@ def get_item_details_from_cart(user_id:int, item_id:int, db: Session = Depends(g
         "message": "Cart item updated successfully",
         "book_details":book_details 
         }
+
+
+@router.get('is_carted/{user_id}/{book_id}')
+def check_book_in_cart(user_id:int, book_id:int, db: Session = Depends(get_db)):
+    cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
+    if not cart:
+        return {'message': 'Cart is empty'}
+    
+    cart_item = db.query(models.CartItem).filter(models.CartItem.book_id == book_id, models.CartItem.cart_id == cart.cart_id).first()
+    if not cart_item:
+        return {'message': 0}
+    
+    return {'message': 1}

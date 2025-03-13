@@ -1,81 +1,118 @@
-/* body.css */
-
-/* Center the book display with left and right margins */
-.allDisplayedBooks {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* More space for books */
-  gap: 25px;
-  padding: 20px;
-  margin: 0 auto; /* Center the books container */
-  max-width: 1200px; /* Prevent full-page stretching */
+/* General container for the books */
+.book-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
   justify-content: center;
+  padding: 20px;
+  background-color: #f4f4f4; /* Background color for the page */
 }
 
-/* Individual book card styling */
-.book {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-  padding: 15px;
-  text-align: center;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+/* Styling each book card */
+.book-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  width: 300px;
   cursor: pointer;
-  width: 250px; /* Set a specific width */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: #fff;
+  transition: transform 0.3s ease;
+  background-color: #fff;
+  overflow: hidden;
 }
 
-/* Hover effect */
-.book:hover {
+/* Hover effect on book card */
+.book-item:hover {
   transform: scale(1.05);
-  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Book image styling */
-.image {
+/* Book content layout */
+.book-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Seller profile */
+.book-seller {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.seller-image {
+  width: 40px; /* Small seller image */
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Book details section */
+.book-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+/* Book image */
+.book-image {
   width: 100%;
-  height: 280px;
+  height: 250px; /* Increased height for book image */
   object-fit: cover;
   border-radius: 10px;
+  margin-top: 10px; /* Top space for book image */
+  margin-bottom: 15px;
 }
 
-/* Text styling */
-.book p {
-  font-size: 14px;
-  margin: 6px 0;
+/* Book info styling */
+.book-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.book-name {
+  font-size: 18px;
+  font-weight: bold;
   color: #333;
+  margin-bottom: 5px;
 }
 
-/* Seller name styling */
-.book span {
-  font-weight: bold;
-  color: #007185;
+.author-name {
+  font-size: 14px;
+  color: #7a7a7a;
 }
 
-/* Price styling */
 .price {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
-  color: #B12704;
+  color: #f44336; /* Bold red color for price */
+  margin-top: auto;
 }
 
-/* Responsive design */
-@media (max-width: 1024px) {
-  .allDisplayedBooks {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      max-width: 900px;
-  }
+/* Optional: Adding a background color for the whole page */
+body {
+  background-color: #f4f4f4;
 }
 
-@media (max-width: 768px) {
-  .allDisplayedBooks {
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      max-width: 600px;
-  }
 
-  .book {
-      width: 200px;
-  }
+.book-seller {
+  display: flex;
+  flex-direction: wrap;
+  justify-content: start;
+  width: 100%;
+}
 
-  .image {
-      height: 220px;
-  }
+.seller-Name{
+  padding-top: 0.5rem;
+  margin-left: 0.5rem;
 }

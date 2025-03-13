@@ -9,7 +9,7 @@ const BookDetails = () => {
   const { id } = useParams();
   const [bookData, setBookData] = useState({});
   console.log("Book ID:", id);
-
+  const [isCart, setCart] = useState(false)
   useEffect(() => {
     const fetchBookData = async () => {
       try {
@@ -30,6 +30,32 @@ const BookDetails = () => {
 
     fetchBookData();
   }, [id]); // Added `id` dependency to re-fetch when it changes
+
+
+  useEffect(() => {
+    const fetchBookData = async () => {
+      try {
+        console.log("User ID:", localStorage.getItem('user_id'));
+        const response = await fetch(`http://127.0.0.1:8000/cartis_carted/${localStorage.getItem('user_id')}/${id}`, {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/json',
+          },
+        });
+
+        const res = await response.json();
+        console.log("Book data:", res.message);
+        setCart(res.message)// Update state with fetched data
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchBookData();
+  }, [id]); // Added `id` 
+
+
+
 
   // Function to add book to cart
   const addBookToCart = async (event, b_id, b_q, u_id) => {
@@ -112,7 +138,7 @@ const BookDetails = () => {
                     addBookToCart(event, bookData.book_id, bookData.quantity, localStorage.getItem('user_id'))
                   }
                 >
-                  Add to Cart
+                  {isCart ? 'Carted' : 'Add to Cart'}
                 </button>
                 <button className="buy-now">Buy Now</button>
               </div>

@@ -35,11 +35,12 @@
   
   .book-container {
     display: flex;
-    flex-grow: 1;
-    padding: 50px;
-    align-items: center;
+    flex-direction: row;
     justify-content: center;
-    gap: 50px;
+    /* flex-grow: 1; */
+    padding: 50px;
+    align-items: center; 
+    /* gap: 50px; */
     background-color: white;
   }
   
@@ -48,6 +49,9 @@
     border-radius: 10px;
   }
   
+  .book-image {
+    width: 100%;
+  }
   .book-details {
     max-width: 500px;
   }

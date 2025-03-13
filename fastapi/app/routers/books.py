@@ -85,7 +85,7 @@ def get_books(db: Session = Depends(get_db)):
             "book_name": book.Book.book_name,
             "seller_id": book.seller_id,
             "seller_name": book.seller_name,
-            "seller_profile": f"{BASE_URL}/uploads/profiles/{book.seller_profile}" if book.seller_profile else None,
+            "seller_profile": f"{BASE_URL}/{book.seller_profile}" if book.seller_profile else None,
             "author_name": book.author_name,
             "price": book.Book.price,
             "quantity": book.Book.quantity,

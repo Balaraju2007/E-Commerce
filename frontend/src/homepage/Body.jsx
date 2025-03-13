@@ -30,15 +30,37 @@ const Body = (prop) => {
     };
 
     return (
-        <div className='allDisplayedBooks'>
+        <div className="book-container">
             {prop.id && userdata.length > 0 ? (
                 userdata.map((book) => (
-                    <div key={book.book_id} className='book' onClick={() => handleBookClick(book.book_id)}>
-                        <img src={book.picture} className='image' alt={book.book_name} />
-                        <p><span>{book.seller_name}</span></p>
-                        <p>Book Name: <strong>{book.book_name}</strong></p>
-                        <p>by <span>{book.author_name}</span></p>
-                        <p className='price'>₹{book.price}</p>
+                    <div
+                        key={book.book_id}
+                        className="book-item"
+                        onClick={() => handleBookClick(book.book_id)}
+                    >
+                        <div className="book-content">
+                            <div className="book-seller">
+                                <img
+                                    src={book.seller_profile}
+                                    alt={book.seller_name}
+                                    className="seller-image"
+                                /> <p className='seller-Name'>{book.seller_name}</p>
+                            </div>
+                            <div className="book-details">
+                                <img
+                                    src={book.picture}
+                                    alt={book.book_name}
+                                    className="book-image"
+                                />
+                                <div className="book-info">
+                                    <p className="book-name">
+                                        <strong>{book.book_name}</strong>
+                                    </p>
+                                    <p className="author-name">by {book.author_name}</p>
+                                    <p className="price">₹{book.price}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 ))
             ) : (
