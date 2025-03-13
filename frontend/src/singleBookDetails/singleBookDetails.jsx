@@ -44,7 +44,8 @@ const BookDetails = () => {
         });
 
         const res = await response.json();
-        console.log("Book data:", res.message);
+        console.log(res)
+        console.log("Book data33333333333333333333333:", res.message);
         setCart(res.message)// Update state with fetched data
       } catch (error) {
         console.log(error);
@@ -138,7 +139,7 @@ const BookDetails = () => {
                     addBookToCart(event, bookData.book_id, bookData.quantity, localStorage.getItem('user_id'))
                   }
                 >
-                  {isCart ? 'Carted' : 'Add to Cart'}
+                  {isCart ? <p disabled>Carted</p> : 'Add to Cart'}
                 </button>
                 <button className="buy-now">Buy Now</button>
               </div>
