@@ -9,3 +9,4 @@ book_id,book_name,seller_id,author_id,price,quantity,genre_id,publisher_id,pictu
 8,os,5,12,199.00,1,4,4,os.jpg
 9,1,4,11,1.00,11,6,9,1.jpg
 10,777,6,1,0.00,1,1,1,777.jpg
+11,software engineering,4,13,150.00,3,4,4,software_engineering.jpg
