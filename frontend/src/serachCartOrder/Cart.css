@@ -105,3 +105,18 @@
     margin-top: 20px;
   }
   
+  .book-seller{
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .total-carts{
+    display: flex;
+    justify-content: flex-end;
+    gap:37%
+  }
+  .clear-all{
+    background-color: rgb(19, 9, 9);
+    height: 10%;
+    color: white;
+  }

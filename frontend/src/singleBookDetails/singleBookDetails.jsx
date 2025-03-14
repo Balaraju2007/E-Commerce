@@ -78,6 +78,7 @@ const BookDetails = () => {
       });
 
       const res = await response.json();
+      console.log("555555555555555555555555555555555555555555555555")
       console.log("Cart response:", res);
       // Handle cart addition response if needed
       // You can update cart-related state here if necessary
@@ -179,7 +180,7 @@ const BookDetails = () => {
                     addBookToCart(event, bookData.book_id, bookData.quantity, localStorage.getItem('user_id'))
                   }
                 >
-                  {isCart ? <p disabled>Carted</p> : 'Add to Cart'}
+                  {isCart==1 ? <p disabled>Carted</p> : 'Add to Cart'}
                 </button>
                 <button className="buy-now" onClick={(e)=>{addBookToOrderSummary(event, bookData.book_id, bookData.quantity, localStorage.getItem('user_id'))}}>Buy Now</button>
 
