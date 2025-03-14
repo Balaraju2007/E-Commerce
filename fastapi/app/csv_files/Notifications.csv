@@ -52,3 +52,33 @@ user_id,message,created_at,is_read
  Price: 1.00 per unit
  Total Price: 11.00
  Order Date: 2025-03-14 06:42:02.407687",2025-03-14 06:42:02.445377,False
+4," Order Canceled!
+ Order ID: 1
+ Book: c programming x 1
+ Order Date: 2025-03-10 14:31:33.629910",2025-03-14 10:23:48.009671,False
+1," Order Canceled!
+ Order ID: 2
+ Book: nowshik x 1
+ Order Date: 2025-03-12 10:16:18.218128",2025-03-14 10:23:49.438682,False
+4," Order Canceled!
+ Order ID: 3
+ Book: c++ x 1
+ Order Date: 2025-03-12 10:16:28.707977",2025-03-14 10:23:59.282216,False
+1," New Order Received!
+ Customer: kuladeep (kuladeep@gmail.com,  9876324554)
+ Order ID: 7
+ Book: string1 x 1
+ Price: 1.00 per unit
+ Total Price: 1.00
+ Order Date: 2025-03-14 10:24:06.590549",2025-03-14 10:24:06.616716,False
+6," New Order Received!
+ Customer: kuladeep (kuladeep@gmail.com,  9876324554)
+ Order ID: 8
+ Book: 777 x 1
+ Price: 0.00 per unit
+ Total Price: 0.00
+ Order Date: 2025-03-14 10:24:24.123803",2025-03-14 10:24:24.158201,False
+1," Order Canceled!
+ Order ID: 7
+ Book: string1 x 1
+ Order Date: 2025-03-14 10:24:06.590549",2025-03-14 10:30:40.004689,False

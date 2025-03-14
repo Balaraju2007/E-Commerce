@@ -34,4 +34,12 @@
     object-fit: cover;
     margin-top: 10px;
   }
-  
+  .Svg {
+    margin-left: 90%;
+    opacity: 0.5;
+    /* background-color: red; */
+  }
+  .Svg:hover {
+    color: red;
+    opacity: 1;
+  }

@@ -3,27 +3,27 @@
     background-color: #f4f4f4;
     min-height: 100vh;
     padding: 20px;
-  }
-  
-  /* Heading and Cart Count */
-  .homeContainer p {
+}
+
+/* Heading and Cart Count */
+.homeContainer p {
     font-size: 1.2rem;
     color: #333;
     text-align: center;
     margin-top: 20px;
-  }
-  
-  /* Styling the cart books container */
-  .allDisplayedBooks {
+}
+
+/* Styling the cart books container */
+.allDisplayedBooks {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
     padding: 20px;
-  }
-  
-  /* Each book's display */
-  .book {
+}
+
+/* Each book's display */
+.book {
     background-color: #fff;
     padding: 15px;
     width: 250px;
@@ -34,55 +34,56 @@
     align-items: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
-  }
-  
-  /* Hover effect for each book */
-  .book:hover {
+}
+
+/* Hover effect for each book */
+.book:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Book name */
-  .book p {
+}
+
+/* Book name */
+.book p {
     font-size: 16px;
     color: #333;
     margin: 5px 0;
     text-align: center;
-  }
-  
-  /* Book image */
-  .image {
+}
+
+/* Book image */
+.image {
     width: 100%;
     height: 200px;
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 10px;
-  }
-  
-  /* Author name */
-  .book span {
+}
+
+/* Author name */
+.book span {
     font-size: 14px;
     color: #7a7a7a;
-  }
-  
-  /* Price styling */
-  .book p:last-child {
+}
+
+/* Price styling */
+.book p:last-child {
     font-size: 16px;
-    color: #f44336; /* Red color for price */
+    color: #f44336;
+    /* Red color for price */
     font-weight: bold;
-  }
-  
-  /* Styling for when no books are in the cart */
-  .homeContainer p {
+}
+
+/* Styling for when no books are in the cart */
+.homeContainer p {
     font-size: 18px;
     color: #7a7a7a;
     text-align: center;
     margin-top: 20px;
     margin-bottom: 40px;
-  }
-  
-  /* Optional: Styling for the Add to Cart button (if you decide to add one) */
-  .addToCartButton {
+}
+
+/* Optional: Styling for the Add to Cart button (if you decide to add one) */
+.addToCartButton {
     padding: 10px 20px;
     font-size: 16px;
     background-color: #4CAF50;
@@ -91,36 +92,43 @@
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
-  }
-  
-  .addToCartButton:hover {
+}
+
+.addToCartButton:hover {
     background-color: #45a049;
-  }
-  
-  /* Optional: Styling for the empty cart section */
-  .empty-cart {
+}
+
+/* Optional: Styling for the empty cart section */
+.empty-cart {
     text-align: center;
     font-size: 18px;
     color: #7a7a7a;
     margin-top: 20px;
-  }
-  
-  .book-seller{
+}
+
+.book-seller {
     display: flex;
     flex-wrap: wrap;
-  }
+}
 
-  .total-carts{
+.total-carts {
     display: flex;
     justify-content: flex-end;
-    gap:37%
-  }
-  .clear-all{
+    gap: 37%
+}
+
+.clear-all {
     background-color: rgb(19, 9, 9);
     height: 10%;
     color: white;
-  }
+}
 
-  svg {
+svg {
     margin-left: 40%;
-  }
+    opacity: 0.5;
+}
+
+svg:hover {
+    opacity: 1;
+    color: red
+}
