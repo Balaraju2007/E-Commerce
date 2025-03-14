@@ -317,3 +317,46 @@ async def update_book(
         "publisher_name":publisher.publisher_name,
         "picture":f"{BASE_URL}/uploads/books/{book.picture}" if book.picture else None
     }
+
+
+@router.get('/books_by_user/{user_id}', response_model=list[dict])  
+def get_books(user_id: int, db: Session = Depends(get_db)):
+    """Fetch all books for a specific seller (user_id)"""
+    
+    books = (
+        db.query(
+            models.Book,
+            models.User.user_id.label("seller_id"),
+            models.User.full_name.label("seller_name"),
+            models.User.profile_image.label("seller_profile"),
+            models.Author.author_name.label("author_name"),
+            models.Genre.genre_name.label("genre_name"),
+            models.Publisher.publisher_name.label("publisher_name"),
+        )
+        .join(models.User, models.User.user_id == models.Book.seller_id)
+        .join(models.Author, models.Author.author_id == models.Book.author_id)
+        .join(models.Genre, models.Genre.genre_id == models.Book.genre_id)
+        .join(models.Publisher, models.Publisher.publisher_id == models.Book.publisher_id)
+        .filter(models.Book.seller_id == user_id)  # ✅ Apply filter BEFORE `.all()`
+        .all()
+    )
+
+    if not books:
+        raise HTTPException(status_code=404, detail="No books found for this seller")
+
+    return [
+        {
+            "book_id": book.Book.book_id,
+            "book_name": book.Book.book_name,
+            "seller_id": book.seller_id,
+            "seller_name": book.seller_name,
+            "seller_profile": f"{BASE_URL}/{book.seller_profile}" if book.seller_profile else None,
+            "author_name": book.author_name,
+            "price": book.Book.price,
+            "quantity": book.Book.quantity,
+            "genre_name": book.genre_name,
+            "publisher_name": book.publisher_name,
+            "picture": f"{BASE_URL}/uploads/books/{book.Book.picture}"
+        }
+        for book in books
+    ]
