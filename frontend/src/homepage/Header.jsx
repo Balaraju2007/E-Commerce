@@ -1,27 +1,20 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from './AppContext'; // Import the context
+import './header.css'
 
 const Header = (prop) => {
   //  const { userData } = useAppContext();  // Access userData from context
   const profile = localStorage.getItem('profile')
   // console.log(userData)
   const navigate = useNavigate();
-
-  // const popUp = () => {
-  //   prop.setStatus(true);
-  //   console.log(prop.status);
-  // };
-
-  // Ensure userData is not null or undefined before trying to access profile_image
-  // const profileImage = userData?.profile_image;
   console.log(profile)
   return (
     <>
       <div className='HeaderContainer'>
         <div className='nameSearch'>
           <h2
-            style={{ marginTop: '6%', fontSize: '2rem', fontWeight: 'inherit' }}
+            style={{ marginTop: '6%',  fontSize: '2rem', fontWeight: 'inherit' }}
             onClick={() => {
               navigate('/home');
             }}
@@ -94,7 +87,7 @@ const Header = (prop) => {
               <img
                 src={profile}
                 onClick={() => {
-                  navigate('/profile');
+                  navigate(`/profile/${localStorage.getItem('user_id')}`);
                 }}
                 className='svg'
                 alt='Profile'
@@ -105,7 +98,6 @@ const Header = (prop) => {
           </h2>
         </div>
       </div>
-      <hr style={{ marginTop: '1%' }}></hr>
     </>
   );
 };

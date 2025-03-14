@@ -31,3 +31,10 @@ user_id,message,created_at,is_read
  Price: 200.00 per unit
  Total Price: 200.00
  Order Date: 2025-03-12 10:16:28.707977",2025-03-12 10:16:28.732357,False
+4," New Order Received!
+ Customer: kuladeep (kuladeep@gmail.com,  9876324554)
+ Order ID: 4
+ Book: c++ x 1
+ Price: 200.00 per unit
+ Total Price: 200.00
+ Order Date: 2025-03-14 03:34:51.504754",2025-03-14 03:34:51.557158,False

@@ -65,7 +65,9 @@ def get_books(db: Session = Depends(get_db)):
     books = (
         db.query(
             models.Book,
+            models.User.user_id.label("seller_id"),
             models.User.full_name.label("seller_name"),
+            models.User.profile_image.label("seller_profile"),
             models.Author.author_name.label("author_name"),
             models.Genre.genre_name.label("genre_name"),
             models.Publisher.publisher_name.label("publisher_name"),
@@ -81,7 +83,9 @@ def get_books(db: Session = Depends(get_db)):
         {
             "book_id": book.Book.book_id,
             "book_name": book.Book.book_name,
+            "seller_id": book.seller_id,
             "seller_name": book.seller_name,
+            "seller_profile": f"{BASE_URL}/{book.seller_profile}" if book.seller_profile else None,
             "author_name": book.author_name,
             "price": book.Book.price,
             "quantity": book.Book.quantity,
@@ -194,7 +198,9 @@ def get_book_by_id(book_id: int, db: Session = Depends(get_db)):
     book = (
         db.query(
             models.Book,
+            models.User.user_id.label("seller_id"),
             models.User.full_name.label("seller_name"),
+            models.User.profile_image.label("seller_profile"),
             models.Author.author_name.label("author_name"),
             models.Genre.genre_name.label("genre_name"),
             models.Publisher.publisher_name.label("publisher_name"),
@@ -213,7 +219,9 @@ def get_book_by_id(book_id: int, db: Session = Depends(get_db)):
     return {
         "book_id": book.Book.book_id,
         "book_name": book.Book.book_name,
+        "seller_id": book.seller_id,
         "seller_name": book.seller_name,
+        "seller_profile": f"{BASE_URL}/{book.seller_profile}" if book.seller_profile else None,
         "author_name": book.author_name,
         "price": book.Book.price,
         "quantity": book.Book.quantity,

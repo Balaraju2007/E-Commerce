@@ -3,15 +3,18 @@ import "../homepage/home.css";
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from 'react-router-dom';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const {id} = useParams()
+    console.log('pppppppppppppppppppppppppppppppppp')
+    console.log(id)
     useEffect(() => {
         axios
-            .get(`http://127.0.0.1:8000/users/${localStorage.getItem('user_id')}`)
+            .get(`http://127.0.0.1:8000/users/${id}`)
             .then((response) => {
                 setUser(response.data);
                 setLoading(false);

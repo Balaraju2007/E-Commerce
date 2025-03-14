@@ -8,7 +8,8 @@ const BookDetails = () => {
   const { userData } = useAppContext(); // Access userData from context
   const { id } = useParams();
   const [bookData, setBookData] = useState({});
-  console.log("Book ID:", id);
+  const [isCart, setCart] = useState(false);
+  const [selectedQuantity, setSelectedQuantity] = useState(1); // State to track selected quantity
 
   useEffect(() => {
     const fetchBookData = async () => {
@@ -29,17 +30,37 @@ const BookDetails = () => {
     };
 
     fetchBookData();
-  }, [id]); // Added `id` dependency to re-fetch when it changes
+  }, [id]);
 
-  // Function to add book to cart
-  const addBookToCart = async (event, b_id, b_q, u_id) => {
+  useEffect(() => {
+    const fetchBookData = async () => {
+      try {
+        console.log("User ID:", localStorage.getItem('user_id'));
+        const response = await fetch(`http://127.0.0.1:8000/cartis_carted/${localStorage.getItem('user_id')}/${id}`, {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/json',
+          },
+        });
+
+        const res = await response.json();
+        console.log("Cart status:", res.message);
+        setCart(res.message); // Update cart status based on response
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchBookData();
+  }, [id]);
+
+  const addBookToCart = async (event, b_id, u_id) => {
     event.preventDefault(); // Prevent page reload when the button is clicked
 
-    // Create a URLSearchParams object to encode data as x-www-form-urlencoded
     const formData = new URLSearchParams();
     formData.append('user_id', u_id);
     formData.append('book_id', b_id);
-    formData.append('quantity', b_q);
+    formData.append('quantity', selectedQuantity); // Send selected quantity
 
     try {
       const response = await fetch('http://127.0.0.1:8000/cart/', {
@@ -52,10 +73,35 @@ const BookDetails = () => {
 
       const res = await response.json();
       console.log("Cart response:", res);
-      // Handle cart addition response if needed
-      // You can update cart-related state here if necessary
+      setCart(true); // Update the cart status once added to the cart
     } catch (error) {
       console.error('Error adding book to cart:', error);
+    }
+  };
+
+  const addBookToOrderSummary = async (event, b_id, u_id) => {
+    event.preventDefault(); // Prevent page reload when the button is clicked
+
+    const requestData = {
+      user_id: parseInt(u_id),
+      book_id: b_id,
+      quantity: selectedQuantity, // Send selected quantity
+    };
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/orders/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({requestData}), // Send data as JSON
+      });
+
+      const res = await response.json();
+      console.log("Order response:", res);
+      // You can display a success message or handle the response further
+    } catch (error) {
+      console.error('Error adding book to order:', error);
     }
   };
 
@@ -96,7 +142,10 @@ const BookDetails = () => {
 
               <div className="quantity">
                 <label>Quantity:</label>
-                <select>
+                <select
+                  value={selectedQuantity}
+                  onChange={(e) => setSelectedQuantity(parseInt(e.target.value))} // Update quantity based on selection
+                >
                   {optionsArray.map((_, index) => (
                     <option key={index} value={index + 1}>
                       {index + 1}
@@ -109,12 +158,14 @@ const BookDetails = () => {
                 <button
                   className="add-to-cart"
                   onClick={(event) =>
-                    addBookToCart(event, bookData.book_id, bookData.quantity, localStorage.getItem('user_id'))
+                    addBookToCart(event, bookData.book_id, localStorage.getItem('user_id'))
                   }
                 >
-                  Add to Cart
+                  {isCart ? <p>Carted</p> : 'Add to Cart'}
                 </button>
-                <button className="buy-now">Buy Now</button>
+                <button className="buy-now" onClick={(e) => addBookToOrderSummary(e, bookData.book_id, localStorage.getItem('user_id'))}>
+                  Buy Now
+                </button>
               </div>
             </div>
           </div>

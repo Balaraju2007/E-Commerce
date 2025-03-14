@@ -31,7 +31,7 @@ function App() {
           <Route path='/orderDetails/:id' element={<OrderDetails />} />
           <Route path='/addbook' element={<Addbook />} />
           <Route path='/search' element={<Search />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/:id' element={<Profile />} />
           <Route path='/singleBookDetails/:id' element={<BookDetails />} />
           <Route path='/orderNotifications' element={<NotificationPage />} />
           <Route path='/orderSummary' element={<OrderSummary />} />
