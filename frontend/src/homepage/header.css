@@ -89,3 +89,15 @@
         gap: 15px;
     }
 }
+
+.Input {
+    margin-left: 5%;
+    height: 50%;
+    width: 50%;
+    padding-top: -10px;
+    padding-left: 1%;
+    padding-right: 1%;
+     color: brown;
+    margin-top: 3%;
+
+}

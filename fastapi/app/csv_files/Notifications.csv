@@ -38,10 +38,17 @@ user_id,message,created_at,is_read
  Price: 200.00 per unit
  Total Price: 200.00
  Order Date: 2025-03-14 03:34:51.504754",2025-03-14 03:34:51.557158,False
-1," New Order Received!
+5," New Order Received!
  Customer: kuladeep (kuladeep@gmail.com,  9876324554)
  Order ID: 5
- Book: string1 x 1
+ Book: java x 2
+ Price: 175.00 per unit
+ Total Price: 350.00
+ Order Date: 2025-03-14 06:41:43.005725",2025-03-14 06:41:43.062915,False
+4," New Order Received!
+ Customer: kuladeep (kuladeep@gmail.com,  9876324554)
+ Order ID: 6
+ Book: 1 x 11
  Price: 1.00 per unit
- Total Price: 1.00
- Order Date: 2025-03-14 05:48:51.209897",2025-03-14 05:48:51.227236,False
+ Total Price: 11.00
+ Order Date: 2025-03-14 06:42:02.407687",2025-03-14 06:42:02.445377,False
