@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../homepage/AppContext';  // Import the custom hook
 import Header from '../homepage/Header';
 import "../homepage/home.css";
+import './cart.css';  // Import the CSS file for cart page styling
 
 const Cart = () => {
-  const  userData  = localStorage.getItem('user_id');  // Use context to access global userData
+  const userData = localStorage.getItem('user_id');  // Use context to access global userData
   const [cartBooks, setCartBooks] = useState([]);
   const [status, setStatus] = useState(false);
 
   useEffect(() => {
-    if (userData && userData) {
+    if (userData) {
       const fetchCartData = async () => {
         try {
           const response = await fetch(`http://127.0.0.1:8000/cart/${userData}`, {
@@ -39,7 +40,6 @@ const Cart = () => {
   return (
     <div className='homeContainer'>
       <Header />
-      {/* {status && <Addbook />} */}
       <p>{status ? `You have ${cartBooks.cart_items?.length} books in your cart` : "No books in cart"}</p>
       
       {/* Display cart content */}
@@ -55,7 +55,7 @@ const Cart = () => {
           ))}
         </div>
       ) : (
-        <p>No items in the cart </p>
+        <p>No items in the cart</p>
       )}
     </div>
   );
