@@ -3,7 +3,7 @@ import { useAppContext } from '../homepage/AppContext';  // Import the custom ho
 import Header from '../homepage/Header';
 import "../homepage/home.css";
 import './cart.css';  // Import the CSS file for cart page styling
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Cart = () => {
   const userData = localStorage.getItem('user_id');  // Use context to access global userData
@@ -47,12 +47,16 @@ const Cart = () => {
 
   const handleCartClear = async () => {
     console.log('Clearing the cart...');
+    const userId = localStorage.getItem('user_id');
+    const formData = new URLSearchParams();
+    formData.append("user_id", userId);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/cart/clear/${localStorage.getItem('user_id')}`, {
+      const response = await fetch(`http://127.0.0.1:8000/cart/clear/`, {
         method: 'DELETE',
         headers: {
-          'Content-type': 'application/json',
+          'Content-type': 'application/x-www-form-urlencoded',
         },
+        body: formData.toString(),
       });
 
       if (!response.ok) {
@@ -75,19 +79,20 @@ const Cart = () => {
       alert("Invalid book ID");
       return;
     }
-
-    // Confirmation before deletion
-    const confirmDelete = window.confirm("Are you sure you want to delete this book from your cart?");
-    if (!confirmDelete) return;
+    const userId = localStorage.getItem('user_id');
+    const formData = new URLSearchParams();
+    formData.append("user_id", userId);
+    formData.append("item_id", i_id);
 
     try {
       console.log("Attempting to delete book with ID:", i_id);
 
-      const response = await fetch(`http://127.0.0.1:8000/cart/${localStorage.getItem('user_id')}/${i_id}`, {
+      const response = await fetch(`http://127.0.0.1:8000/cart/delete_item/`, {
         method: 'DELETE',
         headers: {
-          'Content-type': 'application/json',
+          'Content-type': 'application/x-www-form-urlencoded',
         },
+        body: formData.toString(),
       });
 
       if (!response.ok) {
@@ -100,7 +105,7 @@ const Cart = () => {
       // Filter out the deleted book from cartBooks state
       setCartBooks((prevCartBooks) => ({
         ...prevCartBooks,
-        cart_items: prevCartBooks.cart_items.filter((item) => item.book_id !== i_id),
+        cart_items: prevCartBooks.cart_items.filter((item) => item.cart_item_id !== i_id),
       }));
 
     } catch (error) {
@@ -134,7 +139,7 @@ const Cart = () => {
                 />
                 <p onClick={(e) => handleNavigate(item.book_detals.seller_id, e)} className='seller-Name'>{item.book_detals.seller_name}</p>
                 <svg 
-                  onClick={(e) => handleDeleteCart(e, item.book_id)} 
+                  onClick={(e) => handleDeleteCart(e, item.cart_item_id)} 
                   xmlns="http://www.w3.org/2000/svg" 
                   width="16" 
                   height="16" 
