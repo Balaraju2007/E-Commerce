@@ -109,6 +109,9 @@ const Cart = () => {
     }
   };
 
+    const handleBook = (e, value) => {
+      navigate(`/singleBookDetails/${value}`)
+    }
   return (
     <div className='homeContainer'>
       <Header />
@@ -121,7 +124,7 @@ const Cart = () => {
       {cartBooks.cart_items?.length > 0 ? (
         <div className='allDisplayedBooks'>
           {cartBooks.cart_items.map((item) => (
-            <div key={item.book_id} className='book'>
+            <div key={item.book_id} className='book' onClick={(e)=>{handleBook(e, item.book_id)}}>
               <div className="book-seller">
                 <img 
                   onClick={(e) => handleNavigate(item.book_detals.seller_id, e)}
