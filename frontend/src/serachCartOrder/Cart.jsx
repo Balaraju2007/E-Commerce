@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../homepage/AppContext';  // Import the custom hook
 import Header from '../homepage/Header';
 import "../homepage/home.css";
-import './cart.css';  // Import the CSS file for cart page styling
+import './Cart.css';  // Import the CSS file for cart page styling
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {

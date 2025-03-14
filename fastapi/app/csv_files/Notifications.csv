@@ -82,3 +82,10 @@ user_id,message,created_at,is_read
  Order ID: 7
  Book: string1 x 1
  Order Date: 2025-03-14 10:24:06.590549",2025-03-14 10:30:40.004689,False
+4," New Order Received!
+ Customer: kuladeep (kuladeep@gmail.com,  9876324554)
+ Order ID: 9
+ Book: c++ x 1
+ Price: 200.00 per unit
+ Total Price: 200.00
+ Order Date: 2025-03-14 12:16:05.502869",2025-03-14 12:16:05.552397,False

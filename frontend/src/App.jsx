@@ -15,6 +15,7 @@ import Addbook from './homepage/Addbook'
 import NotificationPage from './assets/orderNotifications/orderNotifications';
 import OrderSummary from './orderSummary/orderSummary';
 import OrderDetails from './serachCartOrder/OrderDetails';
+import Home1 from '../mock/home1';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path='/singleBookDetails/:id' element={<BookDetails />} />
             <Route path='/orderNotifications' element={<NotificationPage />} />
             <Route path='/orderSummary' element={<OrderSummary />} />
+            <Route path='/home1' element={<Home1 />} />
           </Routes>
 
         </Router>
