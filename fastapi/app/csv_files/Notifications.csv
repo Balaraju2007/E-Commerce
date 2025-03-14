@@ -82,6 +82,7 @@ user_id,message,created_at,is_read
  Order ID: 7
  Book: string1 x 1
  Order Date: 2025-03-14 10:24:06.590549",2025-03-14 10:30:40.004689,False
+<<<<<<< HEAD
 4," New Order Received!
  Customer: kuladeep (kuladeep@gmail.com,  9876324554)
  Order ID: 9
@@ -89,3 +90,9 @@ user_id,message,created_at,is_read
  Price: 200.00 per unit
  Total Price: 200.00
  Order Date: 2025-03-14 12:16:05.502869",2025-03-14 12:16:05.552397,False
+=======
+5," Order Canceled!
+ Order ID: 5
+ Book: java x 2
+ Order Date: 2025-03-14 06:41:43.005725",2025-03-14 13:39:29.595981,False
+>>>>>>> refs/remotes/origin/main

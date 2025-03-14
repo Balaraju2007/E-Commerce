@@ -130,30 +130,7 @@ def add_to_cart(
     }
 
 
-@router.delete("/{user_id}/{item_id}")
-def remove_from_cart(user_id:int, item_id:int,db: Session = Depends(get_db)):
-    
-    cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
-    if not cart:
-        raise HTTPException(status_code=404, detail="Cart not found")
-    
-    
-    cart_item = db.query(models.CartItem).filter(models.CartItem.id == item_id, models.CartItem.cart_id == cart.cart_id).first()
-    if not cart_item:
-        raise HTTPException(status_code=404, detail="Item not found")
-    
-    db.delete(cart_item)
-    db.commit()
-    
-    cart_details = get_cart_items(user_id, db)
-    
-    export_cart_to_csv(db)
-    export_cart_items_to_csv(db)
-    
-    return {
-        "message": "Item removed from cart successfully",
-        "cart": cart_details
-        }
+
     
     
 @router.put("/{user_id}/{item_id}")
@@ -188,9 +165,12 @@ def update_cart_item(user_id:int, item_id:int, quantity:int, db: Session = Depen
     
     
     
-@router.delete("/clear/{user_id}/")
-async def clear_cart(user_id: int, db: Session = Depends(get_db)):
-    """✅ Deletes the user's cart and all cart items"""
+@router.delete("/clear/")
+async def clear_cart(
+    user_id: int = Form(...),
+    db: Session = Depends(get_db)
+    ):
+    """ Deletes the user's cart and all cart items"""
     
     user_details = get_users_by_id(user_id, db)
     cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
@@ -246,3 +226,36 @@ def check_book_in_cart(user_id:int, book_id:int, db: Session = Depends(get_db)):
         return {'message': 0}
     
     return {'message': 1}
+
+
+@router.delete("/delete_item/")
+def remove_from_cart(
+    user_id: int = Form(...),
+    item_id: int = Form(...),
+    db: Session = Depends(get_db)
+):
+    print(f"🔍 Deleting item {item_id} for user {user_id}")  # Debugging
+    
+    cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
+    if not cart:
+        raise HTTPException(status_code=404, detail="Cart not found")
+
+    cart_item = db.query(models.CartItem).filter(
+        models.CartItem.id == item_id, models.CartItem.cart_id == cart.cart_id
+    ).first()
+
+    if not cart_item:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    db.delete(cart_item)
+    db.commit()
+
+    cart_details = get_cart_items(user_id, db)
+    
+    export_cart_to_csv(db)
+    export_cart_items_to_csv(db)
+    
+    return {
+        "message": "Item removed from cart successfully",
+        "cart": cart_details
+        }
