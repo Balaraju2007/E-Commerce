@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Form
 from sqlalchemy.orm import Session
 from datetime import datetime
 from .. import models
@@ -43,9 +43,9 @@ def export_order_items_to_csv(db: Session):
 
 @router.post('/')
 def place_order(
-    user_id: int,
-    book_id: int = None,
-    quantity: int = None,
+    user_id : int = Form(...),
+    book_id: int = Form(...),
+    quantity: int = Form(...),
     db: Session = Depends(get_db)
 ):
     customer = db.query(models.User).filter(models.User.user_id == user_id).first()

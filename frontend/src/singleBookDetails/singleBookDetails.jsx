@@ -92,28 +92,40 @@ const BookDetails = () => {
     event.preventDefault(); // Prevent page reload when the button is clicked
 
     // Prepare data to send as JSON
-    const requestData = {
-      user_id: parseInt(u_id),
-      book_id: b_id,
-      quantity: b_q,
-    };
-    console.log(requestData)
-    try {
-      const response = await fetch('http://127.0.0.1:8000/orders/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', // Set to JSON
-        },
-        body: JSON.stringify(requestData), // Send data as JSON
+    if (!b_id || !b_q || !u_id) {
+      console.error(" Missing required fields!");
+      return;
+  }
+
+  // 🔹 Use URLSearchParams to send Form Data
+  const formData = new URLSearchParams();
+  formData.append("user_id", u_id);
+  formData.append("book_id", b_id);
+  formData.append("quantity", b_q);
+
+  console.log(" Sending Order Data:", formData.toString());
+
+  try {
+      const response = await fetch("http://127.0.0.1:8000/orders/", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/x-www-form-urlencoded", 
+          },
+          body: formData.toString(), 
       });
-  
+
       const res = await response.json();
-      console.log("Order response:", res);
-  
-      // Handle response if needed (e.g., show confirmation)
-    } catch (error) {
-      console.error('Error adding book to order:', error);
-    }
+      console.log("✅ Order response:", res);
+
+      if (response.ok) {
+          alert(`Order placed successfully! Order ID: ${res.order_id}`);
+      } else {
+          alert(` Error placing order: ${res.detail || "Unknown error"}`);
+      }
+  } catch (error) {
+      console.error(" Error adding book to order:", error);
+      alert(" Error adding book to order: " + error.message);
+  }
   };
 
   return (
