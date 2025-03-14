@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./singleBookDetails.css";
 import Header from "../homepage/Header";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAppContext } from "../homepage/AppContext";
 
 const BookDetails = () => {
   const { userData } = useAppContext(); // Access userData from context
   const { id } = useParams();
+  const navigate = useNavigate()
   const [bookData, setBookData] = useState({});
   console.log("Book ID:", id);
   const [isCart, setCart] = useState(false)
@@ -21,7 +22,7 @@ const BookDetails = () => {
         });
 
         const res = await response.json();
-        console.log("Book data:", res);
+        console.log("Book data55555555555555555555555555555555:", res);
         setBookData(res); // Update state with fetched data
       } catch (error) {
         console.log(error);
@@ -129,6 +130,11 @@ const BookDetails = () => {
   }
   };
 
+  const updateBook = () => {
+    console.log(bookData)
+    navigate('/addbook', {state:{book: bookData}})
+  }
+
   return (
     <>
       <Header />
@@ -183,7 +189,7 @@ const BookDetails = () => {
                   {isCart==1 ? <p disabled>Carted</p> : 'Add to Cart'}
                 </button>
                 <button className="buy-now" onClick={(e)=>{addBookToOrderSummary(event, bookData.book_id, bookData.quantity, localStorage.getItem('user_id'))}}>Buy Now</button>
-
+                  {bookData.seller_id == localStorage.getItem("user_id") && <button onClick={updateBook}>Update Book</button>}
               </div>
             </div>
           </div>

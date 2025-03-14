@@ -7,7 +7,7 @@ const Search = () => {
     const { bookData } = useBookData(); // Access the global bookData
     const navigate = useNavigate()
     useEffect(() => {
-        console.log('Books Data:', bookData); // Log book data
+        console.log('Books DataDDDDDDDDDDDDDDDDDD:', bookData); // Log book data
     }, [bookData]);
     const handleBook = (e, value) => {
         navigate(`/singleBookDetails/${value}`)

@@ -3,9 +3,10 @@ import "../homepage/home.css";
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Profile = () => {
+    const navigate = useNavigate()
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -46,7 +47,9 @@ const Profile = () => {
 
         fetchUserData();
     }, []);
-
+    const handleBookClick = (value) => {
+        navigate(`/singleBookDetails/${value}`)
+      }
     if (loading) return <p>Loading...</p>;
     if (error) return <p style={{ color: "red" }}>{error}</p>;
 
@@ -70,7 +73,7 @@ const Profile = () => {
                         onClick={() => handleBookClick(book.book_id)}
                     >
                         <div className="book-content">
-                            <div className="book-seller" onClick={(e) => handleNavigate(book.seller_id, e)}>
+                            <div className="book-seller" >
                                  <img
                                     src={book.seller_profile}
                                     alt={book.seller_name}
