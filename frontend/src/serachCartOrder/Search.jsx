@@ -7,9 +7,8 @@ const Search = () => {
     const [status, setStatus] = useState(false)
     return (
         <div className='homeContainer'>
-            <Header setStatus={setStatus} />
-            {status && <Addbook />}
-jkbbjkb
+            <Header />
+
         </div>
     )
 }
