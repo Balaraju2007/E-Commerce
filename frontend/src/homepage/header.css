@@ -1,103 +1,119 @@
-/* Center the header container */
-.HeaderContainer {
+body {
+    background-color: #f5f5f5;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Container */
+  .container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Header */
+  .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 20px;
-    background-color: #253446 !important; /* Amazon-style dark background */
-    color: white;
-    position: sticky;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    position: fixed;
     top: 0;
+    left: 0;
     z-index: 1000;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Logo and search container */
-.nameSearch {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-/* Logo styling */
-.nameSearch h2 {
-    font-size: 1.8rem;
+  }
+  
+  /* Title */
+  .title {
+    cursor: pointer;
+    font-size: 24px;
     font-weight: bold;
-    cursor: pointer;
-    color: #ff9900 !important; /* Amazon-like orange */
-}
-
-/* Search icon */
-.nameSearch .svg {
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-}
-
-/* Hover effect for search */
-.nameSearch .svg:hover {
-    transform: scale(1.1);
-}
-
-/* Right-side container for cart, orders, and profile */
-.profileCartOrder {
+    color: #333;
+  }
+  .search-bar {
     display: flex;
     align-items: center;
-    gap: 25px;
-}
-
-/* Icons (cart, orders, add book) */
-.profileCartOrder .svg {
+    background: #ffffff; /* White background */
+    border-radius: 25px;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 450px;
+    height: 45px;
+    border: 2px solid #ccc; /* Light gray border */
+  }
+  
+  .search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 16px;
+    background: transparent;
+    color: #333;
+    border-radius: 25px;
+    height: 100%;
+  }
+  
+  .search-button {
+    background: transparent;
+    border: none;
+    color: black;
+    padding: 10px 15px;
+    border-radius: 50%;
     cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-/* Hover effect for icons */
-.profileCartOrder .svg:hover {
-    transform: scale(1.1);
-    color: #ff9900; /* Change to Amazon orange */
-}
+  
+  .search-icon {
+    font-size:35px;
+  }
+  
+  
+  /* Icons */
+  .icons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .icon {
+    font-size: 25px;
+    color: #555;
+    cursor: pointer;
+  }
+  
+  .icon:hover {
+    color: black;
+  }
 
-/* Profile picture */
-.profileCartOrder .profile img {
-    width: 38px;
-    height: 38px;
+/* Profile Image */
+/* Profile Icon - Circular & Responsive */
+.profile-icon {
+    width: 42px; /* Adjusted for balance */
+    height: 42px;
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
-    border: 2px solid #ff9900;
-    transition: transform 0.2s ease-in-out;
-}
-
-/* Hover effect for profile */
-.profileCartOrder .profile img:hover {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Profile Icon Hover Effect */
+  .profile-icon:hover {
     transform: scale(1.1);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .HeaderContainer {
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
-    }
-
-    .nameSearch h2 {
-        font-size: 1.6rem;
-    }
-
-    .profileCartOrder {
-        gap: 15px;
-    }
-}
-
-.Input {
-    margin-left: 5%;
-    height: 50%;
-    width: 50%;
-    padding-top: -10px;
-    padding-left: 1%;
-    padding-right: 1%;
-     color: brown;
-    margin-top: 3%;
-
-}
+    border-color: #0073e6; /* Blue glow */
+    box-shadow: 0 0 10px rgba(0, 115, 230, 0.3);
+  }
