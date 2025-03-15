@@ -156,7 +156,9 @@ const BookDetails = () => {
               </div>
 
               <p className="price">
-                ₹{bookData.price} <span className="old-price">₹399</span>
+                ₹{bookData.price} <span className="old-price">₹{parseInt(bookData.price) + parseInt((11 / bookData.price) * 100)}
+
+                </span>
               </p>
               <p className="stock">In Stock</p>
               <p className="delivery">
