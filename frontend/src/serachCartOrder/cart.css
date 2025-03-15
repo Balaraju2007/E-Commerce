@@ -1,134 +1,113 @@
-/* General container for the cart page */
-.homeContainer {
-    background-color: #f4f4f4;
-    min-height: 100vh;
+/* General Cart Container */
+.cart-container {
+    margin-top: 30% !important;
+    max-width: 1100px;
+    margin: 20px auto;
     padding: 20px;
-}
-
-/* Heading and Cart Count */
-.homeContainer p {
-    font-size: 1.2rem;
-    color: #333;
-    text-align: center;
-    margin-top: 20px;
-}
-
-/* Styling the cart books container */
-.allDisplayedBooks {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    padding: 20px;
-}
-
-/* Each book's display */
-.book {
-    background-color: #fff;
-    padding: 15px;
-    width: 250px;
+    background: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+  }
+  
+  
+  /* Cart Header Section */
+  .total-carts {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
-}
-
-/* Hover effect for each book */
-.book:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* Book name */
-.book p {
-    font-size: 16px;
-    color: #333;
-    margin: 5px 0;
-    text-align: center;
-}
-
-/* Book image */
-.image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-/* Author name */
-.book span {
-    font-size: 14px;
-    color: #7a7a7a;
-}
-
-/* Price styling */
-.book p:last-child {
-    font-size: 16px;
-    color: #f44336;
-    /* Red color for price */
-    font-weight: bold;
-}
-
-/* Styling for when no books are in the cart */
-.homeContainer p {
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 20px;
     font-size: 18px;
-    color: #7a7a7a;
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 40px;
-}
-
-/* Optional: Styling for the Add to Cart button (if you decide to add one) */
-.addToCartButton {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4CAF50;
+    font-weight: bold;
+  }
+  
+  .clear-all {
+    display: absolute;
+    right: 20px;
+    background: #d9534f;
     color: white;
     border: none;
+    padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 20px;
-}
-
-.addToCartButton:hover {
-    background-color: #45a049;
-}
-
-/* Optional: Styling for the empty cart section */
-.empty-cart {
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .clear-all:hover {
+    background: #c9302c;
+  }
+  
+  /* 📌 Updated Book List Container for Side-by-Side Layout */
+  .allDisplayedBooks {
+    display: flex;
+    flex-wrap: wrap; /* ✅ Ensures items wrap to next row */
+    gap: 20px;
+    justify-content: flex-start; /* Align items to the left */
+  }
+  
+  /* 📌 Individual Book Card */
+  .cart-book {
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
     text-align: center;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    width: 240px; /* ✅ Each book takes equal width */
+  }
+  
+  .cart-book:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Book Image */
+  .image {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  /* Book Title */
+  .cart-book p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin: 5px 0;
+  }
+  
+  /* Author */
+  .cart-book p span {
+    font-size: 14px;
+    font-weight: normal;
+    color: #777;
+  }
+  
+  /* Price */
+  .cart-book p:last-child {
     font-size: 18px;
-    color: #7a7a7a;
-    margin-top: 20px;
-}
-
-.book-seller {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.total-carts {
-    display: flex;
-    justify-content: flex-end;
-    gap: 37%
-}
-
-.clear-all {
-    background-color: rgb(19, 9, 9);
-    height: 10%;
-    color: white;
-}
-
-svg {
-    margin-left: 40%;
-    opacity: 0.5;
-}
-
-svg:hover {
-    opacity: 1;
-    color: red
-}
+    color: #d9534f;
+    font-weight: bold;
+  }
+  
+  /* Delete Button (Positioned at Top-Right) */
+  .cart-book .bi-trash {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #d9534f;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .cart-book .bi-trash:hover {
+    color: #c9302c;
+  }
+  
