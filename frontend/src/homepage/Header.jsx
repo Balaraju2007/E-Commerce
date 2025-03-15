@@ -54,9 +54,11 @@ const Header = () => {
                 navigate('/home');
                    }}>E-Commerce</h1>
         <div className="search-bar">
-          <input type="text" placeholder="Search for books..." className="search-input" />
+          <input type="text"  onChange={{handleSearch}} placeholder="Search for books..." className="search-input" />
           <button className="search-button">
-            <FiSearch className="search-icon" />
+            <FiSearch className="search-icon" onClick={() => {
+               navigate('/search');
+             }} />
           </button>
         </div>
         <div className="icons">
