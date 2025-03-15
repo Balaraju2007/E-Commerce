@@ -44,7 +44,7 @@ const Home = () => {
   }, [navigate]);  // Only run once when the component mounts
 
   return (
-    <div className="homeContainer">
+    <div className="Container">
       <Header />
       <br />
       <div className="body">

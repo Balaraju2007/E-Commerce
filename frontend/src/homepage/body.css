@@ -1,119 +1,93 @@
-/* General container for the books */
-.book-container {
+/* General */
+body {
+  background-color: #f8f9fa;
+  margin: 0;
+  font-family: Arial, sans-serif;
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
   justify-content: center;
-  padding: 20px;
-  background-color: #f4f4f4; /* Background color for the page */
+  align-items: center;
 }
 
-/* Styling each book card */
-.book-item {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  border: 1px solid #e0e0e0;
-  padding: 20px;
-  width: 300px;
-  cursor: pointer;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+/* Books Section */
+.books-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); /* Adaptive grid */
+  gap: 25px; /* Spacing between books */
+  padding: 120px 30px 30px; /* Padding after the header */
+  width: 95%;
+  max-width: 1400px; /* Ensures content doesn't stretch too wide */
+  margin: 0 auto; /* Centers the section */
+}
+
+/* Book Card */
+.book-card {
+  background-color: white;
+  padding: 15px;
   border-radius: 10px;
-  background-color: #fff;
-  transition: transform 0.3s ease;
-  background-color: #fff;
-  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  width: 100%;
+  max-width: 250px;
+  aspect-ratio: 3 / 4; /* Maintain uniform height */
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Hover effect on book card */
-.book-item:hover {
+.book-card:hover {
   transform: scale(1.05);
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Book content layout */
-.book-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Seller profile */
-.book-seller {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.seller-image {
-  width: 40px; /* Small seller image */
-  height: 40px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-/* Book details section */
-.book-details {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding-top: 10px;
-}
-
-/* Book image */
+/* Book Image */
 .book-image {
   width: 100%;
-  height: 250px; /* Increased height for book image */
-  object-fit: cover;
+  height: 180px;
+  object-fit: contain; /* Ensures the whole book image is visible */
   border-radius: 10px;
-  margin-top: 10px; /* Top space for book image */
-  margin-bottom: 15px;
+  background-color: #fff;
 }
 
-/* Book info styling */
+/* Book Details */
 .book-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  width: 100%;
+  padding: 10px 0;
   text-align: center;
 }
 
-.book-name {
-  font-size: 18px;
+.book-title {
+  font-size: 16px;
+  margin: 5px 0;
   font-weight: bold;
   color: #333;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.book-author {
+  font-size: 14px;
+  color: #555;
   margin-bottom: 5px;
 }
 
-.author-name {
-  font-size: 14px;
-  color: #7a7a7a;
+.book-price {
+  font-size: 18px !important;
+  color: #d9534f !important;
+  font-weight: bold !important;
 }
 
-.price {
-  font-size: 18px;
-  font-weight: bold;
-  color: #f44336; /* Bold red color for price */
-  margin-top: auto;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .books-section {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Smaller screens */
+  }
 }
 
-/* Optional: Adding a background color for the whole page */
-body {
-  background-color: #f4f4f4;
-}
-
-
-.book-seller {
-  display: flex;
-  flex-direction: wrap;
-  justify-content: start;
-  width: 100%;
-}
-
-.seller-Name{
-  padding-top: 0.5rem;
-  margin-left: 0.5rem;
-  /* margin-right: 80; */
+@media (max-width: 480px) {
+  .books-section {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Mobile screens */
+  }
 }
