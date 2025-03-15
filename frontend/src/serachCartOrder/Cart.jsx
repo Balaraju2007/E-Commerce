@@ -2,13 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../homepage/AppContext';  // Import the custom hook
 import Header from '../homepage/Header';
 import "../homepage/home.css";
-<<<<<<< HEAD
-import './Cart.css';  // Import the CSS file for cart page styling
-import { useNavigate } from 'react-router-dom';
-=======
 import './cart.css';  // Import the CSS file for cart page styling
 import { useNavigate, useSearchParams } from 'react-router-dom';
->>>>>>> refs/remotes/origin/main
 
 const Cart = () => {
   const userData = localStorage.getItem('user_id');  // Use context to access global userData
