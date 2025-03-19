@@ -139,38 +139,38 @@ const BookDetails = () => {
     <>
       <Header />
       {bookData && (
-        <div className="full-page">
-          <div className="book-container">
-            <div className="book-image">
+        <div className="single-full-page">
+          <div className="single-book-container">
+            <div className="single-book-image">
               <img src={bookData.picture} alt={bookData.book_name} />
             </div>
 
-            <div className="book-details">
+            <div className="single-book-details">
               <h1>{bookData.book_name}</h1>
-              <p className="author">
+              <p className="single-author">
                 by <span>{bookData.author_name}</span>
               </p>
-              <div className="rating">
+              <div className="single-rating">
                 <span>★★★★☆</span>
-                <span className="rating-count">22 ratings</span>
+                <span className="single-rating-count">22 ratings</span>
               </div>
 
-              <p className="price">
+              <p className="single-price">
                 ₹{bookData.price} <span className="old-price">₹{parseInt(bookData.price) + parseInt((11 / bookData.price) * 100)}
 
                 </span>
               </p>
-              <p className="stock">In Stock</p>
-              <p className="delivery">
+              <p className="single-stock">In Stock</p>
+              <p className="single-delivery">
                 FREE delivery Tuesday, 4 March on orders above ₹499
               </p>
 
-              <div className="description">
+              <div className="single-description">
                 <h3>About this book</h3>
                 <p>This book provides basic information about C.</p>
               </div>
 
-              <div className="quantity">
+              <div className="single-quantity">
                 <label>Quantity:</label>
                 <select>
                   {optionsArray.map((_, index) => (
@@ -181,22 +181,22 @@ const BookDetails = () => {
                 </select>
               </div>
 
-              <div className="buttons">
+              <div className="single-buttons">
                 <button
-                  className="add-to-cart"
+                  className="single-add-to-cart"
                   onClick={(event) =>
                     addBookToCart(event, bookData.book_id, bookData.quantity, localStorage.getItem('user_id'))
                   }
                 >
                   {isCart==1 ? <p disabled>Carted</p> : 'Add to Cart'}
                 </button>
-                <button className="buy-now" onClick={(e)=>{addBookToOrderSummary(event, bookData.book_id, bookData.quantity, localStorage.getItem('user_id'))}}>Buy Now</button>
+                <button className="single-buy-now" onClick={(e)=>{addBookToOrderSummary(event, bookData.book_id, bookData.quantity, localStorage.getItem('user_id'))}}>Buy Now</button>
                   {bookData.seller_id == localStorage.getItem("user_id") && <button onClick={updateBook}>Update Book</button>}
               </div>
             </div>
           </div>
 
-          <footer className="footer">
+          <footer className="single-footer">
             <p>&copy; 2025 Book Store. All rights reserved.</p>
           </footer>
         </div>

@@ -21,7 +21,7 @@ const Header = () => {
               'Content-type': 'application/json',
             },
           });
-
+          console.log(query+'smmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
           if (!response.ok) {
             throw new Error('No books found');
           }
@@ -33,6 +33,7 @@ const Header = () => {
             setBookData([]); // Clear the book data if no books found
           } else {
             setBookData(res); // Update the book data in the global state
+            console.log()
           }
         } catch (error) {
           console.log(error);
@@ -44,8 +45,13 @@ const Header = () => {
   }, [query, setBookData]); // Added setBookData as a dependency
 
   const handleSearch = (e) => {
+    console.log("hiiii999999999999")
     setQuery(e.target.value);
   };
+
+  const GetBookData = () => {
+
+  }
 
   return(
         <header className="header">
@@ -54,11 +60,11 @@ const Header = () => {
                 navigate('/home');
                    }}>E-Commerce</h1>
         <div className="search-bar">
-          <input type="text"  onChange={{handleSearch}} placeholder="Search for books..." className="search-input" />
+          <input type="text"  onChange={(e)=>{handleSearch(e)}} placeholder="Search for books..." className="search-input" />
           <button className="search-button">
             <FiSearch className="search-icon" onClick={() => {
                navigate('/search');
-             }} />
+             }} onChange={{handleSearch}}/>
           </button>
         </div>
         <div className="icons">

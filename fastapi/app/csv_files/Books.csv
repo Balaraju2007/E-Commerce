@@ -5,3 +5,4 @@ book_id,book_name,seller_id,author_id,price,quantity,genre_id,publisher_id,pictu
 4,DBMS,6,14,105.00,2,4,4,DBMS.jpg
 5,COMP,6,15,125.00,3,8,4,COMP.jpg
 6,IOT,5,14,200.00,0,8,4,IOT.jpg
+7,M 2,4,16,275.00,2,9,5,M_2.jpg

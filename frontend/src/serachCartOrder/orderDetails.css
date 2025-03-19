@@ -1,47 +1,87 @@
+/* Main container for order details */
 .order-details-container {
-    
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
-  }
-  
-  .order-details-h2 {
-    margin-top: 100px;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .order-details p {
-    font-size: 18px;
-    margin: 5px 0;
-  }
-  
-  .order-items {
-    margin-top: 20px;
-  }
-  
-  .order-item {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-  }
-  
-  .book-image img {
-    max-width: 150px;
-    max-height: 200px;
-    object-fit: cover;
-    margin-top: 10px;
-  }
-  .Svg {
-    margin-left: 90%;
-    opacity: 0.5;
-    /* background-color: red; */
-  }
-  .Svg:hover {
-    color: red;
-    opacity: 1;
-  }
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Title of the order details page */
+.order-details-h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Container for the individual order details */
+.order-details-order-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* General text styling */
+.order-details-order-details p {
+  font-size: 1.2rem;
+  color: #555;
+  line-height: 1.8;
+}
+
+/* Order items container */
+.order-details-order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Styling for each order item (Book) */
+.order-details-order-item {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  align-items: center; /* Vertically center content */
+}
+
+/* Image container for the book image */
+.order-details-book-image img {
+  width: 120px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Text container for book details */
+.order-details-text {
+  flex: 1;
+}
+
+/* Styling for the book details (name, author, price, etc.) */
+.order-details-text p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* Styling for the seller information section */
+.seller-info {
+  margin-top: 20px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.seller-info p {
+  margin: 5px 0;
+}
+
+/* Styling the "Seller Name" to make it stand out */
+.seller-info strong {
+  color: #007bff;
+  font-weight: bold;
+}
