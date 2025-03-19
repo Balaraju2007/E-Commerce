@@ -71,7 +71,16 @@ const Header = () => {
           onClick={() => {
                          navigate('/cart');
                        }}></i>
-          <i>{profile ? (
+
+           
+            {/* <i className="bi bi-bell" title='Notifications'
+                   ></i> */}
+            <i className="bi bi-bell" style={{color:'black'}} title="Notifications"
+               onClick={() => {
+                navigate('/ordernotifications');
+              }}></i>
+
+      <i>{profile ? (
              <img
                src={profile}
               onClick={() => {
@@ -83,6 +92,7 @@ const Header = () => {
            ) : (
             <i className="bi bi-person icon" title="Profile"></i>
            )} </i>
+
         </div>
       </header>
   );

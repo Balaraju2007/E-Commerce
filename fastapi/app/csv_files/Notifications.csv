@@ -93,3 +93,21 @@ user_id,message,created_at,is_read
  Order ID: 5
  Book: java x 2
  Order Date: 2025-03-14 06:41:43.005725",2025-03-14 13:39:29.595981,False
+5," New Order Received!
+ Customer: balaraju (balaraju@gmail.com,  9876545674)
+ Order ID: 10
+ Book: IOT x 2
+ Price: 200.00 per unit
+ Total Price: 400.00
+ Order Date: 2025-03-19 08:30:47.357428",2025-03-19 08:30:47.423163,False
+5," Order Canceled!
+ Order ID: 10
+ Book: IOT x 2
+ Order Date: 2025-03-19 08:30:47.357428",2025-03-19 08:31:43.216526,False
+5," New Order Received!
+ Customer: balaraju (balaraju@gmail.com,  9876545674)
+ Order ID: 10
+ Book: IOT x 2
+ Price: 200.00 per unit
+ Total Price: 400.00
+ Order Date: 2025-03-19 08:31:55.493362",2025-03-19 08:31:55.524661,False

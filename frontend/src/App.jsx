@@ -16,6 +16,7 @@ import NotificationPage from './assets/orderNotifications/orderNotifications';
 import OrderSummary from './orderSummary/orderSummary';
 import OrderDetails from './serachCartOrder/OrderDetails';
 import Home1 from '../mock/home1';
+import Notification from './Notifications/Notifications';
 
 function App() {
   return (
@@ -29,8 +30,7 @@ function App() {
             <Route path='/signin' element={<Signin />} />
             <Route path='/home' element={<Home />} />
             <Route path='/cart' element={<Cart />} />
-            <Route path='/order' element={<Order />} >
-            </Route>
+            <Route path='/order' element={<Order />} />
             <Route path='/orderDetails/:id' element={<OrderDetails />} />
             <Route path='/addbook' element={<Addbook />} />
             <Route path='/search' element={<Search />} />

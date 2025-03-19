@@ -91,6 +91,10 @@ body {
     color: #555;
     cursor: pointer;
   }
+
+  i{
+    cursor: pointer;
+  }
   
   .icon:hover {
     color: black;
