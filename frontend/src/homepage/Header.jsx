@@ -75,14 +75,15 @@ const Header = () => {
       </div>
       <div className="icons">
         <i className="bi bi-plus-circle icon" title="Add Book" onClick={() => { navigate('/addbook') }}></i>
-        <i className="bi bi-list icon" title="My Orders"
-          onClick={() => {
-            navigate('/order');
-          }}></i>
         <i className="bi bi-cart icon" title="Cart"
           onClick={() => {
             navigate('/cart');
           }}></i>
+        <i className="bi bi-box-seam" title="My Orders" style={{ color: 'black', marginTop: '1.5%px' }} 
+          onClick={() => {
+            navigate('/order');
+          }}></i>
+       
 
 
         {/* <i className="bi bi-bell" title='Notifications'
