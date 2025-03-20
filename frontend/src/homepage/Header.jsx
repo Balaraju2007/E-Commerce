@@ -21,7 +21,7 @@ const Header = () => {
               'Content-type': 'application/json',
             },
           });
-          console.log(query+'smmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+          console.log(query + 'smmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
           if (!response.ok) {
             throw new Error('No books found');
           }
@@ -53,54 +53,60 @@ const Header = () => {
 
   }
 
-  return(
-        <header className="header">
-        <h1 className="title"
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      navigate('/search');
+    }
+  };
+
+  return (
+    <header className="header">
+      <h1 className="title"
         onClick={() => {
-                navigate('/home');
-                   }}>E-Commerce</h1>
-        <div className="search-bar">
-          <input type="text"  onChange={(e)=>{handleSearch(e)}} placeholder="Search for books..." className="search-input" />
-          <button className="search-button">
-            <FiSearch className="search-icon" onClick={() => {
-               navigate('/search');
-             }} onChange={{handleSearch}}/>
-          </button>
-        </div>
-        <div className="icons">
-          <i className="bi bi-plus-circle icon" title="Add Book"onClick={() => { navigate('/addbook') }}></i>
-          <i className="bi bi-list icon" title="My Orders"
+          navigate('/home');
+        }}>Old-Book-Seller</h1>
+      <div className="search-bar">
+        <input type="text" onChange={(e) => { handleSearch(e) }} onKeyDown={handleKeyPress} placeholder="Search for books..." className="search-input" />
+        <button className="search-button">
+          <FiSearch className="search-icon" onClick={() => {
+            navigate('/search');
+          }} onChange={{ handleSearch }} />
+        </button>
+      </div>
+      <div className="icons">
+        <i className="bi bi-plus-circle icon" title="Add Book" onClick={() => { navigate('/addbook') }}></i>
+        <i className="bi bi-list icon" title="My Orders"
           onClick={() => {
-                         navigate('/order');
-                       }}></i>
-          <i className="bi bi-cart icon" title="Cart"
+            navigate('/order');
+          }}></i>
+        <i className="bi bi-cart icon" title="Cart"
           onClick={() => {
-                         navigate('/cart');
-                       }}></i>
+            navigate('/cart');
+          }}></i>
 
-           
-            {/* <i className="bi bi-bell" title='Notifications'
+
+        {/* <i className="bi bi-bell" title='Notifications'
                    ></i> */}
-            <i className="bi bi-bell" style={{color:'black'}} title="Notifications"
-               onClick={() => {
-                navigate('/ordernotifications');
-              }}></i>
+        <i className="bi bi-bell" style={{ color: 'black' }} title="Notifications"
+          onClick={() => {
+            navigate('/ordernotifications');
+          }}></i>
 
-      <i>{profile ? (
-             <img
-               src={profile}
-              onClick={() => {
-                 navigate(`/profile/${localStorage.getItem('user_id')}`);
-               }}
-               className='profile-icon'
-               alt='Profile'
-            />
-           ) : (
-            <i className="bi bi-person icon" title="Profile"></i>
-           )} </i>
+        <i>{profile ? (
+          <img
+            src={profile}
+            onClick={() => {
+              navigate(`/profile/${localStorage.getItem('user_id')}`);
+            }}
+            className='profile-icon'
+            alt='Profile'
+          />
+        ) : (
+          <i className="bi bi-person icon" title="Profile"></i>
+        )} </i>
 
-        </div>
-      </header>
+      </div>
+    </header>
   );
 };
 
