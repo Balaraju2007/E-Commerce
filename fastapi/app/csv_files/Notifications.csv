@@ -114,7 +114,7 @@ user_id,message,created_at,is_read
 6," New Order Received!
  Customer: kuladeep (kuladeep@gmail.com,  9876324554)
  Order ID: 11
- Book: COMP x 3
- Price: 125.00 per unit
- Total Price: 375.00
- Order Date: 2025-03-19 10:46:28.014514",2025-03-19 10:46:28.049256,False
+ Book: python x 5
+ Price: 155.00 per unit
+ Total Price: 775.00
+ Order Date: 2025-03-20 14:30:37.626781",2025-03-20 14:30:37.662002,False
