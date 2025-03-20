@@ -105,14 +105,7 @@ const Addbook = () => {
   return (
     <div className="homeContainer">
       <Header />
-      <div className="addBookContainer">
-        <div className="imageContainer">
-          <img
-            src={book && book.picture ? book.picture : bookImage}
-            alt="Book Cover"
-            className="bookImage"
-          />
-        </div>
+
 
         <div className="formContainer">
           <h2>{book ? 'Update Book' : 'Add Book'}</h2>
@@ -168,7 +161,6 @@ const Addbook = () => {
           </form>
         </div>
       </div>
-    </div>
   );
 };
 

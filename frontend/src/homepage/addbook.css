@@ -1,97 +1,78 @@
-/* Container to hold the image and form side by side */
-.addBookContainer {
+/* General Page Styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Main Container */
+.homeContainer {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    gap: 40px;
-    max-width: 80%;
-    margin: 40px auto;
+    justify-content: center;
+    height: 100vh; /* Full screen height */
+}
+
+/* Form Container */
+.formContainer {
     background: #fff;
     padding: 30px;
-    border-radius: 10px;
-    /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
-}
-
-/* Left-side image container */
-.imageContainer {
-    flex: 1;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
     text-align: center;
+    width: 400px;
 }
 
-.bookImage {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Right-side form container */
-.formContainer {
-    flex: 1;
-    text-align: center;
-}
-
+/* Title */
 .formContainer h2 {
-    font-size: 24px;
-    color: #232f3e;
-    margin-bottom: 20px;
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 15px;
 }
 
-/* Styling for input fields */
+/* Form Styling */
+.addBookForm {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input Fields */
 .addBookForm input {
-    width:65%;
+    width: 100%;
     padding: 12px;
     margin: 10px 0;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: 0.3s;
-}
-
-/* Input field focus effect */
-.addBookForm input:focus {
-    border-color: #ff9900;
+    border-radius: 8px;
+    font-size: 14px;
     outline: none;
-    box-shadow: 0 0 5px rgba(255, 153, 0, 0.5);
+    transition: border 0.3s ease-in-out;
 }
 
-/* File input */
+.addBookForm input:focus {
+    border: 1px solid #007bff;
+}
+
+/* File Input */
 .addBookForm input[type="file"] {
     padding: 8px;
-    border: none;
-}
-
-/* Submit button */
-.addBookForm button {
-    width: 65%;
-    background-color: #ff9900;
-    color: white;
-    padding: 14px;
-    border: none;
-    border-radius: 5px;
-    font-size: 18px;
     cursor: pointer;
-    transition: background 0.3s ease;
-    margin-top: 15px;
 }
 
-/* Hover effect */
+/* Submit Button */
+.addBookForm button {
+    background: #007bff;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: 0.3s ease-in-out;
+}
+
 .addBookForm button:hover {
-    background-color: #e68a00;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .addBookContainer {
-        flex-direction: column;
-        width: 90%;
-    }
-
-    .imageContainer {
-        text-align: center;
-    }
-
-    .bookImage {
-        max-width: 80%;
-    }
+    background: #0056b3;
 }
