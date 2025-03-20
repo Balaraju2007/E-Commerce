@@ -84,7 +84,20 @@ const Registration = () => {
                         <div className='confirmPasssword'><input type='password' onChange={handleConfirmPass} required placeholder='---confirm password---' /> <br></br>
                         {check && <p>password not matched</p>}</div>
                         
-                        <div className='profile'><input type='file' onChange={handleProfile} required placeholder='---set profile pic---' /> </div>
+                        <div className='profile'>
+    {/* Box for Profile Picture Preview */}
+
+    {/* Custom File Upload Button */}
+    <label htmlFor="profileUpload" className="custom-file-upload">
+        Choose Profile Picture
+    </label>
+    <input id="profileUpload" type='file' onChange={handleProfile} required />
+
+    {/* Display File Name */}
+    {user.profile && <p className="file-name">{user.profile.name}</p>}
+</div>
+
+
                         <button type='submit' className='button' onClick={call}>submit</button>
                     </div>
                 </form>

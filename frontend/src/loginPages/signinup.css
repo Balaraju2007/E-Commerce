@@ -75,3 +75,73 @@
 .button:hover {
     background: linear-gradient(to right, #0056b3, #0084d4);
 }
+
+/* Hide the default file input */
+/* .profile input[type="file"] {
+    display: none;
+}
+
+/* Custom file upload button */
+/* .custom-file-upload {
+    display: inline-block;
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    transition: 0.3s ease-in-out;
+}
+
+.custom-file-upload:hover {
+    background: #0056b3;
+} */ 
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-preview {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    border: 2px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.profile-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s ease-in-out;
+}
+
+.custom-file-upload:hover {
+    background: #0056b3;
+}
+
+.file-name {
+    font-size: 12px;
+    color: #333;
+}
+
