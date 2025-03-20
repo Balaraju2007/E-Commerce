@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./signinup.css";
+import "./signin.css";
 
 const Registration = () => {
     const [check, setCheck] = useState(false);
@@ -48,15 +48,18 @@ const Registration = () => {
     }
 
     return (
-        <div className='sigupContainer'>
+        <>
+        <h1 className='login-here'>login here</h1>
+        <div className='signinContainer'>
+            
             <div className='loginInformation'>
-                <h1>Sign in to </h1>
+                <h1>Sign up to </h1>
                 <h2>Old book Seller</h2> <br />
-                <p style={{ fontSize: "13px" }}>If you already have an account <br />
+                <p style={{ fontSize: "13px" }}>If you don't  have an account <br />
                     you can <span style={{ color: "blue", cursor: 'pointer' }} onClick={() => { navigate("/signup") }}>Signup here!</span>
                 </p>
             </div>
-            <div className='signupFieldss'>
+            <div className='signinFieldss'>
                 <h2 style={{ fontSize: '1.6rem' }}>Sign in</h2> <br />
                 <form className='form' onSubmit={call}>
                     <div className='form'>
@@ -71,6 +74,7 @@ const Registration = () => {
                 </form>
             </div>
         </div>
+        </>
     );
 }
 

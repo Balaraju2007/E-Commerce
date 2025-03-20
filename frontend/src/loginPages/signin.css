@@ -1,0 +1,130 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Page Layout */
+.signinContainer {
+    margin-top: -15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    background: #f8f9fa; /* Light background */
+}
+
+/* Login Box */
+.loginInformation, .signinFieldss {
+    margin-right: 4%;
+    width: 320px;
+    min-height: 45%;
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+
+.loginInformation{
+    h1{
+        color: #333;
+        font-size: 1.7rem;
+        margin-top: 2rem;
+    }
+    h2{
+        color: #333;
+        font-size: 1.5rem;
+    }
+    p{
+        font-size: 1rem;
+    }
+
+}
+/* Heading Styles */
+h1, h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Paragraphs */
+p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Input Fields */
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.2s;
+}
+
+/* Input Focus */
+input:focus {
+    border-color: #007bff;
+}
+
+/* Forgot Password */
+div[style*="Forget password"] {
+    font-size: 0.85rem;
+    color: #007bff;
+    cursor: pointer;
+}
+
+/* Button */
+.button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+/* Button Hover */
+.button:hover {
+    background: #0056b3;
+}
+
+/* Error Message */
+p[style*="color: red"] {
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* Mobile Friendly */
+@media (max-width: 768px) {
+    .sigupContainer {
+        padding: 1rem;
+    }
+    .loginInformation, .signupFieldss {
+        width: 90%;
+    }
+}
+
+
+.login-here {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-top: 5rem;
+    padding: 10px;
+    background: linear-gradient(to right, #007bff, #00bfff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
