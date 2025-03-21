@@ -77,7 +77,7 @@ const BookDetails = () => {
                 <span>★★★★☆</span>
                 <span id="single-rating-count">22 ratings</span>
               </div>
-              <p id="single-price">₹{bookData.price} <span id="old-price">₹{parseInt(bookData.price) + parseInt((11 / bookData.price) * 100)}</span></p>
+              <p id="single-price">₹{bookData.price} <span id="old-price">₹{parseInt(bookData.price) + parseInt((15 / bookData.price) * 100)}</span></p>
               <p id="single-stock">In Stock</p>
               <p id="single-delivery">FREE delivery Tuesday, 4 March on orders above ₹499</p>
               <div id="single-description">
