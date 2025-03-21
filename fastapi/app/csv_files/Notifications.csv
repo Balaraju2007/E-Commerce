@@ -118,3 +118,18 @@ user_id,message,created_at,is_read
  Price: 155.00 per unit
  Total Price: 775.00
  Order Date: 2025-03-20 14:30:37.626781",2025-03-20 14:30:37.662002,False
+4," New Order Received!
+ Customer: kuladeep (kuladeep@gmail.com,  9876324554)
+ Order ID: 12
+ Book: Computer Networks x 3
+ Price: 169.00 per unit
+ Total Price: 507.00
+ Order Date: 2025-03-21 00:09:38.397254",2025-03-21 00:09:38.432006,False
+4," Order Canceled!
+ Order ID: 12
+ Book: Computer Networks x 3
+ Order Date: 2025-03-21 00:09:38.397254",2025-03-21 00:09:53.307006,False
+6," Order Canceled!
+ Order ID: 11
+ Book: python x 5
+ Order Date: 2025-03-20 14:30:37.626781",2025-03-21 00:09:54.716920,False

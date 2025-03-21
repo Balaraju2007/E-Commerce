@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import Header from '../homepage/Header';
 import './orderDetails.css';
+import { useNavigate } from 'react-router-dom';
 
 const OrderDetails = () => {
+  const Navigate = useNavigate();
   const [orderData, setOrderData] = useState(null);
   const { id } = useParams();
 
@@ -54,8 +56,10 @@ const OrderDetails = () => {
                     <p><strong>Publisher:</strong> {item.book_details.publisher_name}</p>
                     
                     {/* Seller Details */}
-                    <div className="seller-info">
-                      <p><strong>Seller Name:</strong> {item.book_details.seller_name}</p>
+                    <div className="seller-info"
+                      style={{ cursor: 'pointer', color: 'blue', fontWeight: "bold", 
+                        textDecoration: "underline" }}>
+                      <p onClick={() => {Navigate(`/profile/${item.book_details.seller_id}`)}}><strong>Seller Name:</strong> {item.book_details.seller_name}</p>
                     </div>
                   </div>
                 </div>
