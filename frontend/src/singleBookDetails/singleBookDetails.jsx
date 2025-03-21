@@ -62,8 +62,10 @@ const BookDetails = () => {
   return (
     <>
       <Header />
+      {console.log(bookData)}
       {bookData && (
         <div id="single-full-page">
+          
           <div id="single-book-container">
             <div id="single-book-image">
               <img src={bookData.picture} alt={bookData.book_name} />
@@ -90,12 +92,15 @@ const BookDetails = () => {
                   ))}
                 </select>
               </div>
-              <div id="single-buttons">
+              {parseInt(bookData.seller_id) === parseInt(localStorage.getItem('user_id')) ?(
+                ''
+              ) : ( <div id="single-buttons">
                 <button id="single-add-to-cart" onClick={(event) => addBookToCart(event, bookData.book_id, bookData.quantity, localStorage.getItem('user_id'))}>
                   {isCart == 1 ? <p disabled>Carted</p> : 'Add to Cart'}
                 </button>
                 <button id="single-buy-now" onClick={(event) => addBookToOrderSummary(event, bookData.book_id, bookData.quantity, localStorage.getItem('user_id'))}>Buy Now</button>
-              </div>
+              </div>)}
+             
             </div>
           </div>
           <footer id="single-footer">
